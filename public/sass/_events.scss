@@ -1,0 +1,170 @@
+@use './variables' as variables;
+div.events-container{
+    width:80%;
+    margin:5em auto;
+    position:relative;
+}
+div.events-container>h1{
+    font-size:3em;
+    color:black;
+    font-family:variables.$secondary_font;
+    margin-bottom:0.5em;
+    @media only screen and (max-width:700px){
+        font-size:2.5em;
+    }
+}
+div.events-container>div.events-wrapper{
+    width:100%;
+    overflow:hidden;
+    &>button{
+        width:3em;
+        height:3em;
+        background-size:contain;
+        background-image:url('/assets/arrow.svg');
+        z-index:100;
+        position:absolute;
+        top:50%;
+        background-position:center;
+        background-color:transparent;
+        border:0px solid black;
+        &.left{
+            left:0px;
+            transform:translateX(-50%);
+        }
+        &.right{
+            left:100%;
+            transform:translateX(-50%) rotateZ(180deg);
+        }
+    }
+}
+div.events-wrapper>div.events{
+    width:100%;
+    display:flex;
+    &>div.event{
+        height:250px;
+        border-radius:0.5em;
+        width:200px;
+        background-size:cover;
+        background-position:center;
+        flex-shrink:0;
+        color:white;
+        flex-grow:0;
+        position:relative;
+        padding:0.5em;
+        padding-bottom:1em;
+        box-sizing: border-box;
+        display:flex;
+        justify-content:flex-end;
+        flex-flow:column;
+        font-family: variables.$secondary_font;
+        margin-right:35px;
+        &::after{
+            position:absolute;
+            content:"";
+            top:0px;
+            left:0px;
+            right:0px;
+            bottom:0px;
+            border-radius:inherit;
+            background: linear-gradient(180deg, rgba(0, 0, 0, 0) 16.81%, #000000 86.77%);
+            font-family:variables.$secondary_font;
+        }
+        &>*{
+            position:relative;
+            z-index:1;
+        }
+        &>div.top-date{
+            font-family:variables.$main_font;
+            font-weight:bolder;
+            font-size:2em;
+            position:relative;
+            &::after{
+                content:attr(month);
+                text-transform:uppercase;
+                font-size:0.5em;
+                margin-left:0.5em;
+            }
+        }
+        &>p{
+            font-weight:600;
+            font-size:1em;
+            &>a{
+                color:white;
+            }
+        }
+    }
+}
+
+div.display-wrapper>div.event-vertical-container{
+    width:100%;
+    justify-self:center;
+    align-self:flex-start;
+    margin-top:2em;
+    font-family:variables.$secondary_font;
+    &>h1{
+        font-size:1.5em;
+        width:200px;
+        margin:0 auto;
+        text-align:right;
+        margin-top:2em;
+        margin-bottom:1em;
+        text-transform:uppercase;
+    }
+    &>div.event{
+        height:250px;
+        border-radius:0.5em;
+        width:200px;
+        background-size:cover;
+        background-position:center;
+        flex-shrink:0;
+        color:white;
+        flex-grow:0;
+        position:relative;
+        padding:0.5em;
+        padding-bottom:1em;
+        box-sizing: border-box;
+        display:flex;
+        justify-content:flex-end;
+        flex-flow:column;
+        font-family: variables.$secondary_font;
+        margin:0 auto;
+        margin-bottom:1em;
+        &::after{
+            position:absolute;
+            content:"";
+            top:0px;
+            left:0px;
+            right:0px;
+            bottom:0px;
+            border-radius:inherit;
+            background: linear-gradient(180deg, rgba(0, 0, 0, 0) 16.81%, #000000 86.77%);
+            font-family:variables.$secondary_font;
+        }
+        &>*{
+            position:relative;
+            z-index:1;
+        }
+        &>div.top-date{
+            font-family:variables.$main_font;
+            font-weight:bolder;
+            font-size:2em;
+            position:relative;
+            &::after{
+                content:attr(month);
+                text-transform:uppercase;
+                font-size:0.5em;
+                margin-left:0.5em;
+            }
+        }
+        &>p{
+            font-weight:600;
+            font-size:1em;
+            &>a{
+                color:white;
+            }
+        }
+    }
+    @media only screen and (max-width:1000px){
+        display:none;
+    }
+}

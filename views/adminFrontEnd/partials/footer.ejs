@@ -1,0 +1,123 @@
+</div>
+</main>
+
+<div id="sidebar">
+  <div class="sidebar__title">
+    <div class="sidebar__img">
+      <h1 class="logotxt"><img src="/assets/vc logo black-01.png" alt="" srcset=""></h1>
+    </div>
+    <i onclick="closeSidebar()" class="fa fa-times" id="sidebarIcon" aria-hidden="true"></i>
+  </div>
+
+  <!-- <div class="sidebar_box">
+    <a   href="">Register Patients +</a>
+  </div> -->
+
+  <div class="links">
+    <ul>
+      <li class=""><a   href="/"><i class="fa fa-home"></i>Home</a></li>
+      <li><a   href="/admin/newsList"><i class="fa fa-newspaper-o"></i>List of NEWS</a></li>
+      <li><a   href="/admin/createnews"><i class="fa fa-plus-circle"></i>Create NEWS</a></li>
+      <li><a   href="/admin/events"><i class="fa fa-calendar"></i>Events List</a></li>
+      <li><a   href="/admin/createEvent"><i class="fa fa-plus-circle"></i>Create Event</a></li>
+      <li><a   href="/admin/userlist"><i class="fa fa-user"></i>User List</a></li>
+      <!-- <li><a   href="/admincreateuser"><img src="assets/icons8-about.png" alt="">Create Category</a></li> -->
+      <li><a   href="/admin/tenderlist"><i class="fa fa-file" ></i>Tender List</a></li>
+      <li><a   href="/admin/createtender"><i class="fa fa-plus-circle"></i>Create Tender</a></li>
+      <li><a   href="/admin/threadlist"><i class="fa fa-envelope" ></i>Thread Replies</a></li>
+      <!-- <li><a   href="/adminjoblist"><img src="/assets/icons8-settings (1).png" alt="">Job List</a></li>
+      <li><a   href="/admincreatejob"><img src="/assets/icons8-settings (1).png" alt="">Create Job</a></li> -->
+      <li><a   href="/admin/blogList"><i class="fa fa-pencil-square" ></i>Blog List</a></li>
+      <li><a   href="/admin/createblog"><i class="fa fa-plus-circle" ></i>Create Blog</a></li>
+      <li><a   href="/admin/project"><i class="fa fa-puzzle-piece" ></i>Project List</a></li>
+      <li><a   href="/admin/createproject"><i class="fa fa-plus-circle"></i>Create Project</a></li>
+
+      <li><a   href="/admin/notification"><i class="fa fa-envelope"></i>Notification List</a></li>
+
+      <li><a   href="/admin/createNoti"><i class="fa fa-plus-circle" alt=""></i>Create Notification</a></li>
+      <li><a   href="/admin/forumlist"><i class="fa fa-align-right" alt=""></i>Forum List</a></li>
+      <li><a   href="/admin/forumcreate"><i class="fa fa-plus-circle"></i>Create Forum</a></li>
+      <li><a   href="/admin/approveforum"><i class="fa fa-thumbs-up"></i>Approve Forum</a></li>
+      <li><a   href="/admin/createCategory"><i class="fa fa-plus-circle"></i>Create Category</a></li>
+      <li><a   href="/admin/category"><i class="fa fa-pie-chart"></i>Category List</a></li>
+
+      <li><a   href="/admin/job"><i class="fa fa-building" alt=""></i>Job List</a></li>
+      <li><a   href="/admin/create-job"><i class="fa fa-plus-circle"></i>Create Job</a></li>
+
+
+      <li><a   href="/admin/changeBanner"><i class="fa fa-image"></i>Banner Change</a></li>
+      <li><a   href="/admin/banner-list"><i class="fa fa-plus-circle" alt=""></i>Banner List</a></li>
+
+
+      <li><a   href="/admin/createNewsLetter"><i class="fas fa-plus-circle"></i>Add Newsletter</a></li>
+      <li><a   href="/admin/listNewsLetter"><i class="fas fa-file-pdf"></i>List Newsletters</a></li>
+
+
+      <li style=""><a id="logout" class="logout"><img src="/assets/Group 266.png" alt="">Log Out</a></li>
+    </ul>
+    <div class="foot">
+      &#169; 2021 Valuers Connect. All Rights Reserved.
+    </div>
+  </div>
+
+</div>
+</div>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+  integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+  integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+  integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script>
+  $("li", ".links").click(function () {
+
+    $("li", ".links").removeClass("active");
+    $(this).addClass("active");
+
+  })
+</script>
+<!-- <script src="/js/adminCreateForum.js"></script> -->
+<script src="/js/logout.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+<script src="/script.js"></script>
+<script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
+<script src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>
+
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+  window.jQuery || document.write('<script src="js/vendor/jquery-3.3.1.min.js"><\/script>')
+</script>
+<script src="/Trumbowyg-master/dist/trumbowyg.min.js"></script>
+<script src="/Trumbowyg-master/dist/base64/trumbowyg.base64.js"></script>
+<script>
+  $('#desc')
+    .trumbowyg({
+      btnsDef: {
+        // Create a new dropdown
+        image: {
+          dropdown: ['insertImage', 'base64'],
+          ico: 'insertImage'
+        }
+      },
+      // Redefine the button pane
+      btns: [
+        ['viewHTML'],
+        ['formatting'],
+        ['strong', 'em', 'del'],
+        ['superscript', 'subscript'],
+        ['link'],
+        ['image'], // Our fresh created dropdown
+        ['justifyLeft', 'justifyCenter', 'justifyRight', 'justifyFull'],
+        ['unorderedList', 'orderedList'],
+        ['horizontalRule'],
+        ['removeformat'],
+        ['fullscreen']
+      ]
+    });
+</script>
+<!-- <script src="/js/adminCreateForum.js"></script> -->
+
+</body>
+
+</html>

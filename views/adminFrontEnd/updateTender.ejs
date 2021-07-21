@@ -1,0 +1,156 @@
+<%- include("partials/header") %>
+<style>
+label{
+    margin-left: 15%  !important;
+    margin-bottom: -20px  !important;
+    font-weight: 800;
+    font-size: 1.4rem;
+}
+</style>
+<form action="" class="newsformcreate">
+
+    <h1>Update Tender Details</h1>
+    
+    <label for="">TenderId</label>    
+    <input type="text" name="" readonly disabled id="" value="<%=data.id%>"><br>
+
+    <label for="">Title</label>    
+    <input type="text" name="" id="tenderTitle" value="<%=data.title%>"><br>
+
+    <label for="">Category</label>    
+    <input type="text" name="" id="tendercategory" value="<%=data.category%>"><br>
+    
+    <label for="">Tender Authority</label>
+    <input type="text" name="" id="adminAuthorityIssue" value="<%=data.tenderAuthority%>"><br> 
+    
+    <label for="">Opening Date</label>  
+    <%if(!data.openingDate){%>
+    <!-- <input type="text" disabled name="" id="" value='N/A'><br> -->
+    <input type="date"  name="" id="openingDate" value="N/A"><br>
+    <%}else{%> 
+    <%let ts=new Date(data.openingDate)%> 
+    <!-- <input type="text" disabled name="" id="" value="<%=data.openingDate.toLocaleDateString('af-ZA').replace(/\//g,'-')%>"><br>
+    
+         <span style="font-size:1rem; color: brown;">Please Add the Opening Date, if left Empty then "N/A" will be shown to User</span> -->
+    <input type="date"  name="" id="openingDate"  value="<%=data.openingDate.toLocaleDateString('af-ZA').replace(/\//g,'-')%>"><br>
+    <%}%>
+    
+    <label for="">Last Date</label>
+    <%if(!data.lastDate){%>    
+    <!-- <input type="text" disabled name="" id="" value="N/A"><br> -->
+    <input type="date" name="" id="lastDate" value="N/A"><br>
+    <%}else{%>
+    <%let ts=new Date(data.lastDate)%>  
+    <!-- <input type="date" disabled name="" id="" value='<%=ts.toLocaleDateString("en-GB")%>'><br>
+         <span style="font-size:1rem; color: brown;">Please Add the Last Date, if left Empty then "N/A" will be shown to User</span> -->
+    <input type="date" name="" id="lastDate"  value="<%=data.lastDate.toLocaleDateString('af-ZA').replace(/\//g,'-')%>"><br>
+<%}%>
+    
+    <label for="cars">Tender Status (Live or Not)</label><br>
+    <select name="live" id="tenderLive" style="padding: 1rem; width: 40%; margin-left: 13%; margin-top: 6px;"><br>
+    <option value="yes">yes</option>
+    <option value="nn">no</option>
+    </select><br><br>
+
+    <label for="">Organization Detail</label>  <br> 
+    <textarea name=""  id="adminOrganizationDetail" cols="30" rows="4" aria-valuetext="" style="width: 60%;margin-left: 13%; margin-top: 6px;padding: .25rem;" ><%=data.organizationDetail%></textarea><br> <br>
+    <!-- <input type="text" name="" id="" value="<%=data.organizationDetail%>"><br> -->
+    
+    <label for="">EMD</label>    
+    <input type="text" class="" name="" id="emdupdatetenderinput" value="<%=data.emd%>"><br>
+
+     <label for="">Brief</label>
+    <textarea name="" id="desca" class="adminTenderBrief" cols="30" rows="10"><%=data.brief%></textarea><br>
+
+<input type="file" class="tenderDocuments" name="" multiple id="">
+    
+    <button type="submit" id="update-tender-btn">UPDATE</button>
+</form>
+
+
+
+<script>
+
+
+const hideAlert = () => {
+	const el = document.querySelector(".alert");
+	if (el) el.parentElement.removeChild(el);
+};
+
+// type is 'success' or 'error'
+const showAlert = (type, msg, time = 7) => {
+	hideAlert();
+	const markup = `<div class="alert alert--${type}">${msg}</div>`;
+	document.querySelector("body").insertAdjacentHTML("afterbegin", markup);
+	window.setTimeout(hideAlert, time * 1000);
+};
+
+// const createTenderAdminVal = async (emd,openingDate, lastDate, organizationDetail,tenderAuthority,brief) => {
+const createTenderAdminVal = async (form) => {
+
+	try {
+        let button = document.getElementById('update-tender-btn');
+		button.disabled = 'true';
+		const res = await axios({
+			method: "PATCH",
+			url: "/api/v1/tender/<%=data._id%>",
+			data:form,
+
+		});
+        button.removeAttribute('disabled');
+		if (res.data.status === "success") {
+			console.log("THIS IS RES ", res);
+			showAlert("success", "Published");
+            location.replace("/admin/tenderlist")
+		}
+	} catch (err) {
+		showAlert("error", err);
+        console.log(err);
+		// if (err.response.status === 500) {
+		// 	document.querySelector(".hideAlert").classList.remove("alert");
+		// 	document.getElementById("alert").innerHTML =
+		// 		"Cannot Submit Form Please Fill Required Field Correctly";
+		// } else {
+		// 	document.querySelector(".hideAlert").classList.remove("alert");
+		// 	document.getElementById("alert").innerHTML = err.response.data.message;
+		// }
+	}
+};
+const createTender = document.querySelector(".newsformcreate");
+console.log(createTender);
+if (createTender) {
+	createTender.addEventListener("submit", (e) => {
+		e.preventDefault();
+        const form= new FormData()
+        
+        form.append('title',document.getElementById("tenderTitle").value)
+        form.append('category',document.getElementById("tendercategory").value)
+        form.append('emd',document.getElementById("emdupdatetenderinput").value)
+        form.append('openingDate',document.getElementById("openingDate").value)
+        form.append('lastDate',document.getElementById("lastDate").value)
+        form.append('organizationDetail',document.getElementById("adminOrganizationDetail").value)
+        form.append('tenderAuthority',document.getElementById("adminAuthorityIssue").value)
+        form.append('brief', document.querySelector(".adminTenderBrief").value)
+        form.append('documents',document.querySelector(".tenderDocuments").files[0])
+       
+
+		// const emd = document.getElementById("adminEmd").value;
+		// const openingDate = document.getElementById("openingDate").value;
+		// const lastDate = document.getElementById("lastDate").value;
+		// const organizationDetail = document.getElementById("adminOrganizationDetail").value;
+		// const tenderAuthority = document.getElementById("adminAuthorityIssue").value;
+		// const brief = document.querySelector(".adminTenderBrief").value;
+        
+        // console.log(emd,openingDate, lastDate, organizationDetail,tenderAuthority,brief);
+		// createTenderAdminVal(emd,openingDate, lastDate, organizationDetail,tenderAuthority,brief);
+
+		createTenderAdminVal(form);
+	});
+} 
+
+
+
+
+</script>
+
+<%- include("partials/footer") %>

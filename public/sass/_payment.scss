@@ -1,0 +1,270 @@
+@use './variables' as variables;
+
+div.error-box{
+    width:70%;
+    margin: 5em auto;
+    border:solid 2px variables.$error_color;
+    font-family:variables.$secondary_font;
+    padding:1.5em;
+    border-radius:0.3em;
+    box-sizing: border-box;
+    text-align:center;
+    &>h1{
+        font-size:2.5em;
+        color:variables.$error_color;
+        margin-bottom:0.8em;
+    }
+    &>h3{
+        font-size:1.5em;
+        color:black;
+    }
+    @media only screen and (max-width:740px){
+        width:95%;
+        &>h1{
+            font-size:1.5em;
+            margin-bottom:0.8em;
+        }
+        &>h3{
+            font-size:1.2em;
+        }
+    }
+}
+
+h1.sub-page-heading{
+    font-size:2.5em;
+    margin:2em 0px;
+    text-align:center;
+}
+
+div.plan-box{
+    font-family: variables.$secondary_font;
+    border-top:2px solid variables.$main_color;
+    padding-bottom:4em;
+    position:relative;
+
+    &::after{
+        top:0px;
+        position:absolute;
+        left:0px;
+        height:4px;
+        background-color:variables.$main_color;
+        animation:loading_plan 1s ease-in infinite both;
+        width:100%;
+    }
+
+    &.loading::after{
+        content:"";
+    }
+
+    @keyframes loading_plan {
+        from{
+            transform:translateX(-100%);
+        }
+        to{
+            transform:translateX(100%);
+        }
+    }
+
+    &>div.already-subscribed{
+        margin:2em auto;
+        padding-bottom:2em;
+        border-bottom:2px solid variables.$main_color;
+        text-align:center;
+        &>h2{
+            font-size:1.4em;
+            &>b{
+                color:variables.$main_color;
+                text-transform: uppercase;
+            }
+        }
+        &>button{
+            background-color:variables.$error_color;
+            color:white;
+            border-radius:3em;
+            padding:0.2em 1em;
+            font-size:1.5em;
+            cursor:pointer;
+            margin-top:1em;
+            border:0px;
+            transition : transform 0.2s ease-in;
+            &.disabled{
+                pointer-events:none;
+                background-color:gray;
+            }
+        }
+        &>button:hover{
+            transform:scale(1.05);
+        }
+    }
+
+    &>div.plans{
+        display:grid;
+        grid-template-columns:repeat(4 , 1fr);
+        justify-items:center;
+        align-content:center;
+        grid-gap:2em 0px;
+
+        @media only screen and (max-width:1130px){
+            grid-template-columns:repeat(2 , 1fr);
+        }
+        @media only screen and (max-width:570px){
+            grid-template-columns:repeat(1 , 1fr);
+        }
+
+        &>div.plan{
+            cursor:pointer;
+            width:250px;
+            height:300px;
+            text-align:center;
+            border-radius:0.5em;
+            box-shadow: 0px 0px 30px 10px #0000001A;
+            display:flex;
+            justify-content: flex-end;;
+            flex-flow:column;
+            box-sizing: border-box;
+            transition: transform 0.1s ease-in;
+            &:hover{
+                transform:scale(1.05);
+            }
+            &>*{
+                pointer-events:none;
+            }
+            &.selected{
+                border:2px solid variables.$main_color;
+            }
+            &>h2{
+                font-size:2em;
+                padding:0px 1em;
+                box-sizing: border-box;
+            }
+            &>span{
+                color:variables.$main_color;
+                font-size:1.3em;
+                margin-top:1em;
+                margin-bottom:1em;
+                display:block;
+            }
+            &>h3{
+                flex-shrink:0;
+                padding:1em 0px;
+                margin-bottom:0px;
+                width:calc(100% + 0.15em);
+                position:relative;
+                top:0.2em;
+                align-self:center;
+                font-size:2em;
+                color:white;
+                background-color:variables.$main_color;
+                border-radius:0px 0px 0.2em 0.2em;
+            }
+        }
+
+    }
+
+
+}
+
+
+div.payment-div{
+    font-family: variables.$secondary_font;
+    border-radius:0.5em;
+    box-sizing: border-box;
+    padding-top:2em;
+    border-top:2px solid variables.$main_color;
+    display:none; 
+    margin-bottom:2em;
+    &>div.payment-div-inner{
+        margin:0 auto;
+        border-radius:0.5em;
+        width:400px;
+        height:500px;
+        border:2px solid variables.$main_color;
+        box-shadow: 0px 0px 33px 10px #0000001A;
+        &>div.profile-image{
+            width:5em;
+            height:5em;
+            border-radius:50%;
+            background-color:black;
+            background-size:cover;
+            background-position:center;
+            margin:0 auto;
+            margin-bottom:1em;
+            margin-top:2em;
+        } 
+        &>span.email{
+            font-size:1.2em;
+            color:black;
+            margin-bottom:2em;
+            display:block;
+            text-align:center;
+        }
+        &>span.card-detail-label{
+            width:90%;
+            display:block;
+            margin: 0 auto;
+            margin-bottom:0.8em;
+            color:variables.$main_color;
+        }
+        &>div.label-field{
+            display:flex;
+            align-items:center;
+            width:90%;
+            margin: 0 auto;
+            justify-content:space-between;
+            text-align:center;
+            font-size:1.4em;
+            margin-bottom:1.5em;
+            &>span{
+                flex-basis:50%;
+            }
+            &>span:last-child{
+                color:variables.$main_color;
+            }
+        }
+        &>button{
+            font-size:1.3em;
+            color:white;
+            background-color:#6b98ae;
+            padding:0.2em 1em;
+            border:0px;
+            box-shadow:0px 0px 20px 2px rgba(0,0,0,0.1);
+            border-radius:1em;
+            display:Block;
+            margin:0 auto;
+            margin-top:1em;
+            cursor:pointer;
+            transition:transform 0.2s ease-in;
+            &.disabled{
+                background-color:darkgray;
+                pointer-events: none;
+            }
+            &:hover{
+                transform:scale(1.05);
+            }
+        }
+        #payment-special-input{
+            font-size:1.1em;
+            width:90%;
+            margin: 0 auto;
+        }
+        #error-sub-div{
+            color:variables.$error_color;
+            font-size:0.8em;
+            width:90%;
+            opacity:0;
+            display:block;
+            text-align:center;
+            margin: 0 auto;
+            padding:0.2em 0px;
+            padding-top:0.8em;
+        }
+
+        @media only screen and (max-width:420px){
+            width:95%;
+            max-width:initial;
+            font-size:0.9em;
+            height:450px;
+        }
+    }
+    
+}

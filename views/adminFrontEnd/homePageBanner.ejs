@@ -1,0 +1,54 @@
+<%- include("partials/header") %>
+<form  class="newsformcreate newsformcreateBanner" id="formadminnewscreate formadminnewscreateBanner">
+    <h1>Change Banner</h1>
+    <p style="text-align: center;">Image Size must me - 1500x500</p>
+    	<input type="file" accept=".png,.jpg,.jpeg,.webp,.svg" name="bannerImage" id="bannerImage">
+    <button type="submit" id="createadminnews">PUBLISH</button>
+</form>
+<script>
+
+</script>
+<!-- <script src="/js/createallinonefolder.js"></script> -->
+<script>
+
+const hideAlert = () => {
+	const el = document.querySelector(".alert");
+	if (el) el.parentElement.removeChild(el);
+};
+
+// type is 'success' or 'error'
+const showAlert = (type, msg, time = 7) => {
+	hideAlert();
+	const markup = `<div class="alert alert--${type}">${msg}</div>`;
+	document.querySelector("body").insertAdjacentHTML("afterbegin", markup);
+	window.setTimeout(hideAlert, time * 1000);
+};
+
+const bannerUpload = async (form,id) => {
+	try {
+		const res = await axios({
+			method: "POST",
+			url: '/api/v1/banner/changeBanner',
+			data: form
+		});
+		if (res.data.status === "success") {
+			showAlert("success", "Banner Updated !");
+			console.log('Res reg',res.data);
+		}
+	} catch (err) {
+				showAlert("error", err);
+	}
+};
+const Banner = document.querySelector('.newsformcreateBanner');
+
+if (Banner) {
+	Banner.addEventListener("submit", (e) => {
+		e.preventDefault();
+        const form=new FormData()
+        form.append('bannerImage',document.getElementById('bannerImage').files[0])
+const id='608ddccdc5265032f74b2047'
+		bannerUpload(form ,id);
+	});
+}
+</script>
+<%- include("partials/footer") %>

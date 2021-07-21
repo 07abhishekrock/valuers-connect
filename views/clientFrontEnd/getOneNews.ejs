@@ -1,0 +1,123 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Lobster&family=Permanent+Marker&family=Reggae+One&family=Roboto+Slab&family=Rock+Salt&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://valuers-connect.herokuapp.com/news.css">
+  <link rel="stylesheet" href="https://valuers-connect.herokuapp.com/index.css">
+  <link rel="stylesheet" href="https://valuers-connect.herokuapp.com/profile.css">
+  <link rel="stylesheet" href="https://valuers-connect.herokuapp.com/tenderListCustomer.css">
+  <link rel="stylesheet" href="https://valuers-connect.herokuapp.com/carrier.css">
+  <link rel="stylesheet" href="https://valuers-connect.herokuapp.com/insideTenderClientPage.css">
+  <link rel="stylesheet" href="https://valuers-connect.herokuapp.com/newsall.css">
+  <link rel="stylesheet" href="https://valuers-connect.herokuapp.com/userprofilenew.css">
+  <script src="https://kit.fontawesome.com/29c86029a6.js" crossorigin="anonymous"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.23.0/trumbowyg.min.js"
+    integrity="sha512-sffB9/tXFFTwradcJHhojkhmrCj0hWeaz8M05Aaap5/vlYBfLx5Y7woKi6y0NrqVNgben6OIANTGGlojPTQGEw=="
+    crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="../Trumbowyg-master/dist/ui/trumbowyg.min.css">
+
+  <title>Document</title>
+</head>
+
+<body>
+  <div class="headerdiv">
+    <div class="nava">
+      <nav class="navbar navbar-expand-lg navbar-light  container logoimagediv">
+        <a class="navbar-brand logoimage" href="/"><span>SampleForum</span></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+          aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse " id="navbarNavAltMarkup">
+          <div class="navbar-nav ml-auto">
+            <a class="nav-item nav-link active" href="#discussion">Forum <span class="sr-only">(current)</span></a>
+            <a class="nav-item nav-link active" href="/newsallpage">News</a>
+            <a class="nav-item nav-link active" href="/tenderListcustomer">Tender</a>
+            <a class="nav-item nav-link active" href="/upcomingevent">Upcomig Events</a>
+            <a class="nav-item nav-link active" href="#upcoming">Chat</a>
+            <button class="headerbutton headerbuttondesign btn-primary" data-toggle="modal"
+              data-target="#exampleModalCenter">Log In</button>
+            <button class="headerloginbutton headerbuttondesign btn-outline-primary" data-toggle="modal"
+              data-target="#exampleModalCenter">Sign up Free</button>
+          </div>
+        </div>
+      </nav>
+    </div>
+  </div> -->
+
+<%- include("partials/header") %>
+
+
+<div class="container gg">
+  <div class="newsheader">
+    <p>
+      <%= news.title %>
+    </p>
+  </div>
+  <div class="newsimage">
+    <img src="<%=news.featureImage%>" alt="">
+  </div>
+  <div class="newscontent">
+    <p>
+      <%-news.content%>
+    </p>
+
+  </div>
+
+</div>
+
+<script>
+  window.onload = async ()=>{
+    let news_views = '<%=news.totalViews%>';
+
+    let news_id = '<%=news._id%>';
+    const res = await axios({
+			method: "PATCH",
+			url: `/api/v1/news/${news_id}`,
+      data:{
+        totalViews : Number(news_views) + 1
+      }
+		});
+    console.log(news_views, res);
+  }
+</script>
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+  integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+  integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+  integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+
+
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<!--<script>
+  window.jQuery || document.write('<script src="js/vendor/jquery-3.3.1.min.js"> <\/script>')
+</script>
+<script src="../Trumbowyg-master/dist/trumbowyg.min.js"></script>
+<script src="../Trumbowyg-master/dist/plugins/insertaudio/trumbowyg.insertaudio.min.js"></script>
+
+
+<script>
+  $('#desc').trumbowyg();
+</script> -->
+<!-- <script src="http://3500/js/tenderListAjax.js"></script> -->
+<!-- </body>
+
+</html> -->
+<%- include("partials/footer") %>

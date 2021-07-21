@@ -1,0 +1,568 @@
+<%- include("partials/header") %>
+
+<div class="totalmargibottomnewprofile">
+    <div class="newprofilepagewidth">
+        <div class="row  ">
+            <div class="col-lg-8">
+                <div class="pictureshadow">
+                    <div class="profilebackgroundnew">
+                        <%console.log(userOne)%>
+                        <%console.log(user)%>
+                    </div>
+                    <div class="profilephotoname">
+                        <div class="profilephotonew" style="background-image: url('<%= userOne.userProfile %>');">
+                        </div>
+                        <div style="width: 100%;">
+                            <p class="profilecontentnew" ><%= userOne.firstName %> <%=userOne.lastName%> 
+                                <% if (String(userOne._id) !== String(user._id)) { %>
+                                    <a href="/chat?target=<%=userOne._id%>" style="text-decoration: none; color:white;font-size:0.6em;background-color:#436475;padding:0.3em;border-radius:0.3em">
+                                        <i class="fa fa-comment-dots"></i> Message
+                                    </a>
+                                <% } %> 
+                            <!-- <a class="messageuserpublicprofile btn btn-primary"href="#"><i class="far fa-comment-dots messageuserpublicprofilemarginright"></i>Message</a> -->
+                            </p>
+                             <%if(userOne.about){%>
+
+                            <p class="profilecontentdescriptionnew"><%=userOne.about%></p>
+
+                             <%}else{%>
+                        <p class="profilecontentdescriptionnew"> <b>N/A</b> </p>
+                            <%}%>
+                            
+                        </div>
+                    </div>
+                    <div class="aboutnewprofilediv">
+                        <div>
+                            <span class="aboutnewprofiletag">About</span>
+                            <!-- <a   href="#"><i class="fas fa-pen aboutpennewprofile"></i></a> -->
+                        </div>
+                        <%if(userOne.about){%>
+                        <p class="newprofileaboutdesc"><%=userOne.about%>
+                        </p>
+                        <%}else{%>
+                        <p class="newprofileaboutdesc"><b>N/A </b>
+                        </p>                        
+                        <%}%>
+                        <br>
+                    </div>
+                </div>
+            </div>
+           <div class="col-lg-4">
+                <div class="peopleyoumayknowfullcard" style="padding: 0 !important; padding-top: 40px !important;padding-left: 15px !important;">
+                    <div>
+                        <div class="">
+                            <div class="edutotaldiv" >
+                                <div style="text-align: center;">
+                                    <span class="aboutnewprofiletag">Contact Information</span>
+                                    <!-- <a   href="#"><i class="fas fa-pen educationpen"></i></a> -->
+
+                                </div>
+                                <%if(user.isMember){%>
+                                <div>
+                                    <div class="profilecontacttable">
+                                        <table>
+                                            <tr>
+                                                <td>Phone:</td>
+                                                <td><a   href=""> <%=userOne.phoneNo%></a></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Address:</td>
+                                                <td><%=userOne.address%></td>
+                                            </tr>
+                                            <tr>
+                                                <td>E-mail:</td>
+                                                <td><a><%=userOne.email%></a></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Site:</td>
+                                                <td><a   href="<%=userOne.website%>"><%userOne.website%></a></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Linkedin:</td>
+                                                <td><a   href=""><%=userOne.linkedIn%></a></td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                                <%}else{%>
+                                <div class="peopleyoumayknowheading">
+                                    <h5>Buy Membership to View Contact Details</h5>
+                                </div><br><br>
+                                <div class="viewmorepyk "><a   href="/payment" class="btn btn-danger">Upgrade</a></div><br><br>
+                                <%}%> 
+
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+                </div>
+            </div> 
+        </div>
+
+
+        <div class="overviewtotaldiv">
+            <div>
+                <ul class="nav nav-tabs overview" id="myTab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active rtborder" id="home-tab" data-toggle="tab" href="#home" role="tab"
+                            aria-controls="home" aria-selected="true">
+                            <div class="overviewbottombrdr"> Overview</div>
+                        </a>
+                    </li>
+                    <!-- <li class="nav-item">
+                        <a class="nav-link rtborder" id="profile-tab" data-toggle="tab" href="#profile" role="tab"
+                            aria-controls="profile" aria-selected="false">
+                            <div class="overviewbottombrdr" id="forum-participated-tab"> Forum Participated</div>
+                        </a>
+                    </li> -->
+                    <li class="nav-item">
+                        <a class="nav-link rtborder" id="contact-tab" data-toggle="tab" href="#contact" role="tab"
+                            aria-controls="contact" aria-selected="false">
+                            <div class="overviewbottombrdr" id="forum-created-tab"> Forum Created</div>
+                        </a>
+                    </li>
+                    <!-- <li class="nav-item">
+                        <a class="nav-link" id="createforum-tab" data-toggle="tab" href="#createforum" role="tab"
+                            aria-controls="createforum" aria-selected="false">
+                            <div class="overviewbottombrdr"> Create Forum</div>
+                        </a>
+                    </li> -->
+                </ul>
+            </div>
+        </div>
+
+
+
+        <div class="educationtotaldiv">
+
+            <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="borderrtmarginsmall">
+                                <div class="edutotaldiv">
+                                    <div>
+                                        <span class="aboutnewprofiletag educationheading">Education</span>
+                                        <!-- <a   href="#"><i class="fas fa-pen educationpen"></i></a> -->
+
+                                    </div>
+                                    <div>
+                                    <%if(userOne.degree.length>0){%>
+                                <%userOne.degree.forEach(function(degree){%>
+                                        <div class="educationboxflex">
+                                            <div class="educatioplacebg">
+
+                                            </div>
+                                            <div>
+                                                <span class="Universityname"><%=degree.degree%></span><br>
+                                                <span><%=degree.college%></span><br>
+                                                <span class="educationyearprofile"><%=degree.fromDate%> - <%=degree.toDate%></span><br>
+
+                                            </div>
+                                        </div>
+                                        <%})}else{%>
+                                        <h1 style="color: brown;margin-left: 5rem;">N/A</h1>
+                                        <%}%>
+                                        <!-- <div class="educationboxflex">
+                                            <div class="educatioplacebg">
+
+                                            </div>
+                                            <div>
+                                                <span class="Universityname">University of Arts & Science</span><br>
+                                                <span>Degree of Visual arts</span><br>
+                                                <span class="educationyearprofile">2012-2016</span><br>
+                                            </div>
+                                        </div> -->
+                                    </div>
+                                </div>
+
+
+
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="col-lg-6">
+                            <div class="edutotaldiv">
+                                <div><br>
+                                    <span class="aboutnewprofiletag educationheading">Experience</span>
+                                    <!-- <a   href="#"><i class="fas fa-pen educationpen"></i></a> -->
+
+                                </div>
+                                <div>
+                                <%if(userOne.experience.length>0){%>
+                                <%userOne.experience.forEach(function(experience){%>
+
+                                
+                                    <div class="educationboxflex">
+                                        <div class="educatioplacebg" style="background-image: url('/assets/job.jpg')  ;">
+
+                                        </div>
+                                        <div>
+                                            <span class="Universityname"><%=experience.designation%></span><br>
+                                            <span>
+                                                <table>
+                                                    <tr>
+                                                        <td><%=experience.organization%></td>
+                                                        <!-- <td class="paddingleftfulltime">Full Time</td> -->
+                                                    </tr>
+                                                    <tr class="educationyearprofile">
+                                                        <td><%=experience.fromDate%></td>
+                                                        <td class="paddingleftfulltime"><%=experience.toDate%></td>
+                                                    </tr>
+                                                </table>
+                                            </span><br>
+                                        </div>
+                                    </div>
+                                        <%})}else{%>
+                                        <h1 style="color: brown;margin-left: 5rem;">N/A</h1>
+                                        <%}%>
+                                    <!-- <div class="educationboxflex">
+                                        <div class="educatioplacebg">
+
+                                        </div>
+                                        <div>
+                                            <span class="Universityname">Product Designer</span><br>
+                                            <span>
+                                                <table>
+                                                    <tr>
+                                                        <td>Google</td>
+                                                        <td class="paddingleftfulltime">Full Time</td>
+                                                    </tr>
+                                                    <tr class="educationyearprofile">
+                                                        <td>Mar 2017 - June 2020</td>
+                                                        <td class="paddingleftfulltime">3 yrs 2 mon</td>
+                                                    </tr>
+                                                </table>
+                                            </span><br>
+                                        </div>
+                                    </div> -->
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade demotab" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                    
+                    
+                    <div id="renderThreadsPage">
+                        <!-- <div class="threadbottombordercategory">
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <span class="threadcategorytotaldivwhitefixedfsd">
+                                        Took the Certified Residential Exam a 3rd time yesterday...</span><br>
+                                </div>
+                                
+                            </div>
+                        </div> -->
+                         </div>
+
+
+<!-- 
+                         <script>
+                         var url_string
+                             window.onload=function(){
+                                 url_string = window.location.href
+                            url_string= url_string.split('/')[5]
+                            //  url_string=url_string.split('%20')
+                            console.log(url_string);
+                         }
+                         document.getElementById('forum-participated-tab').addEventListener('click',e=>{
+                             e.preventDefault()
+                             console.log('Clicked',url_string);
+                             getdata()
+                         })
+                        // var url = new URL(url_string);
+                        // var c = url.searchParams.get("id");
+                        // console.log('hello');
+                        function getdata() {
+                          console.log('iiiiiiidddddddddd',url_string);
+                          var html = "";
+                            // ajax() method to make api calls
+                            $.ajax({
+                              url: `/api/v1/forum-thread?user=${url_string}`,
+                              type: "GET",
+                              data: {
+                                page: 1,
+                                // limit: 5,
+                                // category:`${category}`
+                                // user: "60770e0a4bc5681bb8ac0616",
+                              },
+                             beforeSend: function () {
+                               
+                              var html = 
+                              `<div class=loader_wrap>
+                              <div class="loader"></div>
+                              </div>`;
+                        $('#spinn').html(html)
+                            },
+                              success: function (data) {
+                                console.log(data);
+                         $("#spinn").hide();
+                                if (data.status) {
+                                  var dataArr = data.data;
+                                  totalrecord = data.totalRecord;
+                        
+                                  
+                        
+                                  for (var i = 0; i < dataArr.length; i++) {
+                                    html +=
+                        
+                                        `<div class="threadbottombordercategory">
+                                        <div class="row">
+                                            <div class="col-lg-12 col-md-12 col-sm-12 profilepadgeformlist" style="border-bottom:2px solid grey">
+                                                <a   href=/forum-thread/${dataArr[i].id}><span class="threadcategorytotaldivwhitefixedfsd">
+                                                    ${dataArr[i].title}</span><br>
+                                                </a>
+                                            </div>
+                                           
+                                        </div>
+                                    </div>`;
+                        
+                                      // "<div class='sample-user'>" +
+                                      // "<h3>ID: " +
+                                      // dataArr[i]._id +
+                                      // "</h3>" +
+                                      // `<a   href=/threads?category=${dataArr[i].category}>First Name: ` +
+                                      // dataArr[i].category +
+                                      // `</a>` +
+                                      // // "<p>Last Name: " + dataArr[i].lastname + "</p>" +
+                                      // // "<p>Last Modified At: " + dataArr[i].lastmodified + "</p>" +
+                                      // // "<p>Created At: " + dataArr[i].created + "</p>" +
+                                      // "</div>" +
+                                      // "<hr />";
+                                  }
+                                  $("#renderThreadsPage").html(html);
+                                }
+                              },
+                              error: function (jqXHR, textStatus, errorThrown) {
+                                console.log(jqXHR);
+                                console.log(textStatus);
+                                console.log(errorThrown);
+                              },
+                            });
+                          }
+                            </script> -->
+                           
+
+
+
+
+
+                </div>
+                <div class="tab-pane fade demotab" style="overflow: scroll;" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+                    <div id="renderThreadsPagea">
+                        <!-- <div class="threadbottombordercategory">
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <span class="threadcategorytotaldivwhitefixedfsd">
+                                        Took the Certified Residential Exam a 3rd time yesterday...</span><br>
+                                </div>
+                                
+                            </div>
+                        </div> -->
+                         </div>
+
+                         <script>
+                         var url_string
+                             window.onload=function(){
+                                 url_string = window.location.href
+                            url_string= url_string.split('/')[5]
+                            //  url_string=url_string.split('%20')
+                            console.log(url_string);
+                         }
+                            document.getElementById('forum-created-tab').addEventListener('click',e=>{
+                                e.preventDefault()
+                                console.log('Clicked created',url_string);
+                                getdataa(url_string)
+                            })
+                           // var url = new URL(url_string);
+                           // var c = url.searchParams.get("id");
+                           // console.log('hello');
+                           function getdataa(userId) {
+                             
+                             var html = "";
+                               // ajax() method to make api calls
+                               $.ajax({
+                                 url: `/api/v1/forum-thread`,
+                                 type: "GET",
+                                 data: {
+                                   user: userId,
+                                   isApproved: true,
+                                   // category:`${category}`
+                                   // user: "60770e0a4bc5681bb8ac0616",
+                                 },
+                                beforeSend: function () {
+                                  
+                                 var html = 
+                                 `<div class=loader_wrap>
+                                 <div class="loader"></div>
+                                 </div>`;
+                           $('#spinn').html(html)
+                               },
+                                 success: function (data) {
+                                   console.log(data);
+                            $("#spinn").hide();
+                                   if (data.status) {
+                                     var dataArr = data.data;
+                                     totalrecord = data.totalRecord;
+                               for (var i = 0; i < dataArr.length; i++) {
+                                                                 var color
+                                                                 var isApprove
+                                        if(dataArr[i].isApproved){
+                                            color='green'
+                                            isApprove='Published'
+                                        }   else{
+                                            color='orange;'
+                                            isApprove=' Under Review '
+                                        }                      
+   
+                                       html +=
+                                           `<div class="threadbottombordercategory next style=overflow:scroll !important>
+                                           <div class="row">
+                                               <div class="col-lg-12 col-md-12 col-sm-12 profilepadgeformlist" style="border-bottom:2px solid grey">
+                                                   <a   href=/forum-thread/${dataArr[i].id}><span class="threadcategorytotaldivwhitefixedfsd" style:margin-right:10px>
+                                                       ${dataArr[i].title} </span><br>
+                                                   </a>
+                                               </div>
+                                              
+                                           </div>
+                                       </div>`
+                           
+                                         // "<div class='sample-user'>" +
+                                         // "<h3>ID: " +
+                                         // dataArr[i]._id +
+                                         // "</h3>" +
+                                         // `<a   href=/threads?category=${dataArr[i].category}>First Name: ` +
+                                         // dataArr[i].category +
+                                         // `</a>` +
+                                         // // "<p>Last Name: " + dataArr[i].lastname + "</p>" +
+                                         // // "<p>Last Modified At: " + dataArr[i].lastmodified + "</p>" +
+                                         // // "<p>Created At: " + dataArr[i].created + "</p>" +
+                                         // "</div>" +
+                                         // "<hr />";
+                                     }
+                                     $("#renderThreadsPagea").html(html);
+                                   }
+                                 },
+                                 error: function (jqXHR, textStatus, errorThrown) {
+                                   console.log(jqXHR);
+                                   console.log(textStatus);
+                                   console.log(errorThrown);
+                                 },
+                               });
+                             }
+                           
+                           
+                               </script>
+
+                         <script>
+                        //     window.onload=function(){
+                        //     var url_string = window.location.href
+                        //  url_string= url_string.split('=')[1]
+                        // console.log(url_string);
+                        // getdata("url_string")
+                        //     }
+                        // // var url = new URL(url_string);
+                        // // var c = url.searchParams.get("id");
+                        // // console.log('hello');
+                        // function getdata(category) {
+                          
+                        //   var html = "";
+                        //     // ajax() method to make api calls
+                        //     $.ajax({
+                        //       url: `http://localhost:3500/api/v1/forum-thread?category=Second%20Category`,
+                        //       type: "GET",
+                        //       data: {
+                        //         page: 1,
+                        //         // limit: 5,
+                        //         // category:`${category}`
+                        //         // user: "60770e0a4bc5681bb8ac0616",
+                        //       },
+                        //      beforeSend: function () {
+                               
+                        //       var html = 
+                        //       `<div class=loader_wrap>
+                        //       <div class="loader"></div>
+                        //       </div>`;
+                        // $('#spinn').html(html)
+                        //     },
+                        //       success: function (data) {
+                        //         console.log(data);
+                        //  $("#spinn").hide();
+                        //         if (data.status) {
+                        //           var dataArr = data.data;
+                        //           totalrecord = data.totalRecord;
+                        
+                                  
+                        
+                        //           for (var i = 0; i < dataArr.length; i++) {
+                        //             html +=
+                        
+                        //                 `<div class="threadbottombordercategory">
+                        //                 <div class="row">
+                        //                     <div class="col-lg-12 col-md-12 col-sm-12 profilepadgeformlist" style="border-bottom:2px solid grey">
+                        //                         <a   href=/forum-thread/${dataArr[i].id}><span class="threadcategorytotaldivwhitefixedfsd">
+                        //                             ${dataArr[i].title}</span><br>
+                        //                         </a>
+                        //                     </div>
+                                           
+                        //                 </div>
+                        //             </div>`
+                        
+                        //               // "<div class='sample-user'>" +
+                        //               // "<h3>ID: " +
+                        //               // dataArr[i]._id +
+                        //               // "</h3>" +
+                        //               // `<a   href=/threads?category=${dataArr[i].category}>First Name: ` +
+                        //               // dataArr[i].category +
+                        //               // `</a>` +
+                        //               // // "<p>Last Name: " + dataArr[i].lastname + "</p>" +
+                        //               // // "<p>Last Modified At: " + dataArr[i].lastmodified + "</p>" +
+                        //               // // "<p>Created At: " + dataArr[i].created + "</p>" +
+                        //               // "</div>" +
+                        //               // "<hr />";
+                        //           }
+                        //           $("#renderThreadsPagea").html(html);
+                        //           $("#renderThreadsPage").html(html);
+                        //         }
+                        //       },
+                        //       error: function (jqXHR, textStatus, errorThrown) {
+                        //         console.log(jqXHR);
+                        //         console.log(textStatus);
+                        //         console.log(errorThrown);
+                        //       },
+                        //     });
+                        //   }
+                        
+                        
+                            </script>
+
+
+                </div>
+                <!-- <div class="tab-pane fade " id="createforum" role="tabpanel" aria-labelledby="createforum-tab">
+                    <div class="newprofileform">
+
+                        <form action="">
+                            <input class="newprofileinput" type="text" name="" id="" placeholder="Type your title here">
+                            <textarea name="" id="desc" cols="30" rows="10"
+                                placeholder="Type your content here"></textarea>
+                            <button class="newprofilepostbutton btn">Post</button>
+                        </form>
+                    </div>
+                </div> -->
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<%- include("partials/footer") %>

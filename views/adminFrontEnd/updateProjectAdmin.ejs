@@ -1,0 +1,120 @@
+<%- include("partials/header") %>
+<form class="newsformcreate" id="formadminnewscreate" class="newsClass">
+    <h1>Update Project</h1>
+	<span>ID</span><br>
+    <input type="text" name="" disabled id="inputtitlenewsadmin" value="<%=project._id%>" placeholder="Listing ID"><br>
+	<span>Category</span><br>
+    <input type="text" name="" class="projectCategory" id="inputtitlenewsadmin " value="<%=project.category%>"  placeholder="Asset Type"><br>
+	<span>Asset Location</span><br>
+    <input type="text" name="" class="assetLocation" id="inputtitlenewsadmin " value="<%=project.assetLocation%>"  placeholder="Asset Location"><br>
+	<span>Asset City</span><br>
+    <input type="text" name="" class="assetCity" id="inputtitlenewsadmin " value="<%=project.assetCity%>"  placeholder="City"><br>
+	<span>Asset Institute</span><br>
+    <input type="text" name="" id="inputtitlenewsadmin" class="instituteName" value="<%=project.institutionName%>" placeholder="Institution Name"><br>
+	<span>Deadline</span><br>
+	<%if(project.applicationDeadline){%>
+    <input class="projectDeadline" placeholder="Application Deadline" type="date"  value="<%=project.applicationDeadline.toLocaleDateString('af-ZA').replace(/\//g,'-')%>"><br>
+	<%}else{%>
+	 <input class="projectDeadline" placeholder="Application Deadline" type="date"  value="N/A"><br>
+	<%}%>
+	<span>Auction Date</span><br>
+	<%if(project.auctionDate){%>
+    <input type="date" class="auctionDate" value="<%=project.auctionDate.toLocaleDateString('af-ZA').replace(/\//g,'-')%>" name="" id="inputtitlenewsadmin" placeholder="Auction Date"><br>
+	<%}else{%>
+    <input type="date" class="auctionDate" value="N/A" name="" id="inputtitlenewsadmin" placeholder="Auction Date"><br>
+<%}%>
+	<span>Reserve Price</span><br>
+    <input type="text" name="" class="reservedPrice" id="inputtitlenewsadmin" value="<%=project.reservePrice%>" placeholder="Reserved Price"><br>    
+	<span>Property Details</span><br>
+    <textarea name="" id="desca" cols="30" rows="10" class="propertyDetails" placeholder="Property Details"><%=project.propertyDetails%></textarea>
+	<span>Project Document</span><br>
+    <input type="file" name="" id="" class="projectDocument" style="border: none;">
+    <!-- <input type="datetime-local" name="" id="" placeholder="Time"><br> -->
+   
+    <button type="submit" id="update-project-btn">Update</button>
+</form>
+
+
+<script>
+
+const hideAlert = () => {
+	const el = document.querySelector(".alert");
+	if (el) el.parentElement.removeChild(el);
+};
+
+// type is 'success' or 'error'
+const showAlert = (type, msg, time = 7) => {
+	hideAlert();
+	const markup = `<div class="alert alert--${type}">${msg}</div>`;
+	document.querySelector("body").insertAdjacentHTML("afterbegin", markup);
+	window.setTimeout(hideAlert, time * 1000);
+};
+
+// const createTenderAdminVal = async (emd,openingDate, lastDate, organizationDetail,tenderAuthority,brief) => {
+const createProjectAdminVal = async (form) => {
+
+	try {
+		let button = document.getElementById('update-project-btn');
+		button.disabled = 'true';
+		const res = await axios({
+			method: "PATCH",
+			url: "/api/v1/project/<%=project._id%>",
+			data:form,
+
+		});
+		button.removeAttribute('disabled');
+		if (res.data.status === "success") {
+			console.log("THIS IS RES ", res);
+			showAlert("success", "Published");
+            location.replace("/admin/project")
+		}
+	} catch (err) {
+		showAlert("error", 'Something Went Wrong');
+        console.log(err);
+		// if (err.response.status === 500) {
+		// 	document.querySelector(".hideAlert").classList.remove("alert");
+		// 	document.getElementById("alert").innerHTML =
+		// 		"Cannot Submit Form Please Fill Required Field Correctly";
+		// } else {
+		// 	document.querySelector(".hideAlert").classList.remove("alert");
+		// 	document.getElementById("alert").innerHTML = err.response.data.message;
+		// }
+	}
+};
+const createProject = document.querySelector(".newsformcreate");
+console.log(createProject);
+if (createProject) {
+	createProject.addEventListener("submit", (e) => {
+		e.preventDefault();
+        const form= new FormData()
+        form.append('category',document.querySelector(".projectCategory").value)
+        form.append('institutionName',document.querySelector(".instituteName").value)
+        form.append('assetLocation',document.querySelector(".assetLocation").value)
+        form.append('assetCity',document.querySelector(".assetCity").value)
+
+        form.append('applicationDeadline',document.querySelector(".projectDeadline").value)
+        form.append('auctionDate',document.querySelector(".auctionDate").value)
+        form.append('reservePrice',document.querySelector(".reservedPrice").value)
+        form.append('propertyDetails', document.querySelector(".propertyDetails").value)
+        form.append('projectDocuments',document.querySelector(".projectDocument").files[0])
+       
+ for(var pair of form.entries()) {
+   console.log(pair[0]+ ', '+ pair[1]);
+}
+		// const emd = document.getElementById("adminEmd").value;
+		// const openingDate = document.getElementById("openingDate").value;
+		// const lastDate = document.getElementById("lastDate").value;
+		// const organizationDetail = document.getElementById("adminOrganizationDetail").value;
+		// const tenderAuthority = document.getElementById("adminAuthorityIssue").value;
+		// const brief = document.querySelector(".adminTenderBrief").value;
+        
+        // console.log(emd,openingDate, lastDate, organizationDetail,tenderAuthority,brief);
+		// createTenderAdminVal(emd,openingDate, lastDate, organizationDetail,tenderAuthority,brief);
+
+		createProjectAdminVal(form);
+	});
+} 
+
+
+</script>
+<%- include("partials/footer") %>

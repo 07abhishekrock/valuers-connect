@@ -1,0 +1,52 @@
+<%- include("partials/header") %>
+<style>
+    .newprofileinputse{
+    width: 75%;
+    height: 65px;
+    font-size: 25px;
+    border-radius: 20px;
+    border: 1px solid black;
+    outline: none;
+    display: block;
+    margin: 10px auto 20px auto;
+    padding: 10px 0 10px 40px;
+}
+.newprofileinputse span{
+    display: none !important;
+}
+</style>
+<form  class="newsformcreate newsClass addNewForumAdmin" id="addNewForumAdmin formadminnewscreate " >
+    <h1>Add New Forum</h1>
+    <span>Forum Title</span>
+    <input type="text" name="" class="forumTitle" id="inputtitlenewsadmin forumTitle" placeholder="Forum Title"><br>
+    <!-- <input type="datetime-local" name="" id="" placeholder="Time"><br> -->
+    <span>Forum Category</span>
+    <select class="newprofileinputse forumCategory" name="" id="forum-category">
+                  
+        <option value=""></option>
+        <%var i=0%>
+        <%category.forEach(function(category){%>
+        
+        <option value="<%=i%>" ><%=category.name%></option>
+        <option value="<%=i+1%>" style="display: none;"><%=category._id%></option>
+        <%i=i+1%>
+        <%})%>
+    </select>
+    <input type="hidden" id="userId" value="<%=user._id%>" name="">
+    <span>Content Here</span>
+    <textarea name="" class="newprofileinput forum-content desca"style="height:14rem" id=""  cols="30" rows="20"
+                                placeholder="Type your content here"></textarea>
+    <span>File Input</span>
+    <input type="file" accept=".pdf,.zip" name="" id="forumDocument" style="border: none;"> <br>
+    <button type="submit" id="createadminnews" >PUBLISH</button><br><br>
+</form>
+<script src="/js/adminCreateForum.js"></script>
+
+<!-- <script>
+const addNewForumAd = document.querySelector(".addNewForumAdmin");
+console.log(addNewForumAd);
+if (addNewForumAd) {
+alert('hello')
+}
+</script> -->
+<%- include("partials/footer") %>

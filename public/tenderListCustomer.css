@@ -1,0 +1,120 @@
+.clienttenderbody{
+    background-color: #E7E7E7;
+    padding-top: 30px;
+}
+.tensertotaltable{
+    background-color: white;
+    padding: 15px;
+}
+.clienttenderheadingcenter{
+    text-align: center;
+}
+.clienttendertotalheading{
+    border-bottom: 1px solid lightgray;
+    padding: 15px 0 5px 0;
+    font-weight:bold;
+}
+.clienttendercontentbody a{
+    color: black;
+    font-weight: 400;
+    text-decoration: none;
+}
+.clienttendercontentbody{
+    padding: 15px 0 15px 10px;
+    border-bottom: 1px solid lightgray;
+}
+.phpgreycolor{
+    color: lightgray;
+    font-weight: bold;
+}
+.daysleftpadding{
+    padding-top: 10px;
+}
+.tenderidsmall{
+    font-size: 14px;
+}
+.tensertotaltable{
+    padding-top: 30px;
+}
+.clienttendercontentbody:hover{
+    -webkit-box-shadow: -1px 3px 8px 9px rgba(0,0,0,0.18);
+    -moz-box-shadow: -1px 3px 8px 9px rgba(0,0,0,0.18);
+    box-shadow: -1px 3px 8px 9px rgba(0,0,0,0.18);
+}
+.dropdown-check-list {
+    display: inline-block;
+  }
+  
+  .dropdown-check-list .anchor {
+    position: relative;
+    cursor: pointer;
+    display: inline-block;
+    padding: 5px 50px 5px 10px;
+    border: 1px solid #ccc;    
+    width: 230px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    font-size: 12px;
+  }
+  
+  .dropdown-check-list .anchor:after {
+    position: absolute;
+    border-left: 2px solid black;
+    border-top: 2px solid black;
+    padding: 5px;
+    right: 10px;
+    top: 20%;
+    -moz-transform: rotate(-135deg);
+    -ms-transform: rotate(-135deg);
+    -o-transform: rotate(-135deg);
+    -webkit-transform: rotate(-135deg);
+    transform: rotate(-135deg);
+  }
+  
+  .dropdown-check-list .anchor:active:after {
+    right: 8px;
+    top: 21%;
+  }
+  
+  .dropdown-check-list ul.items {
+    padding: 2px;
+    display: none;
+    margin: 0;
+    border: 1px solid #ccc;
+    border-top: none;
+  }
+  
+  .dropdown-check-list ul.items li {
+    list-style: none;
+  }
+  .dropdown-check-list ul.items li input{
+    margin-right: 10px;
+  }
+  
+  .dropdown-check-list.visible .anchor {
+    color: #0094ff;
+  }
+  
+  .dropdown-check-list.visible .items {
+    display: block;
+  }
+  #myInput {
+    background-image: url('../imagesall/search.png');
+    background-position-x:10px;
+    background-repeat: no-repeat;
+    width: 230px;
+    height: 30px;
+    border: 1px solid #ddd;
+    margin-bottom: 12px;
+    margin-top: 20px;
+    background-size: 20px;
+    background-position-y: 5px;
+  font-size: 16px;
+  padding: 15px 20px 15px 40px;
+  }
+  .filtertotaldiv{
+      background-color: white;
+      padding: 20px 0 20px 10px;
+      margin-bottom: 30px;
+  }

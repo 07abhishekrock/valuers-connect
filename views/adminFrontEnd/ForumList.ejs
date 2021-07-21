@@ -1,0 +1,112 @@
+<%- include("partials/header") %>
+<div>
+    <h2 style="text-align: center; font-weight: bold;margin-top: 20px;">
+      Forum List
+    </h2>
+  </div>
+  <nav aria-label="Page navigation example" style="margin-left: 1rem;">
+	<ul class="pagination">
+	  <li class="page-item"><button class="page-link .prev-btn" id="prev-btn">Previous</button></li>
+	  <li class="page-item"><button class="page-link .next-btn" id="next-btn">Next</button></li>
+	</ul>
+  </nav>
+<div class="adminlisttotaldiv">
+
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col bigcol">
+                    Forum Title
+                </th>
+                
+                <th scope="col smallcolumn" style="text-align: center;">
+                    Edit
+                </th>
+            </tr>
+        </thead>
+        <tbody id="adminnewsajaxdiv">
+
+        </tbody>
+    </table>
+
+</div>
+<script>
+    $(function () {
+	var page = 1,
+		limit = 15,
+		totalrecord = 0;
+
+	fetchData();
+
+	document.getElementById("prev-btn").addEventListener("click", function () {
+		if (page > 1) {
+			page--;
+			fetchData();
+		}		else{
+			window.alert("There is no further data available");
+		}
+		console.log("Prev Page: " + page);
+	});
+
+	// handling the next-btn
+	document.getElementById("next-btn").addEventListener("click",function () {
+		if (totalrecord ===15 ) {
+			page++;
+			fetchData();
+		}
+		else{
+			window.alert("There is no further data available");
+		}
+	});
+		
+
+	function fetchData() {
+		// ajax() method to make api calls
+		$.ajax({
+			url: "/api/v1/forum-thread",
+			type: "GET",
+			data: {
+				page: page,
+				limit: 15,
+			},
+			success: function (data) {
+				console.log(data);
+
+				if (data.status) {
+					var dataArr = data.data;
+					totalrecord = data.result;
+					console.log(dataArr);
+
+					var html = "";
+
+					for (var i = 0; i < dataArr.length; i++) {
+						var u = i + 1;
+						html +=
+							" <tr>" +
+							" <td class='bigcol'>" +
+							` <a   href=/forum-thread/${dataArr[i]._id}>` +
+							dataArr[i].title +
+							"</a>" +
+							" </td>" +
+							'  <td class="smallcolumn" style="justify-content:center;">' +
+							`<a onclick="return confirm('Are you Sure')" href=/admin/forumdelete/${dataArr[i]._id}>` +
+							' <i class="fas fa-trash-alt"></i>' +
+							"   </a>" +
+							"  </a>" +
+							"  </td>" +
+							" </tr>";
+					}
+					$("#adminnewsajaxdiv").html(html);
+				}
+			},
+			error: function (jqXHR, textStatus, errorThrown) {
+				console.log(jqXHR);
+				console.log(textStatus);
+				console.log(errorThrown);
+			},
+		});
+	}
+});
+
+</script>
+<%- include("partials/footer") %>

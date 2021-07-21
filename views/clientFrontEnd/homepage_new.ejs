@@ -1,0 +1,348 @@
+<%- include ("partials/header") %>
+    <div class="carousel-wrapper">
+        <div class="carousel">
+            <% banner.forEach(banner_element => { %>
+                <div class="carousel-element" style="background-image:url('<%=banner_element.bannerImage%>')"></div>
+            <% }) %>
+                <div class="carousel-element" style="background-image:url('<%=banner[0].bannerImage%>')"></div>
+        </div>
+        <button class="left" id="btn-left"></button>
+        <button class="right" id="btn-right"></button>
+        
+    </div>
+    <div class="forum-container">
+            <div class="forum-head">
+                <h1>Forums & Discussions</h1>
+                <button>Create New</button>
+            </div>
+            <div class="forum-div">
+                <% forumCategory.forEach(category => { %>
+                <div class="forum-element">
+                    <span class="date">Added on <%=getDateString(category.createdAt)%></span>
+                    <h2><a   href="/forum-thread?category=<%=category.id%>"><%=category.name.length > 30 ? category.name.substring(0,27) + '...' : category.name %></a></h2>
+                    <div class="forum-info">
+                        <span class="threads"><%=category.totalThreads%> Threads</span>
+                        <a   href="/forum-thread?category=<%=category.id%>"></a>
+                    </div>
+                </div>
+                <% }) %>
+            </div>
+            <a class="foot-button" href="/forum_categories">View More</a>
+    </div>
+    <div class="news-container-outer">
+        <div class="news-container">
+        <h1>News</h1>
+        <div class="news-tab">
+            <span class="selected" onclick="changeNews(0)">Latest</span>
+            <span onclick="changeNews(1)">Trending</span>
+            <span onclick="changeNews(2)">Important</span>
+        </div>
+        <div class="news-wrapper">
+            <div class="news">
+            </div>
+        </div>
+            <button class="left"></button>
+            <button class="right"></button>
+    </div>
+            <a class="foot-button" href="/news">View More</a>
+    </div>
+    <div class="events-container">
+        <h1>Upcoming Events</h1>
+        <div class="events-wrapper">
+            <div class="events">
+        <%if(upcomingEvents.length > 0){%>
+                <% upcomingEvents.forEach(event => { %>
+                    <div class="event" style="background-image:url('<%=event.featureImage%>')">
+                        <div class="top-date" month="<%=getDayAndMonth(event.fromDate)[1]%>"><%=getDayAndMonth(event.fromDate)[0]%></div>
+                        <p><a   href="/events/<%=event._id%>"><%=event.title.length > 50 ? event.title.substring(0,47) + '...' : event.title%></a></p>
+                        <div class="time-range" style="opacity:0">7:30 PM - 9:30 PM</div>
+                    </div>
+                <% })}else{%>
+                    <div class="event">
+                        <div class="top-date"></div>
+                        <p><a href="#">No upcoming Events </a></p>
+                        <div class="time-range" style="opacity:0">7:30 PM - 9:30 PM</div>
+                    </div>
+                <%}%>
+                    
+            </div>
+            <button class="left"></button>
+            <button class="right"></button>
+        </div>
+        <%if(upcomingEvents.length > 0){%>
+            <a class="foot-button" href="/events">View More</a>
+        <%}%>
+    </div>
+
+    <div id="aboutus" class="about-us-wrapper">
+        <div class="about-us">
+            <h1>About Us</h1>
+            <p>
+        Valuers Connect is a platform for valuers from all over the world to connect with other professionals and stakeholders in the field of valuation. Valuers Connect wishes to establish a forum for discussions on topics of importance and getting counselled by the industry experts. Valuers from different parts of the world can engage in discussions on not only the forum but also conduct business on Valuers Connect. Stakeholders can get in touch with valuers and other professionals to get their job done with complete privacy.
+
+                        Through our continuous commitment towards the growth of the profession, Valuers Connect drives business in the field of valuation and creates job opportunities, empanelment opportunities and more for your business to prosper.
+
+                        Your data is as valuable to us as it is for you. Valuers Connect uses top of the line encryption tools to ensure that your data remains private and out of bounds from others.
+                        </p>
+    </div>
+    </div>
+
+    <div class="inline-list-wrapper">
+        <div class="inline-list-outer">
+            <h2>Notifications</h2>
+            <div class="inline-list">
+                <% notification.forEach(note => { %>
+                    <a target="_blank"  href="<%=note.url%>"><%=note.title%> <i class="fas fa-external-link-alt"></i></a>
+                <% }) %>
+            </div>
+        </div>
+        <div class="inline-list-outer">
+            <h2>Quick Links</h2>
+            <div class="inline-list">
+                <a target="_blank"  href="https://www.ibbi.gov.in">Insolvency & Bankruptcy Board of India <i class="fas fa-external-link-alt"></i></a>
+                <a target="_blank"  href="https://ibbi.gov.in/service-provider/valuer-organisations">Registered Valuers Organisations <i class="fas fa-external-link-alt"></i></a>
+                <a target="_blank"  href="https://ibbi.gov.in/service-provider/rvo">Registered Valuers in India <i class="fas fa-external-link-alt"></i></a>
+                <a target="_blank"  href="https://www.mca.gov.in/">Ministry of Corporate Affairs <i class="fas fa-external-link-alt"></i></a>
+                <a target="_blank"  href="https://www.institutionofvaluers.net">Institution of Valuers <i class="fas fa-external-link-alt"></i></a>
+                <a target="_blank"  href="https://www.icai.org">The Institute of Chartered Accountants of India <i class="fas fa-external-link-alt"></i></a>
+                <a target="_blank"  href="https://www.icma.org">The Institute of Cost Accountants of India <i class="fas fa-external-link-alt"></i></a>
+                <a target="_blank"  href="https://www.icsi.edu/home/">The Institute of Company Secretaries of India <i class="fas fa-external-link-alt"></i></a>
+            </div>
+        </div>
+        </div>
+    </div>
+
+
+    <script>
+        //get all news
+
+        class MySwiper{
+            constructor(parent_element , left_btn, right_btn)
+            {
+                this.parent = document.querySelector(parent_element);
+                this.parent.style.transition = 'transform 0.4s ease-in-out';
+                this.left =  document.querySelector(left_btn);
+                this.right =  document.querySelector(right_btn);
+                this.current_position = 0;
+                this.child_width = 0;
+                this.interval_id = null;
+            }
+
+            transform = ()=>{
+                this.parent.style.transform = `translateX(${-1 * this.current_position * this.child_width}px)`;
+            }
+
+            reset = ()=>{
+                this.current_position = 0;
+                this.transform();
+            }
+
+            init = ()=>{
+                this.left.addEventListener('click',()=>{
+                    if(this.parent.children.length === 0){
+                        return;
+                    }
+
+                    if(this.current_position === 0){
+                        return;
+                    }
+                    else{
+                        this.current_position -= 1;
+                    }
+                    this.child_width = this.parent.children[0].offsetWidth + 35;
+                    this.transform();
+                })
+                this.right.addEventListener('click',()=>{
+                    if(this.parent.children.length === 0){
+                        return;
+                    }
+
+
+                    if(this.current_position === this.parent.children.length - 1){
+                        return;
+                    }
+                    else{
+                        this.current_position += 1;
+                    }
+                    this.child_width = this.parent.children[0].offsetWidth + 35;
+                    this.transform();
+                })
+            }
+
+        }
+        let newsMySwiper = new MySwiper('div.news','div.news-container button.left','div.news-container button.right');
+        let eventsMySwiper = new MySwiper('div.events','div.events-wrapper button.left','div.events-wrapper button.right');
+
+        newsMySwiper.init();
+        eventsMySwiper.init();
+
+        let important_news = [];
+        let news_total = [];
+        let news_sorted_array = [];
+        let news_tab = document.querySelector('div.news-tab');
+        let getSortedViewsNews = async ()=>{
+
+            news_tab.classList.add('loading-current');
+
+
+            let news = await axios.get('/api/v1/news');
+            news_total = news.data.data;
+            important_news = news_total.filter((element)=>{
+                return element.isImportant;
+            })
+
+
+            let news_sorted = await axios.get('/api/v1/news/sort');
+            news_sorted_array = news_sorted.data.data;
+
+            news_tab.classList.remove('loading-current');
+            changeNews(0);
+        }
+
+        getSortedViewsNews();
+
+        let news_wrapper = document.querySelector('div.news');
+
+        changeButton = (filter_id)=>{
+            let buttons = document.querySelectorAll('div.news-tab span');
+            buttons.forEach((button)=>{
+               button.classList.remove('selected'); 
+            })
+            console.log(filter_id);
+            buttons[filter_id].classList.add('selected');
+        }
+
+        changeNews = (filter_id)=>{
+            newsMySwiper.reset();
+            let html = '';
+            if(filter_id === 0){
+                if(news_total.length === 0){
+                    return;
+                }
+                else{
+                    changeButton(0)
+                    news_total.slice(0,10).forEach((element)=>{
+                     let image = element.featureImage.split(",")[0];
+                       html += `<div class="news-element" style="background-image:url('${image}')">`
+                       if(element.title) html += `<p><a   href="/news/${element._id}">${element.title.length > 50 ? element.title.substring(0,47) + '...' : element.title}</a></p>`;
+                       html += "</div>";
+                    })
+                    news_wrapper.innerHTML = html;
+                }
+            }
+            else if(filter_id === 1){
+                if(news_sorted_array.length === 0){
+                    return;
+                }
+                else{
+                    changeButton(1)
+                    news_sorted_array.slice(0,10).forEach((element)=>{
+                        let image = element.featureImage.split(",")[0];
+                       html += `<div class="news-element" style="background-image:url('${image}')">`
+                       if(element.title) html += `<p><a   href="/news/${element._id}">${element.title.length > 50 ? element.title.substring(0,47) + '...' : element.title}</a></p>`;
+                       html += "</div>";
+                    })
+                    news_wrapper.innerHTML = html;
+                }
+            }
+            else if(filter_id === 2){
+                console.log(important_news);
+                if(important_news.length === 0){
+                    return;
+                }
+                else{
+                    changeButton(2)
+                    important_news.slice(0,10).forEach((element)=>{
+                        let image = element.featureImage.split(",")[0];
+                       html += `<div class="news-element" style="background-image:url('${image}')">`
+                       if(element.title) html += `<p><a   href="/news/${element._id}">${element.title.length > 50 ? element.title.substring(0,47) + '...' : element.title}</a></p>`;
+                       html += "</div>";
+                    })
+                    news_wrapper.innerHTML = html;
+                }
+            }
+        }
+        
+
+    </script>
+    <script>
+
+
+    </script>
+
+    <script>
+        let current_index = 0;
+        let stop_interval = 5000;
+        let transition_time = 300;
+        let image_div = document.querySelector('div.carousel');
+        let banner_length = image_div.children.length - 1;
+        let image_window = document.querySelector('div.carousel-wrapper');
+        let interval_id = null;
+        const callSetInterval = ()=>{
+                togglePointerEvents(0);
+
+                setTimeout(()=>{
+                    togglePointerEvents(1);
+                }, transition_time);
+
+                setTransition();
+                image_div.style.transform = `translateX(calc(-${current_index} * 100%))`;
+
+                if(current_index === banner_length){
+                    setTimeout(()=>{
+                        image_div.style.transform = `translateX(0px)`;
+                        current_index = 0;
+                    },transition_time);
+                };
+        }
+        const togglePointerEvents = (toggle_flag)=>{
+            if(toggle_flag === 0){
+                //turn off the pointer events;
+                image_window.style.pointerEvents = 'none';
+            }
+            else if(toggle_flag === 1){
+                //turn on the pointer events;
+                image_window.style.pointerEvents = 'all';
+            }
+        }
+
+        image_window.addEventListener('click',(e)=>{
+            if(banner_length <= 1){
+                return;
+            }
+            clearInterval(interval_id);
+            if(e.target.id === 'btn-right'){
+                current_index += 1;
+                console.log('right');
+            }
+            else if(e.target.id === 'btn-left'){
+                current_index > 0 ? current_index -= 1 : current_index = banner_length - 1;
+                console.log('left');
+            }
+            callSetInterval();
+            interval_id = setInterval(()=>{
+                current_index += 1;
+                callSetInterval()
+            }, 5000);
+        })
+
+
+        const setTransition = ()=>{
+            image_div.style.transition = `transform ${300}ms ease-in`;
+            setTimeout(() => {
+               image_div.style.transition = 'transform 0s ease-in';
+            }, transition_time);
+        }
+        
+        if(banner_length > 1){
+            //if there is more than 1 banner , then we need to loop other wise there is no need
+            interval_id = setInterval(()=>{
+                current_index += 1;
+                callSetInterval()
+            }, 5000);
+        }
+        
+    </script>
+
+
+<%- include ('partials/footer') %>

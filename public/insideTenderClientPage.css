@@ -1,0 +1,27 @@
+.tenderindividualbold{
+    font-weight: bold !important;
+    color: black;
+    text-decoration: none;
+}
+.tenderindividualboldheadng{
+    background-color: lightgray;
+    padding-top: 0px !important;
+}
+.tenderindividualseperate{
+    margin: 0px 0 20px 0;
+}
+.clienttendercontentbodya{
+    padding: 5px 0 5px 10px ;
+    border-bottom: 1px solid lightgray;
+}
+.clienttendercontentbodya a{
+    color: black;
+    text-decoration: none;
+}
+.tendind{
+    border: 1px solid lightgray;
+    margin-top: 30px;
+}
+.lasttabletenderrow{
+    padding-left: 10px;
+}

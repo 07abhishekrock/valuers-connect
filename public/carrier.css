@@ -1,0 +1,32 @@
+.carrierheading p{
+    text-align: center;
+    font-weight: bold;
+    font-size: 50px;
+    padding-top: 50px;
+}
+.customerorg{
+    font-weight: bold;
+    margin: auto;
+}
+.customerorgbold{
+    font-size: 25px;
+}
+.customerorgrey{
+    color: lightgray;
+    font-size: 20px;
+}
+.carriertable table{
+    width: 100%;
+}
+.carriertable table thead th{
+    padding: 10px 0 15px 0 !important;
+}
+.carriertable table thead{
+    border-bottom: 2px solid lightgray;
+}
+.carriertable table tbody td{
+    padding: 15px 0 15px 0;
+}
+.carriertablefull{
+    margin-top: 50px;
+}

@@ -1,0 +1,934 @@
+<%- include("partials/header") %>
+<%console.log(user)%>
+<div class="my-modal-wrapper ">
+    <form class="my-modal">
+        <span class="cross" onclick="closeModal()"></span>
+        <div class="education modal-inner">
+            <div class="input-group">
+                <span>Degree Name</span>
+                <input class="form-control" type="text" id="degreeName"   name="degreeName" value="" />
+            </div>
+            <div class="input-group">
+                <span>From</span>
+                <input class="form-control" type="month"id="fromdegree"  name="fromdegree" value="" />
+            </div>
+            <div class="input-group">
+                <span>To</span>
+                <input class="form-control" type="month"id="todegree"  name="todegree" value="" />
+            </div>
+            <div class="input-group">
+                <span>College Name</span>
+                <input class="form-control" type="text" id="collegenamedegree" value=""  name="collegenamedegree"/>
+            </div>
+            <div class="input-group">
+                <span>University Name</span>
+                <input class="form-control" type="text" id="universitynamedegree" value=""  name="universitynamedegree"/>
+            </div>
+            <div class="input-group">
+                <span>Specialisation</span>
+                <input class="form-control" type="text" id="specializationdegree" value=""  name="specializationdegree"/>
+            </div>
+        </div>
+
+        <div class="experience modal-inner">
+                <div class="input-group">
+                    <span>Designation</span>
+                    <input class="form-control" id="designation" type="text" name="designation" value="" />
+                </div>
+                <div class="input-group">
+                    <span>Company Name</span>
+                    <input class="form-control" id="organization" type="text" value=""  name="organization"/>
+                </div>
+                <div class="input-group">
+                    <span>From</span>
+                    <input class="form-control" id="fromDateExp" type="month" value=""  name="fromDate"/>
+                </div>
+                <div class="input-group">
+                    <span>To</span>
+                    <input class="form-control" id="toDateExp" type="month" value=""  name="toDate"/>
+                </div>
+        </div>
+
+        <div class="contact-info modal-inner">
+            <div class="input-group">
+                <span>Phone Number</span>
+                <input class="form-control" type="text" value="" name="phoneNo" id="phoneNo"/>
+            </div>
+            <div class="input-group">
+                <span>About Me</span>
+                <textarea name="about" id="about"></textarea>
+            </div>
+            <div class="input-group" style="display:none">
+                <span>Email</span>
+                <input class="form-control" type="text" value="" name="email" id="email"/>
+            </div>
+            <div class="input-group">
+                <span>Address</span>
+                <textarea name="address" id="address"></textarea>
+            </div>
+            <div class="input-group">
+                <span>Website</span>
+                <input class="form-control" type="text" value="" name="website" id="website"/>
+            </div>
+            <div class="input-group">
+                <span>Linkedin</span>
+                <input class="form-control" type="text" value="" name="linkedIn" id="linkedIn"/>
+            </div>
+            <div class="input-group">
+                <span>Position</span>
+                <input class="form-control" type="text" value="" name="position" id="position" class="form-control"/>
+            </div>
+        </div>
+
+        <input  type="submit" id="form-education-submit-update" class="submit-modal btn btn-primary btn-block"/>
+        <input  type="submit" id="form-experience-submit-update" class="submit-modal btn btn-primary btn-block"/>
+        <input  type="submit" id="form-contact-submit-update" class="submit-modal btn btn-primary btn-block"/>
+
+    </form>
+</div>
+<div class="totalmargibottomnewprofile">
+    <div class="newprofilepagewidth">
+        <div class="row  ">
+            <div class="col-lg-8">
+                <div class="pictureshadow">
+                    <div class="profilebackgroundnew">
+
+                    </div>
+                    <div class="profilephotoname">
+                        <div class="profilephotonew" style="background-image: url(<%=user.userProfile%>);">
+                        </div>
+                        <div>
+                            <p class="profilecontentnew"><%=user.firstName%> <%=user.lastName%></p>
+                            <p class="profilecontentdescriptionnew"><%=user.type%> - <%=user.position%>
+                        </div>
+                        <!-- <input type="file" style="border: none; background-color: rgb(74, 73, 112); border-radius: 2rem;  " placeholder="Update profile Photo" data-buttonText="Your label here."   id="profile_file"/> -->
+                    </div>
+                    <div class="aboutnewprofilediv">
+                    <p>Change Profile Photo</p>
+                    <form id="updateProfilePhotoForm">
+                    <input type="file" accept=".png,.jpg" style="border: none; background-color: rgb(182, 182, 184); color: rgb(70, 70, 70); border-radius: 0rem; margin-bottom:0.5em;  margin-top: -.5rem; width: 50%;"  placeholder="Update profile Photo" data-buttonText="Your label here." required  id="profile_file"/>
+                    <button type="submit" id="uploadProfile" style="border: none;">Update</button>
+                    </form>    
+                        <br>
+                        <div>
+                            <span class="aboutnewprofiletag">About</span>
+                            <a><i class="fas fa-pen aboutpennewprofile" onclick="openModal(2,0)"></i></a>
+                        </div>
+                        <% if(user.about) {%>
+                        <p class="newprofileaboutdesc"><%=user.about%>
+                        </p>
+                        <%}else{%>
+                        <p class="newprofileaboutdesc">N/A
+                        </p>
+                        <%}%>
+                        <br>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="peopleyoumayknowfullcard">
+                <%if(user.isMember){%>
+                    <div>
+                        <div class="peopleyoumayknowheading">
+                            <h2>Membership</h2>
+                        </div>
+                        <div class="peopleyoumayknowtoataldiv">
+                            <div class="peopleyoumayknowflex peopleyoumayknowborder">
+                                <div><span> Subscription Plan:</span>
+                                <span class="mrpprofile"><%=user.subscriptionType?.split(' ')[0]%></span></div>
+                            </div>
+<!--
+                            <div class="peopleyoumayknowflex peopleyoumayknowborder">
+
+                                <div><span> Yearly Subscription Plan:</span><span class="mrpprofile">3999/-</span></div>
+                            </div> -->
+
+                            <div class="peopleyoumayknowflex peopleyoumayknowborder">
+
+                                <div><span>Current Status:</span><span class="mrpprofile">Active</span></div>
+                            </div>
+
+                            <div class="peopleyoumayknowflex peopleyoumayknowborder">
+
+                                <div><span> Expiring on:</span><span class="mrpprofile"><%=user.planExpires?.toLocaleDateString()%></span></div>
+                            </div>
+
+
+                            <div class="peopleyoumayknowflex peopleyoumayknowborder">
+
+                                <div><span> Subscribed On:</span><span class="mrpprofile"><%=(user.subscibedOn)?.toLocaleDateString()%></span></div>
+                            </div>
+                        </div>
+                        <!-- <div class="viewmorepyk "><a   href="/payment" class="btn btn-danger">Cancel Subscription</a></div> -->
+                    </div>
+<%}else{%>
+<div class="peopleyoumayknowheading">
+    <h3>Buy Membership to Unlock Benefits</h>
+ </div><br><br>
+<div class="viewmorepyk "><a   href="/payment" class="btn btn-danger">Upgrade</a></div>
+
+<%}%>
+
+
+
+                </div>
+            </div>
+        </div>
+
+
+        <div class="overviewtotaldiv">
+            <div>
+                <ul class="nav nav-tabs overview" id="myTab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active rtborder" id="home-tab" data-toggle="tab" href="#home" role="tab"
+                            aria-controls="home" aria-selected="true">
+                            <div class="overviewbottombrdr"> Overview</div>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link rtborder" id="profile-tab " data-toggle="tab" href="#profile" role="tab"
+                            aria-controls="profile" aria-selected="false">
+                            <div class="overviewbottombrdr" id="forum-participated-tab"> Forum Participated</div>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link rtborder" id="contact-tab" data-toggle="tab" href="#contact" role="tab"
+                            aria-controls="contact" aria-selected="false">
+                            <div class="overviewbottombrdr" id="forum-created-tab"> Forum Created</div>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="createforum-tab" data-toggle="tab" href="#createforum" role="tab"
+                            aria-controls="createforum" aria-selected="false">
+                            <div class="overviewbottombrdr" > Create Forum</div>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="updatepasswordprofile-tab" data-toggle="tab"
+                            href="#updatepasswordprofile" role="tab" aria-controls="updatepasswordprofile"
+                            aria-selected="false">
+                            <div class="overviewbottombrdr"> Update Password</div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+
+
+        <div class="educationtotaldiv">
+
+            <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade  show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="borderrtmarginsmall">
+                                <div class="edutotaldiv">
+                                    <div>
+                                        <span class="aboutnewprofiletag educationheading">Education</span>
+                                        <!-- <a   href="/edit/profile/<#%=user.id%>"><i class="fas fa-pen educationpen"></i></a> -->
+                                    </div>
+                                    <div>
+                                        <!-- <div class="educationboxflex">
+                                            <div class="educatioplacebg">
+
+                                            </div>
+                                            <div>
+                                                <span class="Universityname">University of Arts & Science</span><br>
+                                                <span>Degree of Visual arts</span><br>
+                                                <span class="educationyearprofile">2012-2016</span><br>
+                                            </div>
+                                        </div> -->
+                                    <%if(user.degree.length>0){%>
+                                        <%console.log(user.degree)%>
+                                    <%(user.degree).forEach(function(degree , index){%>
+
+                                        <div class="educationboxflex">
+                                            <div class="educatioplacebg"></div>
+                                            <div class="education display-wrapper">
+                                                <div>
+                                                    <span class="Universityname"><%=degree.degree%></span><br>
+                                                    <span><%=degree.college%></span><br>
+                                                    <span class="educationyearprofile"style="color: rgb(77, 72, 87);; font-weight: 600;"><%=degree.fromDate%> -- <%=degree.toDate%></span><br>
+                                                </div>
+                                                <a   href="/api/v1/user/del-education/<%=index%>""><i class="fas fa-trash-alt"></i></a>
+                                            </div>
+                                        </div>
+                                        <%})%>
+                                        <%}%>
+                                        <div style="text-align: center; margin-top: 2rem; margin-bottom: 2rem;">
+                                        <!-- <a   href="/edit/profile/<%#=user.id%>" style="text-decoration: none;"> -->
+                                        <span style="background-color: brown; border-radius: 8px; padding: 8px 8px 8px 8px; color: white;" class="add-information-btn" onclick="openModal(0,-1)"> Add Education </span></a>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+                                <div class="edutotaldiv">
+                                    <div>
+                                        <span class="aboutnewprofiletag educationheading">Experience</span>
+                                        <!-- <a   href="/edit/profile/<#%=user.id%>""><i class="fas fa-pen educationpen"></i></a> -->
+                                    </div>
+                                    <div>
+                                        <!-- <div class="educationboxflex">
+                                            <div class="educatioplacebg">
+
+                                            </div>
+                                            <div>
+                                                <span class="Universityname">Product Designer</span><br>
+                                                <span>
+                                                    <table>
+                                                        <tr>
+                                                            <td>Google</td>
+                                                            <td class="paddingleftfulltime">Full Time</td>
+                                                        </tr>
+                                                        <tr class="educationyearprofile">
+                                                            <td>Mar 2017 - June 2020</td>
+                                                            <td class="paddingleftfulltime">3 yrs 2 mon</td>
+                                                        </tr>
+                                                    </table>
+                                                </span><br>
+                                            </div>
+                                        </div> -->
+                                        <%if(user.experience.length !=0){%>
+                                     <%(user.experience).forEach(function(exp, index){%>
+
+                                            <div class="educationboxflex">
+                                            <div class="educatioplacebg" style="background-image: url('/assets/job.jpg')">
+
+                                            </div>
+                                            <div class="experience display-wrapper">
+                                            <div>
+                                                <span class="Universityname"><%=exp.designation%></span><br>
+                                                <span>
+                                                    <table>
+                                                        <tr>
+                                                            <td><%=exp.organization%></td>
+                                                            <!-- <td class="paddingleftfulltime">Full Time</td> -->
+                                                        </tr>
+                                                        <tr class="educationyearprofile">
+                                                        <%if(exp.toData === '') exp.toDate='Current'%>
+                                                            <td style="color: rgb(77, 72, 87); font-weight: 600;"><%=exp.fromDate%> -- <%=exp.toDate%></td>
+                                                            <!-- <td class="paddingleftfulltime">3 yrs 2 mon</td> -->
+                                                        </tr>
+                                                    </table>
+                                                </span><br>
+                                            </div>
+                                            <a   href="/api/v1/user/delexp/<%=index%>"><i class="fas fa-trash-alt"></i></a>
+                                        </div>
+                                        </div>
+                                        <%})%>
+                                        <%}%>
+                                         <div style="text-align: center; margin-top: 2rem; margin-bottom: 2rem;">
+                                        <span class="add-information-btn" style="background-color: brown; border-radius: 8px; padding: 8px 8px 8px 8px; color: white;" onclick="openModal(1,-1)"> Add Experience </span>
+                                        </div>
+                                        <!-- <div class="educationboxflex">
+                                            <div class="educatioplacebg">
+
+                                            </div>
+                                            <div>
+                                                <span class="Universityname">Product Designer</span><br>
+                                                <span>
+                                                    <table>
+                                                        <tr>
+                                                            <td>Google</td>
+                                                            <td class="paddingleftfulltime">Full Time</td>
+                                                        </tr>
+                                                        <tr class="educationyearprofile">
+                                                            <td>Mar 2017 - June 2020</td>
+                                                            <td class="paddingleftfulltime">3 yrs 2 mon</td>
+                                                        </tr>
+                                                    </table>
+                                                </span><br>
+                                            </div>
+                                        </div> -->
+
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                        <div class="col-lg-6">
+                            <div class="">
+                                <div class="edutotaldivaa">
+                                    <div>
+                                        <span class="aboutnewprofiletag educationheading">Contact Information</span>
+                                       <i onclick="openModal(2,0)" class="fas fa-pen educationpen"></i>
+
+                                    </div>
+                                    <div>
+                                        <div class="profilecontacttable">
+                                            <table>
+                                                <tr>
+                                                    <td>Phone:</td>
+                                                    <%if(user.phoneNo){%>
+                                                    <td><a   href=""> <%=user.phoneNo%></a></td>
+                                                    <%}else{%>
+                                                    <td><a   href=""> N/A -</a><span style="background-color: brown; border-radius: 8px; padding: 8px 8px 8px 8px; color: white;"> Add</span></td>
+                                                    <%}%>
+                                                </tr>
+                                                <tr>
+                                                    <td>Address:</td>
+                                                     <%if(user.address){%>
+                                                    <td><%=user.address%></td>
+                                                    <%}else{%>
+                                                    <td>no address found</td>
+
+                                                    <%}%>
+                                                </tr>
+                                                <tr>
+
+                                                    <td>E-mail:</td>
+                                                    <%if(user.email){%>
+                                                    <td><a><%=user.email%></a></td>
+                                                     <%}else{%>
+                                                    <td><a>N/A <span style="background-color: brown; border-radius: 8px; padding: 8px 8px 8px 8px; color: white;"> Add</span></a></td>
+
+                                                    <%}%>
+                                                </tr>
+                                                <tr>
+                                                    <td>Website:</td>
+                                                 <%if(user.website){%>
+
+                                                    <td><a   href="<%=user.website%>"><%=user.website%></a></td>
+                                                    <%}else{%>
+                                                    <td><a>N/A</a></td>
+
+                                                    <%}%>
+                                                </tr>
+                                                <tr>
+                                                    <td>Linkedin:</td>
+                                                    <%if(user.linkedIn){%>
+                                                    <td><a   href="<%=user.linkedIn%>"><%=user.linkedIn%></a></td>
+                                                    <%}else{%>
+                                                    <td><a>N/A</a></td>
+
+                                                    <%}%>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade demotab" style="overflow: scroll;" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                    <div id="renderThreadsPage">
+                        <!-- <div class="threadbottombordercategory">
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <span class="threadcategorytotaldivwhitefixedfsd">
+                                        Took the Certified Residential Exam a 3rd time yesterday...</span><br>
+                                </div>
+
+                            </div>
+                        </div> -->
+                         </div>
+
+
+
+                         <script>
+                         document.getElementById('forum-participated-tab').addEventListener('click',e=>{
+                             e.preventDefault()
+                            var userId=document.getElementById('userId').value
+
+                             console.log('Clicked');
+                             getdata(userId)
+                         })
+                        // var url = new URL(url_string);
+                        // var c = url.searchParams.get("id");
+                        // console.log('hello');
+                        function getdata(userId) {
+
+                          var html = "";
+                            // ajax() method to make api calls
+                            $.ajax({
+                              url: `/api/v1/forum-replies?user=${userId}`,
+                              type: "GET",
+                              data: {
+                                // page: 1,
+                                // limit: 5,
+                                // category:`${category}`
+                                // user: "60770e0a4bc5681bb8ac0616",
+                              },
+                             beforeSend: function () {
+
+                              var html =
+                              `<div class=loader_wrap>
+                              <div class="loader"></div>
+                              </div>`;
+                        $('#spinn').html(html)
+                            },
+                              success: function (data) {
+                                console.log(data);
+                         $("#spinn").hide();
+                                if (data.status) {
+                                  var dataArr = data.data;
+                                  totalrecord = data.totalRecord;
+
+                                  console.log('REPLIES ONE DATA',dataArr);
+
+                                  for (var i = 0; i < dataArr.length; i++) {
+                                    html +=
+
+                                        `<div class="threadbottombordercategory">
+                                        <div class="row">
+                                            <div class="col-lg-12 col-md-12 col-sm-12 profilepadgeformlist" style="border-bottom:2px solid grey">
+                                                <a   href=/forum-thread/${dataArr[i].forumThread._id}><span class="threadcategorytotaldivwhitefixedfsd">
+                                                    ${dataArr[i].forumThread.title}</span><br>
+                                                </a>
+                                            </div>
+
+                                        </div>
+                                    </div>`
+
+                                      // "<div class='sample-user'>" +
+                                      // "<h3>ID: " +
+                                      // dataArr[i]._id +
+                                      // "</h3>" +
+                                      // `<a   href=/threads?category=${dataArr[i].category}>First Name: ` +
+                                      // dataArr[i].category +
+                                      // `</a>` +
+                                      // // "<p>Last Name: " + dataArr[i].lastname + "</p>" +
+                                      // // "<p>Last Modified At: " + dataArr[i].lastmodified + "</p>" +
+                                      // // "<p>Created At: " + dataArr[i].created + "</p>" +
+                                      // "</div>" +
+                                      // "<hr />";
+                                  }
+                                  $("#renderThreadsPage").html(html);
+                                }
+                              },
+                              error: function (jqXHR, textStatus, errorThrown) {
+                                console.log(jqXHR);
+                                console.log(textStatus);
+                                console.log(errorThrown);
+                              },
+                            });
+                          }
+                            </script>
+                            <script>
+                         document.getElementById('forum-created-tab').addEventListener('click',e=>{
+                             e.preventDefault()
+                             console.log('Clicked created');
+                             var userId=document.getElementById('userId').value
+                             getdataa(userId)
+                         })
+                        // var url = new URL(url_string);
+                        // var c = url.searchParams.get("id");
+                        // console.log('hello');
+                        function getdataa(userId) {
+
+                          var html = "";
+                            // ajax() method to make api calls
+                            $.ajax({
+                              url: `/api/v1/forum-thread?user=${userId}`,
+                              type: "GET",
+                              data: {
+                                // page: 1,
+                                // category:`${category}`
+                                // user: "60770e0a4bc5681bb8ac0616",
+                              },
+                             beforeSend: function () {
+
+                              var html =
+                              `<div class=loader_wrap>
+                              <div class="loader"></div>
+                              </div>`;
+                        $('#spinn').html(html)
+                            },
+                              success: function (data) {
+                                console.log(data);
+                         $("#spinn").hide();
+                                if (data.status) {
+                                  var dataArr = data.data;
+                                  totalrecord = data.totalRecord;
+                            for (var i = 0; i < dataArr.length; i++) {
+                                                              var color
+                                                              var isApprove
+                                     if(dataArr[i].isApproved){
+                                         color='green'
+                                         isApprove='Published'
+                                     }   else{
+                                         color='orange;border-radius:4px'
+                                         isApprove=' Under Review '
+                                     }
+
+                                    html +=
+                                        `<div class="threadbottombordercategory next">
+                                        <div class="row">
+                                            <div class="col-lg-12 col-md-12 col-sm-12 profilepadgeformlist" style="border-bottom:2px solid grey">
+                                                <a   href=/forum-thread/${dataArr[i].id}><span class="threadcategorytotaldivwhitefixedfsd" style:margin-right:10px>
+                                                    ${dataArr[i].title} - <span style="font-weight:bold !important;color:${color}">  ${isApprove} </span></span><br>
+                                                </a>
+                                            </div>
+
+                                        </div>
+                                    </div>`
+
+                                      // "<div class='sample-user'>" +
+                                      // "<h3>ID: " +
+                                      // dataArr[i]._id +
+                                      // "</h3>" +
+                                      // `<a   href=/threads?category=${dataArr[i].category}>First Name: ` +
+                                      // dataArr[i].category +
+                                      // `</a>` +
+                                      // // "<p>Last Name: " + dataArr[i].lastname + "</p>" +
+                                      // // "<p>Last Modified At: " + dataArr[i].lastmodified + "</p>" +
+                                      // // "<p>Created At: " + dataArr[i].created + "</p>" +
+                                      // "</div>" +
+                                      // "<hr />";
+                                  }
+                                  $("#renderThreadsPagea").html(html);
+                                }
+                              },
+                              error: function (jqXHR, textStatus, errorThrown) {
+                                console.log(jqXHR);
+                                console.log(textStatus);
+                                console.log(errorThrown);
+                              },
+                            });
+                          }
+
+
+                            </script>
+
+
+
+
+
+                </div>
+                <div class="tab-pane fade demotab" style="overflow: scroll;" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+
+
+                    <div id="renderThreadsPagea" >
+                        <!-- <div class="threadbottombordercategory">
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12">
+                                    <span class="threadcategorytotaldivwhitefixedfsd">
+                                        Took the Certified Residential Exam a 3rd time yesterday...</span><br>
+                                </div>
+
+                            </div>
+                        </div> -->
+                         </div>
+
+
+
+                         <!-- <script>
+                            window.onload=function(){
+                            var url_string = window.location.href
+                         url_string= url_string.split('=')[1]
+                        console.log(url_string);
+                        getdata("url_string")
+                            }
+                        // var url = new URL(url_string);
+                        // var c = url.searchParams.get("id");
+                        // console.log('hello');
+                        function getdata(category) {
+
+                          var html = "";
+                            // ajax() method to make api calls
+                            $.ajax({
+                              url: `http://localhost:3500/api/v1/forum-thread?category=Second%20Category`,
+                              type: "GET",
+                              data: {
+                                page: 1,
+                                // limit: 5,
+                                // category:`${category}`
+                                // user: "60770e0a4bc5681bb8ac0616",
+                              },
+                             beforeSend: function () {
+
+                              var html =
+                              `<div class=loader_wrap>
+                              <div class="loader"></div>
+                              </div>`;
+                        $('#spinn').html(html)
+                            },
+                              success: function (data) {
+                                console.log(data);
+                         $("#spinn").hide();
+                                if (data.status) {
+                                  var dataArr = data.data;
+                                  totalrecord = data.totalRecord;
+
+
+
+                                  for (var i = 0; i < dataArr.length; i++) {
+                                    html +=
+
+                                        `<div class="threadbottombordercategory">
+                                        <div class="row">
+                                            <div class="col-lg-12 col-md-12 col-sm-12 profilepadgeformlist" style="border-bottom:2px solid grey">
+                                                <a   href=/forum-thread/${dataArr[i].id}><span class="threadcategorytotaldivwhitefixedfsd">
+                                                    ${dataArr[i].title}</span><br>
+                                                </a>
+                                            </div>
+
+                                        </div>
+                                    </div>`
+
+                                      // "<div class='sample-user'>" +
+                                      // "<h3>ID: " +
+                                      // dataArr[i]._id +
+                                      // "</h3>" +
+                                      // `<a   href=/threads?category=${dataArr[i].category}>First Name: ` +
+                                      // dataArr[i].category +
+                                      // `</a>` +
+                                      // // "<p>Last Name: " + dataArr[i].lastname + "</p>" +
+                                      // // "<p>Last Modified At: " + dataArr[i].lastmodified + "</p>" +
+                                      // // "<p>Created At: " + dataArr[i].created + "</p>" +
+                                      // "</div>" +
+                                      // "<hr />";
+                                  }
+                                  $("#renderThreadsPagea").html(html);
+                                  $("#renderThreadsPage").html(html);
+                                }
+                              },
+                              error: function (jqXHR, textStatus, errorThrown) {
+                                console.log(jqXHR);
+                                console.log(textStatus);
+                                console.log(errorThrown);
+                              },
+                            });
+                          }
+
+
+                            </script> -->
+
+
+                </div>
+                <div class="tab-pane fade " id="createforum" role="tabpanel" aria-labelledby="createforum-tab">
+                    <div class="newprofileform">
+
+                        <form id="forumCreate">
+                            <input class="newprofileinput" type="text" name="" id="forum-title" placeholder="Heading...." required>
+                            <select class="newprofileinputse" name="" id="forum-category" required>
+
+                                <option ></option>
+                                <%var i=0%>
+                                <%category.forEach(function(category){%>
+
+                                    <option value="<%=i%>" ><%=category.name%></option>
+                                    <option value="<%=i+1%>" style="display: none;"><%=category._id%></option>
+
+                                <%i=i+1%>
+                                <%})%>
+
+                            </select>
+                            <input type="hidden" name="userId" id="userId" value="<%=user.id%>" >
+                            <textarea name="" class="newprofileinput forum-content"style="height:14rem" id="desca" cols="30" rows="20"
+                                placeholder="Type your content here" required></textarea>
+                                <a style="text-align: center; margin-left: 6rem;" for="">Please Upload only PDF or .ZIP file</a>
+                                <input type="file" accept=".pdf,.zip" name="" id="forumDoc"  style="border: none;display: block;margin: auto;">
+                            <button type="submit" class="newprofilepostbutton btn create-forum-btn" id="create-forum-btn">Post</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="tab-pane fade demotab" id="updatepasswordprofile" role="tabpanel"
+                    aria-labelledby="updatepasswordprofile-tab">
+
+                    <div>
+                        <form action="" id="updatePasswordForm" class="updatepassword">
+                            <h2>Update Password</h2>
+                            <input type="password" id="currentPassword" name="" placeholder="Current Password" required><br>
+
+                            <input type="password" id="newPassword" name="" placeholder="New Password" required><br>
+
+                            <!-- <input type="password" id="confirmPassword" name="" placeholder="Confirm New Password"><br> -->
+
+                            <input type="submit" id="updatePassBtn" class="btn updatePassBtn" style="background-color: rgb(100,124,188); color: white;font-weight: bold;" value="Sumit">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<script>
+    var main_type = -1;
+    async function load_values_into_modal(type , index){
+        if(index === -1){
+            //empty data
+            modal_form.reset();
+            return;
+        }
+        let user_data = await axios.get(`/api/v1/user?_id=${'<%=user.id%>'}`)
+        switch(type){
+            case 0: {
+                //education fields need to be filled
+                //perform an axios request to get user data
+                let degree_data = user_data.data.user[0].degree ;
+                Array.from(education_modal_inner.children).forEach((element , c_index)=>{
+                    switch(c_index){
+                        case 0:{
+                            element.children[1].value = degree_data[index].degree;
+                            break;
+                        }
+                        case 1:{
+                            element.children[1].value = degree_data[index].fromDate;
+                            break;
+                        }
+                        case 2:{
+                            element.children[1].value = degree_data[index].toDate;
+                            break;
+                        }
+                        case 3:{
+                            element.children[1].value = degree_data[index].college;
+                            break;
+                        }
+                        case 4:{
+                            element.children[1].value = degree_data[index].university;
+                            break;
+                        }
+                        case 5:{
+                            element.children[1].value = degree_data[index].spec;
+                            break;
+                        }
+                    }
+
+                })
+                break;
+            }
+
+
+
+            case 1 : {
+                //for experience
+                let exp_data = user_data.data.user[0].experience ;
+                Array.from(xp_modal_inner.children).forEach((element , c_index)=>{
+                    switch(c_index){
+                        case 0:{
+                            element.children[1].value = exp_data[index].designation;
+                            break;
+                        }
+                        case 1:{
+                            element.children[1].value = exp_data[index].organization;
+                            break;
+                        }
+                        case 2:{
+                            element.children[1].value = exp_data[index].toDate;
+                            break;
+                        }
+                        case 3:{
+                            element.children[1].value = exp_data[index].fromDate;
+                            break;
+                        }
+                    }
+
+                })
+                break;
+            }
+
+            case 2:{
+                //contact info
+                let contact_data = (user_data.data.user[0]);
+                Array.from(contact_info_modal_inner.children).forEach((element , c_index)=>{
+                    switch(c_index){
+                        case 0:{
+                            element.children[1].value = contact_data.phoneNo || '';
+                            break;
+                        }
+                        case 1:{
+                            element.children[1].value = contact_data.about || '';
+                            break;
+                        }
+                        case 2:{
+                            element.children[1].value = contact_data.email || '';
+                            break;
+                        }
+                        case 3:{
+                            element.children[1].value = contact_data.address || '';
+                            break;
+                        }
+                        case 4:{
+                            element.children[1].value = contact_data.website || '';
+                            break;
+                        }
+                        case 5:{
+                            element.children[1].value = contact_data.linkedIn || '';
+                            break;
+                        }
+                        case 6:{
+                            element.children[1].value = contact_data.position || '';
+                        }
+                    }
+
+                })
+            }
+
+
+                    }
+            }
+
+
+    //element declarations start here
+    let modal = document.querySelector('div.my-modal-wrapper');
+    let modal_form = document.querySelector('form.my-modal');
+    let modal_main = document.querySelector('div.my-modal-wrapper div.modal-inner');
+    let modal_button = document.querySelector("div.my-modal-wrapper input[type='submit']");
+    let education_modal_inner = document.querySelector('div.my-modal-wrapper div.education');
+    let xp_modal_inner = document.querySelector('div.my-modal-wrapper div.experience');
+    let contact_info_modal_inner = document.querySelector('div.my-modal-wrapper div.contact-info');
+    //element decalarations end here
+
+    const set_modal_config = (type)=>{
+        modal.setAttribute('type',type);
+    }
+
+
+
+    // modal_button.addEventListener('click' , (e)=>{
+    //     e.preventDefault();
+    //     let dict = {};
+    //     Array.from(modal_form.children[main_type].children).forEach((element , index)=>{
+    //         dict[element.children[1].name] = element.children[1].value;
+    //     });
+
+    //     console.log(dict);
+    // });
+
+    function closeModal(){
+        main_type = -1;
+        modal.removeAttribute('type');
+    }
+
+    function openModal(type , index){
+            set_modal_config(type);
+            main_type = type;
+        switch(type){
+            case 0: {
+                //for education
+                load_values_into_modal(type , index);
+                break;
+            }
+            case 1:{
+                load_values_into_modal(type , index);
+                break;
+            }
+            case 2:{
+                load_values_into_modal(type , index);
+                break;
+            }
+        }
+    };
+
+</script>
+
+
+
+<script src="/js/userProfileContactUpdate.js"></script>
+
+<script src="/js/clientCreateForumAxios.js"></script>
+<script src="/js/updatePasswordAxios.js"></script>
+
+
+<%- include("partials/footer") %>

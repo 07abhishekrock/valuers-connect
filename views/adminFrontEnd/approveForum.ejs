@@ -1,0 +1,132 @@
+<%- include("partials/header") %>
+<div>
+    <h2 style="text-align: center; font-weight: bold;margin-top: 20px;">
+      Approve/Decline List
+    </h2>
+  </div>
+<div class="adminlisttotaldiv">
+
+    <table class="table table-hover">
+        <thead>
+            <tr>
+			<!-- <th scope="col bigcol">
+				Details
+			 </th> -->
+                <th scope="col bigcol">
+                   Forum Title
+                </th>
+                
+                <th scope="col smallcolumn" style="text-align: center;">
+                    Approve / Decline
+                </th>
+            </tr>
+
+        </thead>
+		<%forum.forEach(function(forum){%>
+        <tbody id="adminapprovedeclineajaxdiv">
+            <tr>
+                <td><a   href="/forum-thread/<%=forum._id%>"><%=forum.title%></a></td>
+                <td style="text-align: center;">
+                    <a  class="btn btn-success approve-btn" forumID="<%=forum._id%>" category="<%=forum.category%>">Approve</a> <a   href='/api/v1/forum-thread/deny/<%=forum._id%>' class="btn btn-danger">Decline</a>
+                </td>
+            </tr>
+        </tbody>
+		<%})%>
+    </table>
+
+</div>
+<!-- <script>
+    $(function () {
+	var page = 1,
+		limit = 5,
+		totalrecord = 0;
+
+	fetchData();
+
+	$(".prev-btn").on("click", function () {
+		if (page > 1) {
+			page--;
+			fetchData();
+		}
+		console.log("Prev Page: " + page);
+	});
+
+	// handling the next-btn
+	$(".next-btn").on("click", function () {
+		if (page * limit < totalrecord) {
+			page++;
+			fetchData();
+		}
+		console.log("Next Page: " + page);
+	});
+
+	function fetchData() {
+		// ajax() method to make api calls
+		$.ajax({
+			url: "http://localhost:3500/api/v1/blog",
+			type: "GET",
+			data: {
+				page: page,
+				limit: 15,
+			},
+			success: function (data) {
+				console.log(data);
+
+				if (data.status) {
+					var dataArr = data.data;
+					totalrecord = data.totalRecord;
+					console.log(dataArr);
+
+					var html = "";
+
+					for (var i = 0; i < dataArr.length; i++) {
+						var u = i + 1;
+						html +=
+							`<tr><td><button class="btn btn-info">View</button></td>
+                <td>This is Forum Title</td>
+                <td style="text-align: center;">
+                    <button class="btn btn-success" >Approve</button> <button class="btn btn-danger">Decline</button>
+                </td>
+            </tr>`;
+					}
+					$("#adminapprovedeclineajaxdiv").html(html);
+				}
+			},
+			error: function (jqXHR, textStatus, errorThrown) {
+				console.log(jqXHR);
+				console.log(textStatus);
+				console.log(errorThrown);
+			},
+		});
+	}
+});
+
+</script> -->
+<script>
+	let a_tags = document.querySelectorAll('a.approve-btn');
+	a_tags.forEach((element)=>{
+		element.addEventListener('click',async (e)=>{
+			e.preventDefault();
+			let category = e.target.getAttribute('category');
+			let current_thread_count = await axios({
+				method:"GET",
+				url : `/api/v1/category/${category}`
+			})
+			current_thread_count = current_thread_count.data.data.category.totalThreads;
+			let final_url = (window.location.origin + '/api/v1/forum-thread/approve/' + e.target.getAttribute('forumID'));
+
+			const res = await axios({
+			method: "PATCH",
+			url: `/api/v1/category/${category}`,
+			data:{
+				totalThreads : current_thread_count + 1
+			},
+			});
+
+			if(res.data && res.data.status === 'success'){
+				window.location.href = final_url;
+			}
+		});
+	})
+</script>
+<%- include("partials/footer") %>

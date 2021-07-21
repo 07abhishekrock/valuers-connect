@@ -1,0 +1,167 @@
+.loginwhitebga {
+    background-color: white;
+    width: 500px;
+    height: auto;
+    margin: auto;
+    padding-top: 25px;
+}
+
+.signupflname input {
+    padding: 5px 0 5px 20px;
+    border-radius: 20px;
+    width: 160px;
+    margin-bottom: 10px;
+    outline: none;
+    border: 1px solid black;
+}
+
+.signupflname p {
+    color: #436475;
+    font-size: 18px;
+    font-weight: bolder;
+    text-align: left;
+    line-height: 0.1;
+    margin-top: 20px;
+}
+
+.signupflname {
+    display: flex;
+    width: 350px;
+    margin-top: 50px;
+    margin: auto;
+}
+
+.signupflname div {
+    width: 350px;
+    margin-top: 50px;
+}
+
+.greencolortextlogina {
+    display: block;
+    margin: auto;
+    text-align: center;
+    margin-top: 0px;
+    width: 350px;
+}
+
+.greencolortextlogina p {
+    color: #436475;
+    font-size: 18px;
+    font-weight: bolder;
+    text-align: left;
+    line-height: 0.1;
+    margin-top: 20px;
+}
+
+.greencolortextlogina input {
+    padding: 5px 0 5px 20px;
+    border-radius: 20px;
+    width: 350px;
+    margin-bottom: 10px;
+    outline: none;
+    border: 1px solid black;
+}
+
+.signupflnamemargnauto {
+    display: block;
+    margin: auto;
+    justify-content: center;
+    align-items: center;
+}
+
+.signupselectoption {
+    padding: 5px 0 5px 20px;
+    border-radius: 20px;
+    width: 350px;
+    margin-bottom: 10px;
+    outline: none;
+    color: #436475;
+    font-size: 18px;
+    font-weight: bolder;
+    text-align: left;
+}
+
+@media(max-width:515px) {
+    .loginwhitebga {
+        background-color: white;
+        width: 95%;
+        height: auto;
+        margin: auto;
+        padding-top: 25px;
+    }
+
+    .signupflname input {
+        padding: 5px 0 5px 20px;
+        border-radius: 20px;
+        width: 90%;
+        margin-bottom: 0px;
+        outline: none;
+        border: 1px solid black;
+    }
+
+    .signupflname p {
+        color: #436475;
+        font-size: 14px;
+        font-weight: bolder;
+        text-align: left;
+        line-height: 0.1;
+        margin-top: 0px;
+    }
+
+    .signupflname {
+        display: block;
+        width: 100%;
+        margin: auto;
+        padding-left: 30px;
+        margin-top: 50px;
+    }
+
+    .signupflname div {
+        width: 100%;
+        margin-top: 0px;
+    }
+
+    .greencolortextlogina {
+        display: block;
+        margin: auto;
+        text-align: left;
+        margin-top: 0px;
+        width: 100%;
+        padding-left: 30px;
+    }
+
+    .greencolortextlogina p {
+        color: #436475;
+        font-size: 14px;
+        font-weight: bolder;
+        text-align: left;
+        line-height: 0.1;
+        margin-top: 20px;
+    }
+
+    .greencolortextlogina input {
+        padding: 5px 0 5px 20px;
+        border-radius: 20px;
+        width: 90%;
+        margin-bottom: 10px;
+        outline: none;
+        border: 1px solid black;
+    }
+
+    .signupflnamemargnauto {
+        display: block;
+        margin: auto;
+    }
+
+    .signupselectoption {
+        padding: 5px 0 5px 0px;
+        border-radius: 20px;
+        width: 90%;
+        margin-bottom: 10px;
+        outline: none;
+        color: #436475;
+        font-size: 18px;
+        font-weight: bolder;
+        text-align: left;
+    }
+}

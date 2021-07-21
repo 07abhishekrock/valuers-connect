@@ -1,0 +1,188 @@
+<%- include("partials/header") %>
+
+<div class="container tendind" style="margin-top: 100px">
+  <div class="tenderindividualseperate">
+    <div>
+      <div class="row clienttendercontentbodya">
+        <div class="col-lg-4">
+          <a href="" class="tenderindividualbold"> Listing ID </a>
+        </div>
+        <div class="col-lg-8"><span> <%=project.id%></span><br /></div>
+      </div>
+      <div class="row clienttendercontentbodya">
+        <div class="col-lg-4">
+          <a href="" class="tenderindividualbold"> Institution </a>
+        </div>
+        <div class="col-lg-8">
+          <span> <%=project.institutionName%></span><br />
+        </div>
+      </div>
+      <div class="row clienttendercontentbodya">
+        <div class="col-lg-4">
+          <a href="" class="tenderindividualbold"> Asset Type </a>
+        </div>
+        <div class="col-lg-8">
+          <p><b><%=project.category%></b></p>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-4">
+          <a href="" class="tenderindividualbold lasttabletenderrow">
+            Asset Location
+          </a>
+        </div>
+        <div class="col-lg-8">
+          <span><%=project.assetLocation%></span><br />
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-4">
+          <a href="" class="tenderindividualbold lasttabletenderrow"> City </a>
+        </div>
+        <div class="col-lg-8"><span><%=project.assetCity%></span><br /></div>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-4">
+          <a href="" class="tenderindividualbold lasttabletenderrow">
+            Reserve Price
+          </a>
+        </div>
+        <div class="col-lg-8">
+          <span>₹ <%=project.reservePrice%></span><br />
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-4">
+          <a href="" class="tenderindividualbold lasttabletenderrow">
+            Auction Date Time
+          </a>
+        </div>
+        <div class="col-lg-8"><span><%=project.auctionDate%></span><br /></div>
+      </div>
+<br />
+      <div class="row">
+        <div class="col-lg-4">
+          <a href="" class="tenderindividualbold lasttabletenderrow">
+            Documents Available
+          </a>
+        </div>
+        <%if(user.isMember){%> 
+            <%if(project.projectDocuments !== null && project.projectDocuments !== "" && project.projectDocuments !== undefined && project.projectDocuments !== "undefined"){%>
+
+        <div class="col-lg-8">
+          <a
+            target="_blank"
+            rel="noopener noreferrer"
+            href="<%=project.projectDocuments%>"
+            ><span>View Documents</span></a
+          ><br />
+        </div>
+        <%}else{%>
+        <div class="col-lg-8">
+          <p><b>N / A</b></p>
+        </div>
+        <%}%>
+        <%}else{%>
+        <div class="col-lg-8">
+          <a href=""><span>Subscription Required To View Documents</span></a
+          ><br />
+        </div>
+        <%}%>
+      </div>
+    </div>
+  </div>
+
+  <div class="tenderindividualseperate">
+    <div>
+      <div class="row clienttendercontentbodya">
+        <div class="col-lg-4">
+          <a href="" class="tenderindividualbold"> Last Date for Submission </a>
+        </div>
+        <div class="col-lg-8">
+          <span><%=project.applicationDeadline%></span><br />
+        </div>
+      </div>
+
+      <!-- <div class="row ">
+                <div class="col-lg-4">
+                    <a   href="" class="tenderindividualbold lasttabletenderrow">
+                        Opening Date
+                    </a>
+                </div>
+                <div class="col-lg-8 ">
+                    <span>&nbsp; 05-05-2021</span><br>
+                </div>
+            </div> -->
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  id="exampleModalCenter"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">...</div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+          Close
+        </button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script
+  src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+  integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+  crossorigin="anonymous"
+></script>
+<script
+  src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+  integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+  crossorigin="anonymous"
+></script>
+<script
+  src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+  integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+  crossorigin="anonymous"
+></script>
+<!-- <script src="./dropdown.js"></script> -->
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<!--<script>
+  window.jQuery || document.write('<script src="js/vendor/jquery-3.3.1.min.js"> <\/script>')
+</script>
+<script src="../Trumbowyg-master/dist/trumbowyg.min.js"></script>
+<script src="../Trumbowyg-master/dist/plugins/insertaudio/trumbowyg.insertaudio.min.js"></script>
+
+
+<script>
+  $('#desc').trumbowyg();
+</script> -->
+<!-- <script src="http://3500/js/tenderListAjax.js"></script> -->
+<!-- </body>
+
+</html> -->
+<%- include("partials/footer") %>

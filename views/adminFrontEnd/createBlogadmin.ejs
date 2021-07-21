@@ -1,0 +1,27 @@
+<%- include("partials/header") %>
+<form action="/api/v1/blog/" id="blogformcreate" method="POST" class="newsformcreate blogformcreate">
+
+    <h1>Create Blog</h1>
+    <span>Title</span>
+    <input type="text" name="title" id="blog_title" placeholder="Title"><br>
+    <!-- <input type="text" id="inputdateformat" data-date="" data-date-format="DD/MM/YYYY"
+        value=""><br> -->
+    <span>Category</span>
+    <input type="text" name="category" id="blog_category" placeholder="Category">
+    <span>Content</span>
+    <textarea name="content" id="desc" class="blog_content" cols="30" rows="10" placeholder="This is content"></textarea><br>
+    <!-- <input type="file" name="" id="" style="width: 2rem;border: none;"> -->
+
+        <!-- please make sure that there is a folder for storing blogs or else this creating new blog will return 500 server error-->
+    <span><b>Thumbnail Image </b>File Resolution should be 320 X 350</span>
+    <input type="file" class="blogThumbnailImage" name="blogThumbnailImage" id="" style="border: none;" required>
+
+
+    <span><b>Banner Image </b>File Resolution should be 900 X 500</span>
+    <input type="file" class="blogFeatureImage" name="blogFeatureImage" id="" style="border: none;" required>
+
+    <button id="createBlog_btn" type="submit">Post</button>
+</form>
+<script src="/js/createBlogAxios.js"></script>
+
+<%- include("partials/footer") %>

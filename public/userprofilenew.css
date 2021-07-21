@@ -1,0 +1,356 @@
+.profilebackgroundnew {
+    background-image: url("../imagesall/profilebackground.jpg");
+    width: 100%;
+    height: 200px;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    border-radius: 20px;
+}
+
+.newprofilepagewidth {
+    width: 90%;
+    margin: auto;
+}
+
+.profilephotonew {
+    width: 200px;
+    height: 200px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    border-radius: 50%;
+    margin-top: -100px;
+    margin-left: 50px;
+    flex-shrink: 0;
+}
+
+.profilephotoname {
+    display: flex;
+    line-height: 0.8;
+}
+
+.profilecontentnew {
+    font-weight: 500;
+    font-size: 30px;
+    margin-left: 20px;
+    margin-top: 20px;
+    display:flex;
+    padding-right:0.5em;
+    align-items:center;
+    justify-content:space-between;
+}
+
+@media only screen and (max-width:700px){
+    .profilecontentnew{
+        flex-flow:column;
+    }
+    .profilecontentnew a{
+        margin-top:0.5em;
+    }
+}
+
+.profilecontentdescriptionnew {
+    font-weight: 500;
+    font-size: 15px;
+    margin-left: 20px;
+    color: grey;
+    line-height:1.5em;
+}
+
+.aboutpennewprofile {
+    float: right;
+    margin-right: 30px;
+}
+
+.aboutnewprofilediv {
+    margin-left: 50px;
+    margin-top: 30px;
+}
+
+.aboutnewprofiletag {
+    color: gray;
+    font-size: 30px;
+    font-weight: 500;
+}
+
+.totalmargibottomnewprofile {
+    padding-top: 50px;
+    background-color: rgb(253, 250, 244);
+    font-family:"Rubik" , sans-serif;
+    padding-bottom: 50px;
+}
+
+.newprofileaboutdesc {
+    width: 90%;
+    font-weight: 500;
+    color: grey;
+    overflow-wrap:break-word;
+}
+
+.peopleyoumayknow {
+    width: 40px;
+    height: 40px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-radius: 100%;
+    margin-right: 15px;
+}
+
+.peopleyoumayknowflex {
+    padding: 50x 0 5px 10px;
+}
+
+.peopleyoumayknowtoataldiv {
+    margin-top: 20px;
+    height: 320px;
+}
+
+.peopleyoumayknowheading {
+    text-align: center;
+}
+@media(max-width:1000px){
+    .peopleyoumayknowfullcard{
+        margin-top: 30px !important;
+    }
+}
+
+.peopleyoumayknowfullcard {
+    margin: auto;
+    background-color: white;
+    -webkit-box-shadow: 0px 0px 6px 1px rgba(0, 0, 0, 0.29);
+    -moz-box-shadow: 0px 0px 6px 1px rgba(0, 0, 0, 0.29);
+    box-shadow: 0px 0px 6px 1px rgba(0, 0, 0, 0.29);
+    border-radius: 25px;
+    padding: 20px;
+    padding-top: 70px;
+}
+
+.pictureshadow {
+    background-color: white;
+    -webkit-box-shadow: 0px 0px 6px 1px rgba(0, 0, 0, 0.29);
+    -moz-box-shadow: 0px 0px 6px 1px rgba(0, 0, 0, 0.29);
+    box-shadow: 0px 0px 6px 1px rgba(0, 0, 0, 0.29);
+    border-radius: 20px;
+}
+
+.peopleyoumayknowborder {
+    border-bottom: 1px solid lightgray;
+    width: 80%;
+    margin: auto;
+    padding: 10px 0 10px 0;
+}
+
+.viewmorepyk {
+    text-align: center;
+    margin-top: -20px;
+}
+
+.overviewtotaldiv {
+    margin-top: 30px;
+    -webkit-box-shadow: 0px 0px 6px 1px rgba(0, 0, 0, 0.29);
+    -moz-box-shadow: 0px 0px 6px 1px rgba(0, 0, 0, 0.29);
+    box-shadow: 0px 0px 6px 1px rgba(0, 0, 0, 0.29);
+    background-color: white;
+    border-radius: 30px;
+    padding: 0 0 25px 0;
+}
+
+.overview li .active {
+    color: #4430FF !important;
+}
+
+.overview li .nav-link {
+    color: grey;
+    font-size: 1.1em;
+    margin: 20px 0px 0 0px;
+    padding: 0 30px 0px 30px;
+    padding-bottom:10px;
+    border: none;
+    border-radius: 20px 0 0 0px;
+}
+
+.overview {
+    border-bottom: none;
+}
+
+.rtborder {
+    border-right: 1px solid lightgray !important;
+}
+
+.overview li .active .overviewbottombrdr {
+    display: inline;
+    border-bottom: 3px solid #4430FF !important;
+}
+
+.educationtotaldiv {
+    margin-top: 30px;
+    background-color: white;
+    -webkit-box-shadow: 0px 0px 6px 1px rgba(0, 0, 0, 0.29);
+    -moz-box-shadow: 0px 0px 6px 1px rgba(0, 0, 0, 0.29);
+    box-shadow: 0px 0px 6px 1px rgba(0, 0, 0, 0.29);
+    border-radius: 25px;
+}
+
+.educatioplacebg {
+    background-image: url("/assets/education.png");
+    width: 70px;
+    height: 70px;
+    margin-right: 20px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    border-radius: 100%;
+}
+
+.educationboxflex {
+    display: flex;
+    padding: 20px 0 0px 130px;
+}
+
+.Universityname {
+    font-weight: bold;
+    font-size: 17px;
+    border-bottom: 1px solid lightgray;
+}
+
+.educationyearprofile {
+    font-size: 13px;
+    color: grey;
+}
+
+.educationheading {
+    padding-left: 80px;
+    font-size: 25px;
+}
+
+.educationpen {
+    color: grey;
+    float: right;
+    margin-right: 30px;
+    font-size: 25px;
+    margin-top: 20px;
+}
+
+.edutotaldiv {
+    margin-top: 0px;
+}
+.edutotaldivaa{
+    margin-top: 50px;
+}
+.paddingleftfulltime {
+    padding-left: 40px;
+}
+
+.borderrtmarginsmall {
+    margin-top: 30px;
+    border-right: 2px solid grey !important;
+    margin-bottom: 30px;
+}
+
+.profilecontacttable table tr td:nth-child(1) {
+    font-size: 20px;
+    font-weight: bold;
+    width: 110px !important;
+}
+
+.profilecontacttable table tr td {
+    padding: 22px 10px 20px 10px;
+    font-size: 20px;
+}
+
+.profilecontacttable table {
+    margin: auto;
+    margin-top: 20px;
+}
+.threadcategorytotaldivwhitefixedfsd{
+    font-size: 20px;
+}
+.profilepadgeformlist{
+padding: 10px 0 10px 0;
+}
+.profilepadgeformlist a{
+text-decoration: none;
+color: black;
+font-weight: 400;
+}
+
+.demotab {
+    height: 500px;
+    padding: 50px;
+}
+.newprofileinputse{
+    width: 75%;
+    height: 65px;
+    font-size: 25px;
+    border-radius: 20px;
+    border: 1px solid black;
+    outline: none;
+    display: block;
+    margin: 10px auto 20px auto;
+    padding: 10px 0 10px 40px;
+}
+
+.newprofileinput {
+    display: block;
+    margin: 10px auto 20px auto;
+    width: 75%;
+    height: 50px;
+    padding: 30px 0 30px 40px;
+    font-size: 25px;
+    border-radius: 20px;
+    border: 1px solid black;
+    outline: none;
+}
+
+.newprofileform {
+    padding: 40px 0 40px 0 !important;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.newprofilepostbutton {
+    width: 200px;
+    height: 50px;
+    font-size: 20px;
+    background-color: #4430FF;
+    color: white;
+    display: block;
+    margin: auto;
+    margin-top: 30px;
+    border-radius: 25px;
+}
+
+.messageuserpublicprofile {
+    float: right;
+    margin-top: -10px;
+    margin-right: 20px;
+}
+
+.messageuserpublicprofilemarginright {
+    margin-right: 10px;
+}
+.mrpprofile{
+    float: right;
+}
+.updatepassword h2{
+    font-weight: bold;
+    text-align: center;
+}
+.updatepassword input{
+    width: 55%;
+    height: 50px;
+    margin: 20px auto 0px auto;
+    display: block;
+    padding-left: 20px;
+    border-radius: 20px;
+    border: 1px solid black;
+}
+.updatepassword input:focus{
+    outline: none;
+}
+#photoinputreg{
+    border: none;
+}

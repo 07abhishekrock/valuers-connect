@@ -1,0 +1,79 @@
+body{    
+    overflow-x: hidden;
+}
+.comingsoondiv{
+    font-size: 130px;
+    font-weight: bolder;
+    color: white;
+    text-align: center;
+    padding-top: 200px;
+    letter-spacing: 5px;
+    background-image: url("../imagesall/ranger.png");
+    width: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100vh;
+}
+.comingsooncontactus p{
+    font-size: 60px;
+    padding: 80px 0 0px 0;
+}
+.comingsoondiv button i{
+    padding-right: 10px;
+}
+.comigsoonform input{
+    margin:0px 0 20px 0;
+    width: 100%;
+}
+.comigsoonform textarea{
+    width: 100%;
+}
+.comigsoonform button{
+    display: block;
+    margin: 20px auto 0 auto;
+}
+.comingsooncontactus{
+}
+.comingsooncontactusbg{
+    background-color: rgb(230, 230, 230);
+    padding: 50px 0 50px 0;
+    
+}
+@media(max-width:578px){
+    .comingsoondiv{
+        font-size: 80px;
+        font-weight: bolder;
+        letter-spacing: 0px;
+        color: white;
+        text-align: center;
+        background-image: url("../imagesall/ranger.png");
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;        
+    padding-top: 150px;
+    }
+    .comingsooncontactus p{
+        font-size: 60px;
+        padding: 80px 0 0px 0;
+    }
+    .comingsoondiv button i{
+        padding-right: 10px;
+    }
+    .comigsoonform input{
+        margin:0px 0 20px 0;
+        width: 100%;
+    }
+    .comigsoonform textarea{
+        width: 100%;
+    }
+    .comigsoonform button{
+        display: block;
+        margin: 20px auto 0 auto;
+    }
+    .comingsooncontactusbg{
+        background-color: rgb(230, 230, 230);
+        padding: 50px 0 50px 0;
+        
+    }
+}

@@ -1,0 +1,66 @@
+.jobsingleheading {
+    font-size: 70px;
+    text-align: center;
+    font-weight: bolder;
+    background-color: #1C272B;
+    color: white;
+    padding: 100px 0 100px 0;
+}
+
+
+.jobsingledescparawidth {
+    width: 65%;
+    margin: auto;
+    font-size: 20px;
+    margin-top: 80px;
+}
+
+.josingleresponsibities {
+    width: 65%;
+    margin: auto;
+    margin-top: 50px;
+}
+
+.josingleresponsibities li {
+    font-size: 20px;
+    width: 90%;
+}
+
+.jobsinglebutton {
+    width: 180px;
+    font-size: 20px;
+    font-weight: bold;
+    color: white;
+    background-color: #FF6C37;
+    padding: 20px;
+    border: none;
+    cursor: pointer;
+    margin-top: 100px;
+}
+
+.jobsingletopmargintotal {
+    margin-bottom: 50px;
+}
+
+@media(max-width:550px) {
+    .jobsingledescparawidth {
+        width: 90%;
+        margin: auto;
+        font-size: 20px;
+        margin-top: 80px;
+    }
+
+    .josingleresponsibities {
+        font-size: 20px;
+        width: 90%;
+    }
+
+    .jobsingleheading {
+        font-size: 40px;
+        text-align: center;
+        font-weight: bolder;
+        background-color: #1C272B;
+        color: white;
+        padding: 100px 0 100px 0;
+    }
+}

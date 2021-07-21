@@ -1,0 +1,68 @@
+<%- include("partials/header") %>
+<head>
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+</head>
+
+<div class="logintotalbggreen">
+  <div class="loginwhitebg">
+    <div class="loginheading">
+      <p>Welcome Back</p>
+    </div>
+    <form id="loginform">
+      <div class="greencolortextlogin">
+        <p>Email Address</p>
+        <input type="email" name="" id="email-login" />
+
+        <p>Password</p>
+        <input type="password" name="" id="password-login" />
+      </div>
+      <div>
+        <div class="rememberdiv">
+          <input style="visibility: hidden" type="checkbox" name="" id="" />
+          <span></span>
+          <a href="/forgot-password">Forgot Password?</a>
+        </div>
+      </div>
+      <div 
+        class="g-recaptcha"
+        id="captcha"
+        data-sitekey="6LeXKAEbAAAAAJH4tMsBdBNJlkE2kMl_1sxFWh07"
+        data-callback="submitCaptcha"
+      ></div>
+
+      <button type="submit" style="cursor:not-allowed;background: grey;" class="loginbutton" disabled="true">
+        Login
+      </button>
+      <br><p style="text-align: center; margin-top: 1rem;">New to ValuersConnect? <a href="/signup"><b>Signup</b>></a></p>
+
+    </form>
+  </div>
+
+</div>
+<script>
+  function submitCaptcha(value) {
+   axios({
+       method:"post",
+       url:"/api/v1/captcha/verify",
+       data: {value}
+   })
+   .then((response)=>{
+       response = JSON.parse(response.data.response)
+       if(response.success === true){
+         let loginButton = document.querySelector(".loginbutton");
+         loginButton.style.background = "#436475";
+         loginButton.removeAttribute("disabled");
+         loginButton.style.cursor = "pointer";
+       }
+       else{
+         window.alert("Captcha Verification Failed!. Try Again.");
+         window.location.reload();
+       }
+   })
+   .catch((err)=>{
+       console.log(err.message)
+   });
+  }
+</script>
+
+<%- include("partials/footer") %>

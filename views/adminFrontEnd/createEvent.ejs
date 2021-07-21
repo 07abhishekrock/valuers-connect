@@ -1,0 +1,105 @@
+<%- include("partials/header") %>
+<form action="" class="newsformcreate upcomingeventformAdmin">
+
+    <h1>New Event</h1>
+	<span>Enter Event Name</span>
+    <input type="text" name="title" class="upcomingETitleInputAdmin" id="" placeholder="Event Name"><br>
+	<span>From Date</span>
+	<input type="date" class="date" name="date" id="" placeholder="Time"><br>
+	<span>To Date</span>
+	<input type="date" class="todate" name="todate" id="" placeholder="Time"><br>
+	<span>Content</span>
+    <textarea name="content" class="upcomingEcontentInputAdmin" id="desc" cols="30" rows="10" placeholder="Event Description"></textarea><br>
+
+
+	<span><b>Thumbnail Image </b>File Resolution should be 250 X 300</span>
+    <input type="file" class="EventThumbnailImage" name="EventThumbnailImage" id="" style="border: none;" required>
+
+
+    <span><b>Banner Image </b>File Resolution should be 900 X 500</span>
+    <input type="file" class="EventFeatureImage" name="EventFeatureImage" id="" style="border: none;" required>
+
+
+    <button type="submit" id="create-event-new-btn">PUBLISH</button><br><br>
+</form>
+
+<script>
+    const hideAlert = () => {
+	const el = document.querySelector(".alert");
+	if (el) el.parentElement.removeChild(el);
+};
+
+// type is 'success' or 'error'
+const showAlert = (type, msg, time = 7) => {
+	hideAlert();
+	const markup = `<div class="alert alert--${type}">${msg}</div>`;
+	document.querySelector("body").insertAdjacentHTML("afterbegin", markup);
+	window.setTimeout(hideAlert, time * 1000);
+};
+
+// const createTenderAdminVal = async (emd,openingDate, lastDate, organizationDetail,tenderAuthority,brief) => {
+const createTenderAdminVal = async (form) => {
+
+	try {
+		let button = document.getElementById('create-event-new-btn');
+		button.disabled = 'true';
+		const res = await axios({
+			method: "POST",
+			url: "/api/v1/upcoming-events",
+			data:form,
+
+		});
+		button.removeAttribute('disabled');
+		if (res.data.status === "success") {
+			console.log("THIS IS RES ", res);
+			showAlert("success", "Published");
+            document.querySelector(".upcomingeventformAdmin").reset()
+		}
+	} catch (err) {
+		showAlert("error", err);
+        console.log(err);
+		// if (err.response.status === 500) {
+		// 	document.querySelector(".hideAlert").classList.remove("alert");
+		// 	document.getElementById("alert").innerHTML =
+		// 		"Cannot Submit Form Please Fill Required Field Correctly";
+		// } else {
+		// 	document.querySelector(".hideAlert").classList.remove("alert");
+		// 	document.getElementById("alert").innerHTML = err.response.data.message;
+		// }
+	}
+};
+const createTender = document.querySelector(".upcomingeventformAdmin");
+console.log(createTender);
+if (createTender) {
+	createTender.addEventListener("submit", (e) => {
+		e.preventDefault();
+        const form= new FormData()
+        form.append('title',document.querySelector(".upcomingETitleInputAdmin").value)
+        form.append('content',document.querySelector(".upcomingEcontentInputAdmin").value)
+        form.append('fromDate',document.querySelector(".date").value)
+        form.append('toDate',document.querySelector(".todate").value)
+        form.append('EventThumbnailImage',document.querySelector(".EventThumbnailImage").files[0])
+		form.append('EventFeatureImage',document.querySelector(".EventFeatureImage").files[0])
+        // form.append('lastDate',document.getElementById("lastDate").value)
+        // form.append('organizationDetail',document.getElementById("adminOrganizationDetail").value)
+        // form.append('tenderAuthority',document.getElementById("adminAuthorityIssue").value)
+        // form.append('brief', document.querySelector(".adminTenderBrief").value)
+        // form.append('documents',document.querySelector(".tenderDocuments").files[0])
+
+
+		// const emd = document.getElementById("adminEmd").value;
+		// const openingDate = document.getElementById("openingDate").value;
+		// const lastDate = document.getElementById("lastDate").value;
+		// const organizationDetail = document.getElementById("adminOrganizationDetail").value;
+		// const tenderAuthority = document.getElementById("adminAuthorityIssue").value;
+		// const brief = document.querySelector(".adminTenderBrief").value;
+
+        // console.log(emd,openingDate, lastDate, organizationDetail,tenderAuthority,brief);
+		// createTenderAdminVal(emd,openingDate, lastDate, organizationDetail,tenderAuthority,brief);
+console.log(document.querySelector(".upcomingEcontentInputAdmin").value);
+		createTenderAdminVal(form);
+	});
+}
+
+</script>
+<%- include("partials/footer") %>

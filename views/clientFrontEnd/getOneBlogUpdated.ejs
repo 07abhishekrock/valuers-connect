@@ -1,0 +1,38 @@
+
+<%- include("partials/header") %>
+    <div class="display-wrapper">
+        <div class="blog-display-wrapper">
+        <div class="blog-head">
+            <span class="date"><i class="fa fa-calendar"></i><%=getDateString(blog.createdAt)%></span>
+            <h1><%=blog.title%></h1>
+            <% if (blog.category) { %>
+                <span class="category"><%=blog.category%></span>
+            <% }else { %>
+                <span class="category">N/A</span> 
+            <%}%>
+        </div>
+
+        <div class="blog-display">
+                <img src="<%=blog.blogFeatureImage%>"/>
+
+                <div class="blog-main">
+                    <%- blog.content %>
+                </div>
+            </div>
+        </div>
+        <div class="event-vertical-container">
+                <h1>Events</h1>
+                <% upcomingEvents.forEach(event => { %>
+                    <div class="event" style="background-image:url('<%=event.featureImage%>')">
+                        <div class="top-date" month="<%=getDayAndMonth(event.fromDate)[1]%>"><%=getDayAndMonth(event.fromDate)[0]%></div>
+                        <p><a   href="/events/<%=event._id%>"><%=event.title.length > 50 ? event.title.substring(0,47) + '...' : event.title%></a></p>
+                        <div class="time-range" style="opacity:0">7:30 PM - 9:30 PM</div>
+                    </div>
+                <% }) %>
+                <a class="foot-button" href="/events">View More</a>
+        </div>
+        </div>
+            
+
+
+<%- include("partials/footer") %>

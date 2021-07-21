@@ -1,0 +1,121 @@
+<%- include("partials/header") %>
+<form action="" class="newsformcreate">
+
+    <h1>Update News</h1>
+	<span>Title</span>
+    <input type="text" name="inputtitleupdatenews" class="inputtitleupdatenews" id="" value="<%= data.title %>"><br>
+    <!-- <input type="text" id="inputdateformat" data-date="" data-date-format="DD/MM/YYYY"
+        value="<%= data.createdAt %>"><br> -->
+	<span>Content</span>
+    <textarea name="inputcontentupdatenews" id="desc" class="inputcontentupdatenews" cols="30" rows="20"><%- data.content %></textarea><br>
+    <a id="is-important" check="<%=Number(data.isImportant)%>" style="cursor:pointer;text-decoration:None;margin:2em auto;display:block;text-align:center;width:150px;border-radius:2em;padding:0.3em 1em;border:2px solid black">is Important</a>
+	
+	<span><b>Thumbnail Image </b>File Resolution should be 320 X 350</span>
+	<input type="file" class="newsThumbnailImage" name="newsThumbnailImage" id="" style="border: none;" required>
+    <span><b>Banner Image </b>File Resolution should be 900 X 500</span>
+	<input type="file" class="newsFeatureImage" name="newsFeatureImage" id="" style="border: none;" required>
+	
+    <button type="submit" id="update-news-btn">UPDATE</button>
+</form>
+
+
+
+<script>
+
+    let is_important = document.querySelector('#is-important');
+    is_important.onclick = ()=>{
+        console.log('hello');
+        if(is_important.getAttribute('check')=='0'){
+            is_important.setAttribute('check','1');
+        }
+        else{
+            is_important.setAttribute('check','0');
+        }
+    }
+
+
+
+
+    var url_string=""
+    window.onload=function(){
+        url_string = window.location.href
+ url_string= url_string.split('/')[5]
+console.log(url_string);
+    }
+    const hideAlert = () => {
+	const el = document.querySelector(".alert");
+	if (el) el.parentElement.removeChild(el);
+};
+
+// type is 'success' or 'error'
+const showAlert = (type, msg, time = 7) => {
+	hideAlert();
+	const markup = `<div class="alert alert--${type}">${msg}</div>`;
+	document.querySelector("body").insertAdjacentHTML("afterbegin", markup);
+	window.setTimeout(hideAlert, time * 1000);
+};
+
+// const createTenderAdminVal = async (emd,openingDate, lastDate, organizationDetail,tenderAuthority,brief) => {
+const createTenderAdminVal = async (form) => {
+
+	try {
+		let button = document.getElementById('update-news-btn');
+		button.disabled = 'true';
+		const res = await axios({
+			method: "PATCH",
+			url: `/api/v1/news/${url_string}`,
+			data:form,
+
+		});
+		button.removeAttribute('disabled');
+		if (res.data.status === "success") {
+			console.log("THIS IS RES ", res);
+			showAlert("success", "Published");
+            document.querySelector(".newsformcreate").reset()
+		}
+	} catch (err) {
+		showAlert("error", err);
+        console.log(err);
+		// if (err.response.status === 500) {
+		// 	document.querySelector(".hideAlert").classList.remove("alert");
+		// 	document.getElementById("alert").innerHTML =
+		// 		"Cannot Submit Form Please Fill Required Field Correctly";
+		// } else {
+		// 	document.querySelector(".hideAlert").classList.remove("alert");
+		// 	document.getElementById("alert").innerHTML = err.response.data.message;
+		// }
+	}
+};
+const createTender = document.querySelector(".newsformcreate");
+console.log(createTender);
+if (createTender) {
+	createTender.addEventListener("submit", (e) => {
+		e.preventDefault();
+        const form= new FormData()
+        form.append('title',document.querySelector(".inputtitleupdatenews").value)
+        form.append('content',document.querySelector(".inputcontentupdatenews").value)
+		form.append('featureImage',document.querySelector(".newsFeatureImage").files[0])
+		form.append('newsThumbnailImage',document.querySelector(".newsThumbnailImage").files[0])
+		form.append('isImportant',Boolean(Number(document.querySelector('#is-important').getAttribute('check'))))
+        // form.append('lastDate',document.getElementById("lastDate").value)
+        // form.append('organizationDetail',document.getElementById("adminOrganizationDetail").value)
+        // form.append('tenderAuthority',document.getElementById("adminAuthorityIssue").value)
+        // form.append('brief', document.querySelector(".adminTenderBrief").value)
+        // form.append('documents',document.querySelector(".tenderDocuments").files[0])
+       
+
+		// const emd = document.getElementById("adminEmd").value;
+		// const openingDate = document.getElementById("openingDate").value;
+		// const lastDate = document.getElementById("lastDate").value;
+		// const organizationDetail = document.getElementById("adminOrganizationDetail").value;
+		// const tenderAuthority = document.getElementById("adminAuthorityIssue").value;
+		// const brief = document.querySelector(".adminTenderBrief").value;
+        
+        // console.log(emd,openingDate, lastDate, organizationDetail,tenderAuthority,brief);
+		// createTenderAdminVal(emd,openingDate, lastDate, organizationDetail,tenderAuthority,brief);
+		createTenderAdminVal(form);
+	});
+} 
+
+</script>
+<%- include("partials/footer") %>

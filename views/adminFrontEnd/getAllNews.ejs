@@ -1,0 +1,38 @@
+<%- include("partials/header") %>
+<script src="../../js/adminNewsAjax.js"></script>
+<div>
+  <h2 style="text-align: center; font-weight: bold;margin-top: 20px;">
+    News List
+  </h2>
+</div>  
+<nav aria-label="Page navigation example" style="margin-left: 1rem;">
+	<ul class="pagination">
+	  <li class="page-item"><button class="page-link .prev-btn" id="prev-btn">Previous</button></li>
+	  <li class="page-item"><button class="page-link .next-btn" id="next-btn">Next</button></li>
+	</ul>
+  </nav>
+<div class="adminlisttotaldiv">
+
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th scope="col bigcol">
+          NEWS Title
+        </th>
+        <th scope="col">
+          Date
+        </th>
+        <th scope="col smallcolumn" style="text-align: center;">
+          Edit
+        </th>
+      </tr>
+    </thead>
+    <tbody id="adminnewsajaxdiv">
+
+    </tbody>
+  </table>
+
+</div>
+
+
+<%- include("partials/footer") %>

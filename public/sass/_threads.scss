@@ -1,0 +1,89 @@
+@use './variables' as variables;
+div.threads_wrapper{
+    width:70%;
+    margin:0 auto;
+    font-family: variables.$secondary_font;
+    &>div.threads{
+        width:100%;
+        &>h2{
+            text-align:center;
+            @media only screen and (max-width:900px){
+                font-size:1.2em;
+            }
+        }
+        &>a{
+            display:block;
+            text-align:center;
+        }
+        &>div.thread{
+            padding-bottom:1em;
+            margin-bottom:2em;
+            border-bottom:2px solid variables.$background_color;
+            &>span.date{
+                margin-bottom:0.5em;
+                display:block;
+            }
+            &>h2{
+                & a{
+                    color:black;
+                }
+                font-size:1.5em;
+            }
+            &>div.thread-inner{
+                margin-top:1.4em;
+                display:flex;
+                justify-content:flex-end;
+                align-items: center;
+                & a{
+                    color:white;
+                    &:hover{
+                        text-decoration:none;
+                    }
+                }
+                &>span{
+                    margin-right:0.5em;
+                    background-color:variables.$main_color;
+                    color:white;
+                    display:inline-flex;
+                    align-items: center;
+                    padding:0.4em 0.4em;
+                    padding-right:0.8em;
+                    border-radius:2em;
+                    justify-content: space-between;
+                    & i{
+                        display:inline-block;
+                        margin-right:0.5em;
+                        width:1.6em;
+                        height:1.6em;
+                        background-color:black;
+                        border-radius:50%;
+                        background-size:cover;
+                        background-position:center;
+                        background-repeat: no-repeat;
+                    }
+                }
+                &>span.replies{
+                    padding-left:0.6em;
+                    background-color:#21333D;
+                }
+                &>span.replies i{
+                    background-size:contain;
+                    background-image:url('/assets/replies.png');
+                    border-radius:0px;
+                    background-color:initial;
+                }
+
+                @media only screen and (max-width:900px){
+                    justify-content: flex-start;
+                }
+            }
+
+        }
+
+    }
+
+    @media only screen and (max-width:900px){
+        width:90%;
+        font-size:0.9em;
+    }
+}

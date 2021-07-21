@@ -1,0 +1,375 @@
+<%- include("partials/header") %>
+
+    <div class="discussiontotalpage">
+        <div class="contnr">
+
+            <div class="commercial">
+                <p style="text-align: left;"> <b>
+                        <%=forumHead.title%>
+                    </b></p>
+            </div>
+            <div>
+                <div class="discussionmaincontentdiv">
+                    <div class="row">
+                        <div class="col-lg-3 discussionborderrt">
+                            <div class="discussionprofilepicdiv">
+                                <div>
+                                    <img class="discussionprofilepic" src="<%=forumHead.user.userProfile%>" alt="">
+                                </div>
+                                <div class="imagenamediscussionpage">
+                                    <div>
+
+                                        <div>
+                                            <span class="discussionprofilepicname">
+                                                <%=forumHead.user.firstName%> <%=forumHead.user.lastName%>
+                                            </span><br>
+
+                                            <span class="discussionprofilepicrank "
+                                                style="background-color: rgb(175, 4, 27);border-radius: .8rem;color: white;padding: .35rem .35rem .35rem .35rem;">Thread
+                                                Starter</span><br>
+                                                <%if(forumHead.user.experience.length>0){%>
+                                                <span class="discussionprofilepicrank "><%=forumHead.user.experience[0].designation%></span>
+
+                                                <%}%>
+                                        </div>
+                                        <div class="underdiscussionpicheading" style="margin-left: 0px !important;">
+                                        <%var ts= new Date(forumHead.user.createdAt)%>
+                                            <span class="underdiscussionpicheadingjoined">Joined:</span><span> <%=ts.toLocaleString()%></span><br>
+                                            <span class="underdiscussionpicheadingjoined">Proffesional
+                                                Status:</span>
+                                              <%if(forumHead.user.position){%>
+                                                <span>
+                                                Certified
+                                                General Appraiser</span>
+                                                <%}else{%>
+                                                 <span>N/A</span>
+                                                <%}%>
+                                                <br>
+                                            <!-- <span class="underdiscussionpicheadingjoined">State:</span><span> Oregon</span> -->
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                        <div class="col-lg-9">
+                            <span class="discussionprofilepicrank">
+                                <%=forumHead.createdAt.toLocaleDateString('en-US',{ year: 'numeric' , month: 'long' ,
+                                    day: 'numeric' })%>
+                            </span>
+                            <p class="discussionpagecontentmain">
+                                <%=forumHead.content%>
+                                <%if(forumHead.document){%>
+                                <br><br>
+                                <a   href="<%=forumHead.document%>"><span style="background-color: rgb(12, 236, 49);border-radius: 8px; padding: 5px;color: rgb(0, 0, 0); font-weight: 900; text-decoration: none;">📎Attachments</span></a>
+                                <%}%>
+                            </p><br><br>
+                            <!-- <p data-toggle="modal" data-target="#exampleModalCentereditreply"
+                                style="position: absolute;cursor: pointer;bottom: 0px;right: 100px;font-weight: 400;color: grey;">
+                                Edit &nbsp;<i class="fas fa-pen"></i></p>
+                            <p data-toggle="modal" data-target="#exampleModalCentereditreply"
+                                style="position: absolute;cursor: pointer;bottom: 0px;right: 30px;font-weight: 400;color: grey;">
+                                Delete &nbsp;<i class="fas fa-trash-alt"></i></p> -->
+                        </div>
+                    </div>
+                </div>
+                <div id="replyToThread">
+                    <div id="spinn"></div>
+                </div>
+            </div>
+
+            <div class="discussionmaincontentdiv discussiontxtarea" id="xyz">
+                <form id="creatReply">
+                    <input type="hidden" name="userId" id="user" value="<%=user.id%>">
+                    <input type="hidden" name="threadId" id="threadId" value="<%=forumHead.id%>">
+                    <textarea name="" class="reply" id="desca" cols="30" rows="10"></textarea> <br>
+                    <button type="submit" style="text-decoration: none;cursor: pointer;background-color: #647CBC;"
+                        id="loginbuttonddiscussiona" class="loginbuttond">Post</button>
+
+                </form>
+            </div>
+            <input type="text" id="getUserId" hidden value="<%=user._id%>">
+
+            <%if(user===0){%>
+                <div style="text-align: center; margin-top: 1rem;"><a   href="/login"
+                        style="text-decoration: none;cursor: pointer;text-align: center; font-size: 1.4rem;"><button
+                            style="text-decoration: none;cursor: pointer;" id="" class="">Please Login to reply this
+                            thread</button></a></div>
+                <%}else{%>
+                    <%if(forumHead.isApproved){%>
+                        <div><a style="text-decoration: none;cursor: pointer;"><button
+                                    style="text-decoration: none;cursor: pointer;background-color: #647CBC;"
+                                    id="loginbuttonddiscussion" class="loginbuttond">Reply to this
+                                    thread</button></a></div>
+                        <%}}%>
+        </div>
+    </div>
+
+
+    <!-- Button trigger modal -->
+
+
+    <!-- Modal -->
+    <!-- <div style="position: fixed;top: 150px;width: 100%;z-index: 100;display: none;">
+    <div style="width: 80%;background-color:#647CBC;padding-top: 50px;padding-bottom: 50px;display: block;margin: auto;">
+        <form action="">
+          <div>
+              <h3 style="font-weight: bold;text-align: center;">Edit Reply</h3>
+          </div>
+          <div style="justify-content: center;align-items: center;text-align: center;">
+              <textarea name="" id="" cols="30" rows="10" style="width: 80%;margin: auto;display: block;border: 1px solid black;"></textarea>
+          </div>
+          <button class="btn btn-success" type="submit"  style="display: block;margin: auto;margin-top: 20px;">Submit</button>
+        </form>
+        
+    </div>
+  </div>
+   -->
+
+
+    <script>
+        $("#loginbuttonddiscussion").on("click", function () {
+            $("#loginbuttonddiscussion").hide();
+            $(".discussiontxtarea").show();
+
+        })
+        $("#loginbuttonddiscussiona").on("click", function () {
+            $(".discussiontxtarea").hide();
+            $("#loginbuttonddiscussion").show();
+
+        })
+    </script>
+    <script>
+        $("#loginbuttonddiscussion").on("click", function () {
+            $("#loginbuttonddiscussion").hide();
+            $(".discussiontxtarea").show();
+
+        })
+        $("#loginbuttonddiscussiona").on("click", function () {
+            $(".discussiontxtarea").hide();
+            $("#loginbuttonddiscussion").show();
+
+        })
+    </script>
+    <script>
+        function edit(i) {
+            console.log(i);
+            //     var url_string=""
+            //     window.onload=function(){
+            //         url_string = window.location.href
+            //  url_string= url_string.split('/')[4]
+            // console.log(url_string);
+            //     }
+            const hideAlert = () => {
+                const el = document.querySelector(".alert");
+                if (el) el.parentElement.removeChild(el);
+            };
+
+            // type is 'success' or 'error'
+            const showAlert = (type, msg, time = 7) => {
+                hideAlert();
+                const markup = `<div class="alert alert--${type}">${msg}</div>`;
+                document.querySelector("body").insertAdjacentHTML("afterbegin", markup);
+                window.setTimeout(hideAlert, time * 1000);
+            };
+
+            // const createTenderAdminVal = async (emd,openingDate, lastDate, organizationDetail,tenderAuthority,brief) => {
+            const createTenderAdminVal = async (form) => {
+                console.log(form);
+                try {
+                    const res = await axios({
+                        method: "PATCH",
+                        url: `/api/v1/forum-replies?_id=${document.getElementById("inputreplyupdateform" + i).value}`,
+                        data: {
+                            form
+                        },
+
+                    });
+                    if (res.data.status === "success") {
+                        console.log("THIS IS RES ", res);
+                        showAlert("success", "Published");
+                        // document.querySelector(".upcomingeventformcreate").reset()
+                         location.reload(true);
+                    }
+                } catch (err) {
+                    showAlert("error", err);
+                    console.log(err);
+                }
+            };
+            const createTender = document.querySelector(".editreplyformdiscussion" + i);
+            if (createTender) {
+                createTender.addEventListener("submit", (e) => {
+                    e.preventDefault();
+                    const threadReply = document.querySelector("#texteditorreplyupdate" + i).value
+                    createTenderAdminVal(threadReply);
+                });
+            }
+        }
+
+        var getonedataid = "";
+        window.onload = function () {
+            var url_string = window.location.href
+            url_string = url_string.split('/')[4]
+            console.log(url_string);
+            getdata(url_string)
+        }
+
+                                    // <span class="underdiscussionpicheadingjoined">State:</span><span> Oregon</span>
+
+
+        // var url = new URL(url_string);
+        // var c = url.searchParams.get("id");
+        // console.log('hello');
+        function getdata(threadId) {
+       var userId=document.getElementById("getUserId").value
+
+            var html = "";
+            // ajax() method to make api calls
+            $.ajax({
+                url: `/api/v1/forum-replies?forumThread=${threadId}`,
+                type: "GET",
+                data: {
+                    page: 1,
+                    // limit: 5,
+                    // category:`${category}`
+                    // user: "60770e0a4bc5681bb8ac0616",
+                },
+                beforeSend: function () {
+                    
+                    var html =
+                        `<div class=loader_wrap>
+      <div class="loader"></div>
+      </div>`;
+                    $('#spinn').html(html)
+                },
+                success: function (data) {
+                    console.log(data);
+                    $("#spinn").hide();
+                    if (data.status) {
+                        var dataArr = data.data;
+                        
+                        totalrecord = data.totalRecord;
+
+                        if (dataArr.length === 0) {
+                            $('#spinn').html("No Replies")
+
+                        }
+                        var editShowLogInuser="none"
+                        for (var i = 0; i < dataArr.length; i++) {
+                            var ts= new Date(dataArr[i].user.createdAt)
+                            var k = "dfs";
+                                // console.log('fods',dataArr[i].user._id);
+
+                            if(userId === dataArr[i].user._id){
+                             editShowLogInuser="block"
+                            }
+                            else{
+                            editShowLogInuser="none"
+
+                            }
+                            var gotobj = dataArr[i];
+                            if (dataArr[i].user.experience.length === 0) {
+                                var designation = 'N/A'
+                            } else {
+                                var designation = dataArr[i].user.experience[0].designation
+                            }
+
+                            html +=
+                                `<div class="discussionmaincontentdiv">
+                <div class="row">
+                    <div class="col-lg-3 discussionborderrt">
+                        <div class="discussionprofilepicdiv">
+                            <div>
+                            <img class="discussionprofilepic" src=${dataArr[i].user.userProfile} alt="">
+                            </div>
+                            <div>
+                                <div class="imagenamediscussionpage">
+                                    <div>
+                            <span class="discussionprofilepicname"><a   href=/user/profile/${dataArr[i].user._id}>${dataArr[i].user.firstName} ${dataArr[i].user.lastName}</a></span><br>
+                            <span class="discussionprofilepicrank ">${designation}</span>
+                                </div>
+
+                        </div>
+                        <div class="underdiscussionpicheading">
+                            <span class="underdiscussionpicheadingjoined">Joined:</span><span> ${ts.toLocaleString()}</span><br>
+                            <span class="underdiscussionpicheadingjoined">Proffesional Status:</span><span>${dataArr[i].user.position}</span><br>
+                        </div>
+                        </div>
+                    </div>
+                    </div>
+                    <div class="col-lg-9">
+                        <span class="discussionprofilepicrank">
+                            Jan 18th, 2021
+                        </span>
+                        <p id="contentreplyhide${i}"  class="discussionpagecontentmain" style="">
+                           ${dataArr[i].threadReply}
+                        </p><br><br>
+
+                        <div id="contentreplyhideid${i}" style="display:none;justify-content: center;align-items: center;text-align: center;">
+                            <form action="" class="editreplyformdiscussion${i}">
+                                <input type="text" style="display:none" id="inputreplyupdateform${i}" value="${dataArr[i]._id}">
+                                <textarea  name="sadasdasdas" id="texteditorreplyupdate${i}" cols="30" rows="5" style="width: 80%;margin: auto;display: block;border: 1px solid black;">${dataArr[i].threadReply}</textarea>
+                                <br><button type="submit" onclick="edit(${i})" class="btn btn-success" style="display:block;margin:auto">Update</button>
+                                </form>
+              <br></div>
+                   
+
+                        <p class="editdeletehide" onclick="getonereply(${i})" style="position: absolute;cursor: pointer;bottom: 0px;right: 100px;font-weight: 400;color: grey;display:${editShowLogInuser}">Edit &nbsp;<i class="fas fa-pen"></i></p>
+                       <p class="editdeletehide" style="position: absolute;cursor: pointer;bottom: 0px;right: 30px;font-weight: 400;color: grey;display:${editShowLogInuser}" > <a   href=/api/v1/forum-replies/del/${threadId}/${dataArr[i].user._id}/${dataArr[i]._id} style="text-decoration:none">Delete &nbsp;<i class="fas fa-trash-alt"></i></a></p>
+
+                
+                      
+                        </div>
+                </div>
+            </div>`
+//   <p class="editdeletehide" onclick="getonereply(${i})"  style="position: absolute;cursor: pointer;bottom: 0px;right: 100px;font-weight: 400;color: grey;">Edit &nbsp;<i class="fas fa-pen"></i></p>
+//                         <p class="editdeletehide" onclick="getonreply(${i})"  style="position: absolute;cursor: pointer;bottom: 0px;right: 30px;font-weight: 400;color: grey;">Delete &nbsp;<i class="fas fa-trash-alt"></i></p>
+                     
+                            // "<div class='sample-user'>" +
+                            // "<h3>ID: " +
+                            // dataArr[i]._id +
+                            // "</h3>" +
+                            // `<a   href=/threads?category=${dataArr[i].category}>First Name: ` +
+                            // dataArr[i].category +
+                            // `</a>` +
+                            // // "<p>Last Name: " + dataArr[i].lastname + "</p>" +
+                            // // "<p>Last Modified At: " + dataArr[i].lastmodified + "</p>" +
+                            // // "<p>Created At: " + dataArr[i].created + "</p>" +
+                            // "</div>" +
+                            // "<hr />";
+                        }
+                        $("#replyToThread").html(html);
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    $("#spinn").hide();
+
+                    console.log(jqXHR);
+                    console.log(textStatus);
+                    console.log(errorThrown);
+
+                },
+            });
+        }
+
+        function getonereply(gitid) {
+            //alert(gitid);
+            
+            $("#contentreplyhide" + gitid).hide();
+            $("#contentreplyhideid" + gitid).show();
+            $(".editdeletehide").hide();
+            $("#inputreplyupdateform").hide()
+        }
+    </script>
+   
+    <script>
+        function test() {
+            location.assign('/')
+            console.log("jhdjksgdkjaegdjkagdkjagdkjagdkjagdkjg");
+        }
+    </script>
+    <script src="/js/createForumReply.js"></script>
+    <script src="/js/updateEditReplyDiscussion.js"></script>
+    <%-include("partials/footer")%>

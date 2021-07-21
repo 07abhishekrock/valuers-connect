@@ -1,0 +1,67 @@
+@use './variables' as variables;
+div.blog-display-wrapper{
+    margin-top:4em;
+    width:90%;
+    font-family:variables.$secondary_font;
+    &>div.blog-head{
+        display:flex;
+        padding-left:2em;
+        box-sizing: border-box;
+        flex-flow:column;
+        align-items:flex-start;
+        & span.date{
+            margin-bottom:1em;
+        }
+        & h1{
+            @media only screen and (max-width:600px){
+                font-size:1.5em;
+            }
+        }
+        & i{
+            border-radius:0px;
+            box-shadow:none;
+            color:variables.$main_color;
+            display:inline-block;
+            margin-left:0px;
+            cursor:default;
+        }
+        & span.category{
+            background-color:variables.$main_color;
+            text-transform:uppercase;
+            font-size:0.9em;
+            color:white;
+            padding:0.3em 1em;
+            margin-top:0.5em;
+            border-radius:0.3em;
+        }
+    }
+    @media only screen and (max-width:600px){
+        width:95%;
+    }
+}
+div.blog-display-wrapper img{
+    width:90%;
+    display: block;
+    margin-top:2em;
+    margin-bottom:4em;
+    border-radius:0.5em;
+
+    @media only screen and (max-width:600px){
+        width:95%;
+    }
+}
+div.blog-display-wrapper div.blog-display{
+    margin-top:3em;
+    padding:2em 2em;
+    border-radius:0px 0.5em 0.5em 0px;
+    box-sizing: border-box;
+    border:4px solid variables.$background_color;
+    border-left:0px;
+
+    @media only screen and (max-width:600px){
+        padding:2em 1em;
+    }
+}
+div.blog-display-wrapper div.blog-main{
+    font-size:1.1em;
+}

@@ -1,0 +1,415 @@
+<%- include("partials/header") %>
+<div class="edit-body-wrapper">
+  <h1>Update Profile</h1>
+
+  <div class="education wrapper">
+    <h3>Education</h3>
+    <% userOne.degree && userOne.degree.forEach(function(degree, index){%>
+      <div class="unit-wrapper">
+      <i class="delete-unit" onclick="delete_unit(0,'<%=index%>')" ></i>
+    <div class="unit" id="degree<%=index%>">
+      <div class="input-group">
+        <span>Degree Name</span>
+        <input type="text" value="<%= degree[0].degreeName %>" />
+      </div>
+      <div class="input-group">
+        <span>From</span>
+        <input type="date" value="<% degree[0].fromDate %>" />
+      </div>
+      <div class="input-group">
+        <span>To</span>
+        <input type="date" value="<%degree[0].toDate %>" />
+      </div>
+      <div class="input-group">
+        <span>College Name</span>
+        <input type="text" value="<%= degree[0].college %> " />
+      </div>
+      <div class="input-group">
+        <span>University Name</span>
+        <input type="text" value="<%= degree[0].university %>  " />
+      </div>
+      <div class="input-group">
+        <span>Specialization</span>
+        <input type="text" value=" <%= degree[0].specialisation %> " />
+      </div>
+    </div>
+    </div>
+    <%})%>
+  </div>
+  <button class="add-more" id="education-btn">Add New</button>
+
+  <div class="experience wrapper">
+    <h3>Experience</h3>
+
+    <% userOne.experience && userOne.experience.forEach(function(experience , index){%>
+
+
+      <div class="unit-wrapper">
+      <i class="delete-unit" onclick="delete_unit(1,'<%=index%>')" ></i>
+    <div class="unit" id="xp<%=index%>" >
+      <div class="input-group">
+        <span>Designation</span>
+        <input type="text" value="<%= experience[0].designation %>" />
+      </div>
+      <div class="input-group">
+        <span>Organization Name</span>
+        <input type="text" value="<%= experience[0].company %>" />
+      </div>
+      <div class="input-group">
+        <span>From</span>
+        <input
+          type="date"
+          value="<%=(experience[0].fromDate) %>"
+        />
+      </div>
+      <div class="input-group">
+        <span>To</span>
+        <input type="date" value="<%=(experience[0].toDate) %>" />
+      </div>
+    </div>
+
+    <%})%>
+  </div>
+  </div>
+  <button class="add-more" id="experience-btn">Add New</button>
+
+  <div class="contact-info wrapper">
+    <h3>Contact Info</h3>
+    <div class="unit">
+      <div class="input-group">
+        <span>Website URL</span>
+        <input type="text" value="<%=userOne.websiteUrl%>" />
+      </div>
+      <div class="input-group">
+        <span>LinkedIn Info</span>
+        <input type="text" value="<%=userOne.linkedInfo%>" />
+      </div>
+      <div class="input-group">
+        <span>Alternate Phone No</span>
+        <input type="text" value="<%=userOne.phoneNo%>" />
+      </div>
+      <div class="input-group">
+        <span>Email ID</span>
+        <input type="text" value="<%=userOne.email%>" />
+      </div>
+      <div class="input-group">
+        <span>Whatsapp No</span>
+        <input type="text" value="<%=userOne.whatsappNo%>" />
+      </div>
+    </div>
+  </div>
+</div>
+
+<button id="update-btn">Update Info</button>
+
+<%#------Script Files for dynamic addition and final output generation-----%>
+<script>
+  let update_btn = document.querySelector("#update-btn");
+  let education_wrapper = document.querySelector("div.education");
+  let experience_wrapper = document.querySelector("div.experience");
+
+  let contact_info = document.querySelector("div.contact-info>.unit");
+  let add_more_education = document.querySelector("#education-btn");
+  let add_more_experience = document.querySelector("#experience-btn");
+  //read one by one
+
+  function appendUnit(type) {
+    switch (type) {
+      case 0: {
+        //education
+        let html_string = `
+              <div class="unit-wrapper">
+                  <i class="delete-unit" onclick="delete_unit(0,${education_wrapper.children.length - 1})" ></i>
+                  <div class="unit" id="degree${education_wrapper.children.length - 1}">
+                    <div class="input-group">
+                        <span>Degree Name</span>
+                        <input type="text" value=""/>
+                    </div>
+                    <div class="input-group">
+                        <span>From</span>
+                        <input type="date" value=""/>
+                    </div>
+                    <div class="input-group">
+                        <span>To</span>
+                        <input type="date" value=""/>
+                    </div>
+                    <div class="input-group">
+                        <span>College Name</span>
+                        <input type="text" value=""/>
+                    </div>
+                    <div class="input-group">
+                        <span>University Name</span>
+                        <input type="text" value=""/>
+                    </div>
+                    <div class="input-group">
+                        <span>Specialization</span>
+                        <input type="text" value=""/>
+                    </div>
+                </div>
+              </div>
+                `;
+        education_wrapper.insertAdjacentHTML( 'beforeend', html_string );
+        break;
+      }
+      case 1: {
+        let html_string = `
+
+              <div class="unit-wrapper">
+                  <i class="delete-unit" onclick="delete_unit(1,${experience_wrapper.children.length - 1})" ></i>
+                  <div class="unit" id="xp${experience_wrapper.children.length - 1}">
+                    <div class="input-group">
+                        <span>Designation</span>
+                        <input type="text" value=""/>
+                    </div>
+                    <div class="input-group">
+                        <span>Organization Name</span>
+                        <input type="date" value=""/>
+                    </div>
+                    <div class="input-group">
+                        <span>From</span>
+                        <input type="date" value=""/>
+                    </div>
+                    <div class="input-group">
+                        <span>To</span>
+                        <input type="text" value=""/>
+                    </div>
+                </div>
+                </div>
+                `;
+        experience_wrapper.insertAdjacentHTML( 'beforeend', html_string );
+        break;
+      }
+    }
+  }
+
+  function convertFromDate(date){
+    date = [date.split('-')[1] , date.split('-')[2] , date.split('-')[0]].join('/');
+    return date;
+  }
+
+
+  add_more_education.addEventListener("click", function () {
+    appendUnit(0);
+  });
+  add_more_experience.addEventListener("click", function () {
+    appendUnit(1);
+  });
+
+  function delete_unit(type , index){
+    switch (type){
+      case 0 : {
+        //deleting an education unit
+        education_wrapper.removeChild(document.querySelector(`#degree${index}`).parentNode);
+        break;
+      }
+      case 1 : {
+        //deleting an education unit
+        console.log(document.querySelector(`#xp${index}`));
+        experience_wrapper.removeChild(document.querySelector(`#xp${index}`).parentNode);
+        break;
+      }
+    }
+  }
+
+  update_btn.addEventListener("click", function () {
+    let education_units = document.querySelectorAll("div.education>.unit-wrapper");
+    let experience_units = document.querySelectorAll("div.experience>.unit-wrapper");
+
+    function raiseError(error_element){
+      error_element.scrollIntoView(0);
+      error_element.classList.add('error');
+    }
+
+    function noError(element,value){
+      element.classList.remove('error');
+      element.classList.remove('error');
+      return value;
+    }
+
+
+    let userData = {};
+    let error_flag = 0;
+    let education_array = [];
+    education_units.forEach((element) => {
+      let education_unit = {};
+
+      Array.from(element.children[1].children).forEach((child_element, index) => {
+        switch (index) {
+          case 0: {
+            let field_value = child_element.children[1].value
+            if(!field_value){
+              error_flag += 1;
+              raiseError(element);
+              return;
+            }
+            education_unit.degreeName = noError(element , field_value);
+            break;
+          }
+          case 1: {
+            let field_value = child_element.children[1].value
+            if(error_flag){
+              break;
+            }
+            if(!field_value){
+              error_flag += 1;
+              raiseError(element);
+              return;
+            }
+            education_unit.fromDate = noError(element, convertFromDate(child_element.children[1].value));
+            break;
+          }
+          case 2: {
+            let field_value = child_element.children[1].value
+            if(error_flag){
+              break;
+            }
+            if(!field_value){
+              error_flag += 1;
+              raiseError(element);
+              return;
+            }
+            education_unit.toDate = noError(element , convertFromDate(child_element.children[1].value));
+            break;
+          }
+          case 3: {
+            let field_value = child_element.children[1].value
+            if(error_flag){
+              break;
+            }
+            if(!field_value){
+              error_flag += 1;
+              raiseError(element);
+              return;
+            }
+            education_unit.college = noError(element , child_element.children[1].value);
+            break;
+          }
+          case 4: {
+            let field_value = child_element.children[1].value
+            if(error_flag){
+              break;
+            }
+            if(!field_value){
+              error_flag += 1;
+              raiseError(element);
+              return;
+            }
+            education_unit.university = noError(element , child_element.children[1].value);
+            break;
+          }
+          case 5: {
+            let field_value = child_element.children[1].value
+            if(error_flag){
+              break;
+            }
+            if(!field_value){
+              error_flag += 1;
+              raiseError(element);
+              return;
+            }
+            education_unit.specialisation = noError(element , child_element.children[1].value);
+            break;
+          }
+        }
+      });
+      education_array.push(education_unit);
+    });
+
+    let experience_array = [];
+    experience_units.forEach((element) => {
+
+      let experience_unit = {};
+      Array.from(element.children[1].children).forEach((child_element, index) => {
+        switch (index) {
+          case 0: {
+            let field_value = child_element.children[1].value
+            if(error_flag){
+              break;
+            }
+            if(!field_value){
+              error_flag += 1;
+              raiseError(element);
+              return;
+            }
+            experience_unit.designation = noError(element , child_element.children[1].value);
+            break;
+          }
+          case 1: {
+            let field_value = child_element.children[1].value
+            if(error_flag){
+              break;
+            }
+            if(!field_value){
+              error_flag += 1;
+              raiseError(element);
+              return;
+            }
+            experience_unit.company = noError(element , child_element.children[1].value);
+            break;
+          }
+          case 2: {
+            let field_value = child_element.children[1].value
+            if(error_flag){
+              break;
+            }
+            if(!field_value){
+              error_flag += 1;
+              raiseError(element);
+              return;
+            }
+            experience_unit.fromDate = noError(element , convertFromDate(child_element.children[1].value));
+            break;
+          }
+          case 3: {
+            let field_value = child_element.children[1].value
+            if(error_flag){
+              break;
+            }
+            if(!field_value){
+              error_flag += 1;
+              raiseError(element);
+              return;
+            }
+            experience_unit.toDate = noError(element , convertFromDate(child_element.children[1].value));
+            break;
+          }
+        }
+      });
+      experience_array.push(experience_unit);
+    });
+
+    let contact_unit = {};
+    Array.from(contact_info.children).forEach((child_element, index) => {
+      switch (index) {
+        case 0: {
+          userData.websiteUrl = child_element.children[1].value;
+          break;
+        }
+        case 1: {
+          userData.linkedInfo = child_element.children[1].value;
+          break;
+        }
+        case 2: {
+          userData.phoneNo = child_element.children[1].value;
+          break;
+        }
+        case 3: {
+          userData.email = child_element.children[1].value;
+          break;
+        }
+        case 4: {
+          userData.whatsappNo = child_element.children[1].value;
+          break;
+        }
+      }
+    });
+
+    console.log(education_array, experience_array, userData);
+  });
+</script>
+<%#------Script Files end here----%>
+
+
+
+<%#------Script Files end here----%>
+<%- include("partials/footer") %>

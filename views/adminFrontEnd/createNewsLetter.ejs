@@ -1,0 +1,60 @@
+<%- include("partials/header") %>
+<form class="newsformcreate newsformcreateNewsLetter" id="formadminnewscreate formadminnewscreateBanner">
+    <h1>Add NewsLetter</h1>
+    <span>Desc About Newsletter (mention month and other details)</span>
+    <input type="text" id="newsletter_desc" required/>
+    <span>NewsLetter Pdf upload here</span>
+    	<input type="file" accept=".pdf" id="newsletter_pdf" required>
+    <button type="submit" id="createadminnews">PUBLISH</button>
+</form>
+<script>
+
+</script>
+<!-- <script src="/js/createallinonefolder.js"></script> -->
+<script>
+
+const hideAlert = () => {
+	const el = document.querySelector(".alert");
+	if (el) el.parentElement.removeChild(el);
+};
+
+// type is 'success' or 'error'
+const showAlert = (type, msg, time = 7) => {
+	hideAlert();
+	const markup = `<div class="alert alert--${type}">${msg}</div>`;
+	document.querySelector("body").insertAdjacentHTML("afterbegin", markup);
+	window.setTimeout(hideAlert, time * 1000);
+};
+
+const newsletterUpload = async (form) => {
+	try {
+
+		let button = document.getElementById('createadminnews');
+		button.disabled = 'true';
+		const res = await axios({
+			method: "POST",
+			url: '/api/v1/newsletter',
+			data: form
+		});
+		button.removeAttribute('disabled');
+		if (res.data.status === "success") {
+			showAlert("success", "NewsLetter Updated !");
+			console.log('Res reg',res.data);
+		}
+	} catch (err) {
+				showAlert("error", err);
+	}
+};
+const newsletter = document.querySelector('.newsformcreateNewsLetter');
+
+if (newsletter) {
+	newsletter.addEventListener("submit", (e) => {
+		e.preventDefault();
+        const form=new FormData()
+        form.append('description',document.getElementById('newsletter_desc').value);
+        form.append('newsletterdoc',document.getElementById('newsletter_pdf').files[0])
+		newsletterUpload(form);
+	});
+}
+</script>
+<%- include("partials/footer") %>

@@ -1,0 +1,65 @@
+@use './variables' as variables;
+div.inline-list-wrapper{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-family:variables.$secondary_font;
+    margin:3em 0px;
+    @media only screen and (max-width:900px){
+        flex-flow:column;
+        align-items:center;
+        justify-content: center;;
+    }
+}
+div.inline-list-wrapper>div.inline-list-outer{
+    width:400px;
+    margin:0px 2em;
+    border:2px solid variables.$main_color;
+    border-radius:0.5em;
+    &>h2{
+        font-size:1.5em;
+        text-align:center;
+        margin:0.4em 0px;
+    }
+    &>div{
+        overflow:auto;
+        height:380px;
+        background-color:variables.$background_color;
+        font-size:1em;
+        box-sizing: border-box;
+    }
+    &>div>a{
+        margin-bottom:0.5em;
+        width:100%;
+        padding:1em;
+        text-decoration:None;
+        box-sizing: border-box;
+        display:block;
+        color:black;
+        &:hover{
+            text-decoration:none;
+        }
+        &>i{
+            color:black;
+        }
+        &:nth-child(even){
+            background-color:variables.$main_color;
+            color:white;
+            &>i{
+                color:white;
+            }
+        }
+        &:last-child{
+            margin-bottom:0px;
+        }
+    }
+    @media only screen and (max-width:900px){
+        margin:1em 0px;
+    }
+    @media only screen and (max-width:450px){
+        width:350px;
+        &>h2{
+            font-size:1.7em;
+        }
+    }
+}

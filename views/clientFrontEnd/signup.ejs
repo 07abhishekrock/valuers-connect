@@ -1,0 +1,125 @@
+<%- include("partials/header") %>
+<head>
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+</head>
+
+<div class="logintotalbggreen" >
+  <div class="loginwhitebga">
+  <div class="afterSignup loginheading" style="display: none;"> 
+    <i class="fa fa-envelope-o"></i>
+    <p>Please Check your Mail and Verify Your Email Id</p>
+    <small style="font-size: .9rem; color: maroon;" >If you do not receive a confirmation email, please check your spam and promotion folder. Also, please verify that you entered a valid email address in our sign-up form</small>
+  </div>
+
+    <div class="loginheading signupHeading" >
+    
+      <p>Please SignUp</p>
+    </div>
+    <form id="signupForm" >
+      <div class="signupflnamemargnauto">
+        <div class="signupflname">
+          <div>
+            <p>First Name</p>
+            <input type="text" name="First Name" id="fname" required >
+          </div>
+          &nbsp;&nbsp;&nbsp;&nbsp; <div>
+            <p>Last Name</p>
+            <input type="text" name="" id="lname" required>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="greencolortextlogina">
+        <p>Mobile Number <small  style="color: rgb(133, 2, 41); text-align: left !important; margin-left: 0;"> (With country code)</small> </p>
+        
+        <input type="text" name="" id="phone" pattern=/^+/  required>
+        <p>Email Address</p>
+        <input type="email" name="" id="email" required>
+
+        <p>Password<small style="color: rgb(133, 2, 41);"> (8 characters minimum)</small> </p>
+        <input type="password" name="Password"  id="password" required  minlength="8">
+        <p>User Type</p>
+        <select name="" id="userType" class="signupselectoption"  required>
+          <option value="" >Select</option>
+          <option value="1">Angel Investor</option>
+          <option value="2">Banking</option>
+          <option value="3">Business entities</option>
+          <option value="4">Investors</option>
+          <option value="5">Lenders </option>
+          <option value="6">Non Banking Financial Institution</option>
+          <option value="7">Other Govt. / non govt. organisations</option>
+          <option value="8">Private Equity</option>
+          <option value="9">Registered Valuers Organisation (RVO)</option>
+          <option value="10">Service Providers</option>
+          <option value="11">Startups</option>
+        </select><br>
+        <small><input checked required style="width:28px;margin-top: -14px;" type="checkbox" name="" id=""> By Signing up you agree to our <a   href="/terms_and_conditions.html"> Terms and Conditions</a> , <a   href="/Privacy_statement.html"> Privacy Policy</a> & <a   href="/social_media_policy.html"> Social Media Policy</a></small>
+      </div>
+      <div>
+      </div>
+      <div
+      class="g-recaptcha"
+      id="signupcaptcha"
+      data-sitekey="6LeXKAEbAAAAAJH4tMsBdBNJlkE2kMl_1sxFWh07"
+      data-callback="submitCaptcha"
+    ></div>
+
+      <button type="submit" class="loginbutton signup signupload" id="signupbutton" style="cursor:not-allowed;background: grey;" disabled="true">SignUp</button>
+    </form><br>
+    <h4 class="askForLogin" style="text-align: center; font-size: 1.2rem; ">Already Member? <a   href="/login"><b>LOGIN</b></a></h4><br><br><br>
+    <br><br>
+  </div>
+</div>
+<script src="/js/signupAjax.js"></script>
+<script>
+  function submitCaptcha(value) {
+   axios({
+       method:"post",
+       url:"/api/v1/captcha/verify",
+       data: {value}
+   })
+   .then((response)=>{
+       response = JSON.parse(response.data.response)
+       if(response.success === true){
+         let loginButton = document.getElementById("signupbutton");
+         loginButton.style.background = "#436475";
+         loginButton.removeAttribute("disabled");
+         loginButton.style.cursor = "pointer";
+       }
+       else{
+         window.alert("Captcha Verification Failed!. Try Again.");
+         window.location.reload();
+       }
+   })
+   .catch((err)=>{
+       console.log(err.message)
+   });
+  }
+</script>
+
+<%- include("partials/footer") %>
+<!-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+  integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+  integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+  integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+  window.jQuery || document.write('<script src="js/vendor/jquery-3.3.1.min.js"> <\/script>')
+</script>
+<script src="../Trumbowyg-master/dist/trumbowyg.min.js"></script>
+<script src="../Trumbowyg-master/dist/plugins/insertaudio/trumbowyg.insertaudio.min.js"></script>
+
+
+<script>
+  $('#desc').trumbowyg();
+</script> -->
+<!-- <script src="http://3500/js/tenderListAjax.js"></script> -->
+<!-- </body>
+
+</html> -->

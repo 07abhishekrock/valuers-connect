@@ -1,0 +1,15 @@
+<%- include("partials/header") %>
+<form action="/admin/notification" method="POST"  class="newsformcreate" id="formadminnewscreate">
+    <h1>Create Notification</h1>
+    <p style="text-align: center;color: green;"><%=message%></p>
+    <span>Notification</span>
+    <input type="text" name="title" required id="inputtitlenewsadmin" placeholder="Notification Title"   ><br>
+    <span>Notification URL</span>
+    <input type="text" name="url" id="inputtitlenewsadmin" placeholder="Notification URL"   ><br>
+    <button type="submit" id="createadminnotif">PUBLISH</button>
+</form>
+<script>
+
+</script>
+<!-- <script src="/js/createallinonefolder.js"></script> -->
+<%- include("partials/footer") %>

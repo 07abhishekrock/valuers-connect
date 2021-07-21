@@ -1,0 +1,235 @@
+<%- include("partials/header") %>
+
+<h1 class="page-heading">Forum - <%=category.name%></h1>
+<div class="threads_wrapper">
+    <div id="spinn"></div>
+    <div class="threads" id="render-threads-page">
+    </div>
+</div>
+
+ <script>
+    window.onload=function(){
+    var url_string = window.location.href
+ url_string= url_string.split('=')[1]
+//  url_string=url_string.split('%20')
+console.log(url_string);
+getdata(url_string)
+    }
+// var url = new URL(url_string);
+// var c = url.searchParams.get("id");
+// console.log('hello');
+function getdata(category) {
+  
+  var html = "";
+    // ajax() method to make api calls
+    $.ajax({
+      url: `/api/v1/forum-thread?category=${category}`,
+      type: "GET",
+      data: {
+    //     // page: 1,
+        isApproved:'true'
+    //     // limit: 5,
+    //     // category:`${category}`
+    //     // user: "60770e0a4bc5681bb8ac0616",
+      },
+     beforeSend: function () {
+       
+      var html = 
+      `<div class=loader_wrap>
+      <div class="loader"></div>
+      </div>`;
+$('#spinn').html(html)
+    },
+      success: function (data) {
+        console.log(data);
+ $("#spinn").hide();
+        if (data.status) {
+          var dataArr = data.data;
+          totalrecord = data.totalRecord;
+
+          if(dataArr.length===0){
+            html=`<h2 style=display:${display}>No threads to show </h2>
+            <br>
+            <a   href="/">Back to Home</a>`
+
+          }
+          else{
+            var display='none'
+
+          }
+          for (var i = 0; i < dataArr.length; i++) {
+            var tsThread=new Date(dataArr[i].createdAt)
+            html += `
+            <div class="thread">
+                <span class="date">${tsThread.toDateString()}</span>
+                <h2><a   href="/forum-thread/${dataArr[i].id}">${dataArr[i].title}</a></h2>
+                <div class="thread-inner">
+                    <span class="author"><i class="profile" style="background-image:url('${dataArr[i].user.userProfile}')"></i><a   href="/user/profile/${dataArr[i].user._id}">${dataArr[i].user.firstName + " " + dataArr[i].user.lastName}</a></span>
+                    <span class="replies">
+                        <i></i> ${dataArr[i].reply.length} Replies
+                    </span>
+                </div>
+            </div>
+            `;
+
+
+              // "<div class='sample-user'>" +
+              // "<h3>ID: " +
+              // dataArr[i]._id +
+              // "</h3>" +
+              // `<a   href=/threads?category=${dataArr[i].category}>First Name: ` +
+              // dataArr[i].category +
+              // `</a>` +
+              // // "<p>Last Name: " + dataArr[i].lastname + "</p>" +
+              // // "<p>Last Modified At: " + dataArr[i].lastmodified + "</p>" +
+              // // "<p>Created At: " + dataArr[i].created + "</p>" +
+              // "</div>" +
+              // "<hr />";
+          }
+          $("#render-threads-page").html(html);
+        }
+      },
+      error: function (jqXHR, textStatus, errorThrown) {
+        console.log(jqXHR);
+        console.log(textStatus);
+        console.log(errorThrown);
+      },
+    });
+  }
+
+
+    </script>
+<%- include("partials/footer") %>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Single Page</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <style>
+    .loader_wrap{
+      display: flex;
+      height: 100vh;
+      justify-content: center;
+      /* background-color: aqua; */
+      text-align: center;
+      align-items: center;
+    }
+    .loader {
+  border: 16px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 16px solid #194342;
+  width: 120px;
+  height: 120px;
+  /* text-align: center; */
+  display: flex;
+  justify-content: center;
+  
+  -webkit-animation: spin 2s linear infinite; /* Safari */
+  animation: spin 2s linear infinite;
+}
+
+/* Safari */
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+    </style>
+</head>
+<body>
+<h1>Worked</h1>
+    <button class="prev-btn"></button>
+    <button class="next-btn">Next</button>
+    <div id="result"></div>
+        <div id="spinn"></div>
+
+    <script>
+    window.onload=function(){
+    var url_string = window.location.href
+ url_string= url_string.split('=')[1]
+console.log(url_string);
+getdata(url_string)
+    }
+// var url = new URL(url_string);
+// var c = url.searchParams.get("id");
+// console.log('hello');
+function getdata(category) {
+  
+  var html = "";
+    // ajax() method to make api calls
+    $.ajax({
+      url: "http://localhost:3500/api/v1/forum-thread",
+      type: "GET",
+      data: {
+        page: 1,
+        limit: 5,
+        category:category
+        // user: "60770e0a4bc5681bb8ac0616",
+      },
+     beforeSend: function () {
+       
+      var html = `<div class=loader_wrap>
+      <div class="loader"></div>
+      </div>`;
+$('#spinn').html(html)
+    },
+      success: function (data) {
+        console.log(data);
+ $("#spinn").hide();
+        if (data.status) {
+          var dataArr = data.data;
+          totalrecord = data.totalRecord;
+
+          
+
+          for (var i = 0; i < dataArr.length; i++) {
+            html +=
+              "<div class='sample-user'>" +
+              "<h3>ID: " +
+              dataArr[i]._id +
+              "</h3>" +
+              `<a   href=/threads?category=${dataArr[i].category}>First Name: ` +
+              dataArr[i].category +
+              `</a>` +
+              // "<p>Last Name: " + dataArr[i].lastname + "</p>" +
+              // "<p>Last Modified At: " + dataArr[i].lastmodified + "</p>" +
+              // "<p>Created At: " + dataArr[i].created + "</p>" +
+              "</div>" +
+              "<hr />";
+          }
+          $("#result").html(html);
+        }
+      },
+      error: function (jqXHR, textStatus, errorThrown) {
+        console.log(jqXHR);
+        console.log(textStatus);
+        console.log(errorThrown);
+      },
+    });
+  }
+
+
+    </script>
+</body>
+</html> -->

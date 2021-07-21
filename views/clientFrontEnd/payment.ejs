@@ -1,0 +1,272 @@
+<%- include ("partials/header") %>
+<%console.log(user)%>
+<%if(isBlocked){%>
+<div class="error-box">
+    <h1>You need to be a paid member to access the following page.</h1>
+    <h3>Please Choose one of the plans and complete the payment.</h3>
+</div>
+<%}%>
+    <div class="plan-box">
+    <% if (user.isMember) { %>
+        <div class="already-subscribed">
+            <h2>You are already subscribed to <b><%=user.subscriptionType%></b>.</h2>
+            <button style="display:none" email="<%=user.email%>" amt="<%=user.subscriptionType.split(' ')[0]%>" id="cancel-sub">Cancel Plan</button>
+        </div>
+    <%}%>
+
+    <%if (!user.isMember) {%>
+    <h1 class="sub-page-heading">Choose Plan :)</h1>
+    <div class="plans">
+        <div class="plan">
+            <h2>Fetching Data</h2>
+            <span>Fetching Data</span>
+            <h3>Fetching Data</h3>
+        </div>
+        <div class="plan">
+            <h2>Fetching Data</h2>
+            <span>Fetching Data</span>
+            <h3>Fetching Data</h3>
+        </div>
+        <div class="plan">
+            <h2>Fetching Data</h2>
+            <span>Fetching Data</span>
+            <h3>Fetching Data</h3>
+        </div>
+        <div class="plan">
+            <h2>Fetching Data</h2>
+            <span>Fetching Data</span>
+            <h3>Fetching Data</h3>
+        </div>
+    </div>
+</div>
+<div class="payment-div">
+    <h1 class="sub-page-heading">Make Payment :)</h1>
+    <div class="payment-div-inner">
+        <div class="profile-image" style="background-image:url(<%=user.userProfile%>)"></div>
+        <span class="email" id="main-email"><%=user.email%></span>
+        <div class="label-field">
+            <span>Chosen Plan</span>
+            <span id="payment-form-plan">1 Month Plan</span>
+        </div>
+        <div class="label-field">
+            <span>Amount</span>
+            <span id="payment-form-amount">Rs 500</span>
+        </div>
+        <span class="card-detail-label">Enter Card Details</span>
+        <div id="payment-special-input"></div>
+        <span id="error-sub-div">There is an error.</span>
+        <button id="make-payment">Pay Now</button>
+    </div>
+</div>
+<%}%>
+<script src="https://js.stripe.com/v3/"></script>
+<script>
+
+var stripe = Stripe(
+        "pk_live_51IpdrmSFBE8jcbx4pmnfyQ5spGQqxGkiHU2KVWrJzGS4zsrULPePPLslnAFi9WEoPt0Ls6zYPDRYFp5taOJuIwMD00yx7aQE8J"
+      );
+      var elements = stripe.elements();
+      /* Custom styling can be passed to options when creating an Element */
+      var style = {
+        base: {
+          fontSize: "1.2em",
+          "::placeholder": { color: "#aab7c4" },
+          fontFamily: '"Open Sans", "Helvetica", sans-serif',
+          fontSmoothing: "antialiased",
+        },
+        invalid: {
+          color: "#fa755a",
+          iconColor: "#fa755a",
+        },
+      };
+
+      /* Create a Stripe Elements instance 
+      and mount to the div with the id 'card-element' */
+
+      var card = elements.create("card", { style: style });
+
+      card.mount("#payment-special-input");
+
+      /* Handle validation errors */
+      card.addEventListener("change", (event) => {
+        var displayError = document.getElementById("error-sub-div");
+
+        if (event.error) {
+          displayError.textContent = event.error.message;
+          displayError.style.opacity = '1';
+        } else {
+          displayError.textContent = "";
+          displayError.style.opacity = '0';
+        }
+      });
+
+//***********************************************************************************
+
+      function getPlan() {
+        $("div.plan-box").addClass('loading');
+        fetch("api/v1/payment/getPlans", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
+          .then((result) => result.json())
+          .then((data) => {
+              $("div.plan-box").removeClass('loading');
+              let html = '';
+              let plans_wrapper = document.querySelector('div.plans');
+              let keywords = ['Monthly','Quarterly','Half-Yearly','Yearly']
+              data[0].plans.forEach((value, index) => {
+                if(keywords.length < index + 1){
+                    return;
+                }
+                let tag_line = `${keywords[index]} Plan`;
+                let amount = value.amount / 100;
+                let amount_string = "";
+                if(value.currency === 'inr'){
+                    amount_string = `Rs ${amount}`;
+                }
+                else{
+                    amount_string = `${value.currency} ${amount}`;
+                }
+                let interval_string = `For ${value.interval_count} ${value.interval}`
+                html += `
+                    <div class="plan">
+                        <h2>${tag_line}</h2>
+                        <span>${interval_string}</span>
+                        <h3>${amount_string}</h3>
+                    </div>
+                `;
+
+
+            });
+                plans_wrapper.innerHTML = html;
+                Array.from(plans_wrapper.children).forEach((element , index)=>{
+                    element.addEventListener('click',()=>{
+                        Array.from(plans_wrapper.children).forEach((element)=>{
+                            element.classList.remove('selected');
+                        })
+                        element.classList.add('selected');
+                        makePayment(data[0].plans[index]);
+                    })
+                })
+          })
+          .catch((err) => console.log(err));
+      }
+
+      let choosenPlanValue = {};
+      let one_selected = 0;
+      let payment_amount_label = document.querySelector('#payment-form-amount');
+      let payment_plan_label = document.querySelector('#payment-form-plan');
+
+      function makePayment(data) {
+        if(!one_selected){
+            let button = document.querySelector('button#make-payment'); 
+            let payment_div = document.querySelector('div.payment-div');
+            button.addEventListener('click',()=>{
+                pay();
+            })
+            payment_div.style.display = 'block';
+            payment_div.scrollIntoView(0);
+            one_selected = 1;
+        }
+        payment_amount_label.innerText = `${data.currency.toUpperCase()} ${data.amount / 100}`;
+        payment_plan_label.innerText = `${data.interval_count} ${data.interval}`;
+        
+        choosenPlanValue = data;
+      }
+
+      async function pay() {
+        await stripe.createToken(card).then(function (result) {
+          if (result.error) {
+            window.alert(result.error.message);
+          } else {
+            console.log(result.token.id);
+            let button = document.querySelector('button#make-payment');
+            button.innerText = "In Process";
+            button.classList.add('disabled');
+            fetch("api/v1/payment/processPayment", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                plan: choosenPlanValue,
+                email: document.getElementById("main-email").innerText,
+                token: result.token.id,
+              }),
+            })
+              .then((data) => 
+                data.json())
+                .then((data)=>
+                {
+                  window.alert(data.msg);
+                  window.setTimeout(()=>{location.href = '/my/profile'},3000);
+                }
+                )
+              .catch((err) => {
+                let bool = window.confirm('Your payment could not be completed , please try again');
+                if(bool){
+                  location.reload();
+                }
+                console.log(err);
+              });
+          }
+        });
+      }
+
+      let isMember = document.querySelector('button#cancel-sub');
+      if(isMember){
+          isMember.addEventListener('click',()=>{
+            cancel(isMember.getAttribute('email') , Number(isMember.getAttribute('amt')));
+          })
+      }
+
+
+      function cancel(email,amt){
+      isMember.innerText = 'In Process';
+      isMember.classList.add('disabled');
+      var myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/json");
+
+      var raw = JSON.stringify({ email, amount:amt });
+
+      var requestOptions = {
+        method: "POST",
+        headers: myHeaders,
+        body: raw,
+        redirect: "follow",
+      };
+
+      fetch(
+        "api/v1/payment/cancelSubscription",
+        requestOptions
+      )
+        .then((response) => response.text())
+        .then((result) => {console.log(result);location.href = '/my/profile'})
+        .catch((error) => console.log("error", error));
+    }
+
+
+
+    window.onload = ()=>{
+        getPlan();
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+
+<%- include ("partials/footer") %>

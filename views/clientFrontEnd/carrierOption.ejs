@@ -1,0 +1,46 @@
+<%- include("partials/header") %>
+
+<div class="carrier">
+    <div class="carrierheading">
+        <p>Open Positions</p>
+    </div>
+    <div id="carierajaxdiv">
+	 <div class="carriertablefull">  
+							 <div class="row container customerorg">  
+							  <div class="col-lg-9 col-md-9">  
+							  <p class="customerorgbold"></p>  
+							 </div> 
+							 <div class="col-lg-3 col-md-3">  
+							 <p class="customerorgrey" style="color: grey;"><%=job.length%> Open Positions</p>  
+							 </div> 
+							 </div> 
+							 <div class="container carriertable">  
+							 <table> 
+							  <thead> 
+							   <th>Position</th> 
+							   <th>Location</th> 
+							  <th>Country</th>" 
+							 <th></th> 
+							  </thead> 
+							   <tbody> 
+                               <%job.forEach(function(job){%>
+							<tr> 
+							  <td><%=job.position%></td> 
+							 <td><%=job.location%></td> 
+							 <td><%=job.country%></td> 
+							 <td><a   href="/job-detail/<%=job.id%>">Learn More..</a></td>  
+							  </tr> 
+                              <%})%>
+						
+							  </tbody> 
+							</table> 
+							</div> 
+							</div>
+    </div>
+
+
+</div>
+
+
+<!-- <script src="../js/carrierClientAjax.js"></script> -->
+<%- include("partials/footer") %>

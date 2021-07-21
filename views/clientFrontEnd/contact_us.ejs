@@ -1,0 +1,311 @@
+<%- include ('partials/header')%>
+
+<h1 class="small-screen-heading"><i class="fab fa-telegram-plane"></i>Contact Us</h1>
+<div class="contact-form-wrapper">
+    <div class="contact-us-left-div">
+        <i class="fab fa-telegram-plane"></i>
+        <h2>Contact Us</h2>
+        <p>Reach Out to Us So we can provide you better services.<br/><br/>Don't forget to mention your email-id and name for sustained communication.</p>
+    </div>
+    <form class="contact-us-form">
+
+        <div class="my-form-input-group" id="name-input">
+            <span>Name</span>
+            <input type="text" placeholder="Enter Your Name Here"/>
+            <span class="input-footer">Error Comes Here</span>
+        </div>
+
+        <div class="my-form-input-group" id="email-input">
+            <span>Email</span>
+            <input type="text" placeholder="Enter Your Email Here"/>
+            <span class="input-footer">Error Comes Here</span>
+        </div>
+
+        <div class="my-form-input-group" id="subject-input">
+            <span>Subject</span>
+            <input type="text" placeholder="Enter Subject Here"/>
+            <span class="input-footer">Error Comes Here</span>
+        </div>
+
+        <div class="my-form-input-group" id="message-input">
+            <span>Message</span>
+            <textarea placeholder="Enter Message Here"></textarea>
+            <span class="input-footer">Error Comes Here</span>
+        </div>
+
+        <button id="submit-contact-us-form">Submit</button>
+
+    </form>
+</div>
+
+<script>
+
+    class FormObject{
+        constructor(fields , submit_btn_id, default_text){
+            this.formFields = fields;
+            this.default_text = default_text || 'Submit';
+            this.submit_btn = document.getElementById(submit_btn_id);
+        }
+
+        clearForm = ()=>{
+            this.formFields.forEach((formField)=>{
+                formField.clear();
+                formField.errorState = 1;
+            })
+        }
+
+        resetButton = ()=>{
+            this.submit_btn.setAttribute('class','');
+            this.submit_btn.innerText = this.default_text;
+            this.submit_btn.removeAttribute('disabled');
+        }
+
+        throwBtnError = (str)=>{
+            this.submit_btn.classList.add('error');
+            this.submit_btn.innerText = str;
+            this.submit_btn.disabled = 'true';
+            setTimeout(()=>{
+                this.resetButton();
+            },2000)
+        }
+
+        makeServerPostRequest = async ()=>{
+            try{
+                let response = await axios({
+                    method:'POST',
+                    url:'/api/v1/contactform/submit',
+                    data:this.formData()
+                })
+                return response;
+            }
+            catch(e){
+                console.error(e);
+            }
+        }
+
+        SendDataWithBtnChange = async (str)=>{
+            try{
+                this.submit_btn.innerText = str;
+                this.submit_btn.disabled = 'true';
+                let response = await this.makeServerPostRequest();
+                this.resetButton();
+                return response;
+            }
+            catch(e){
+                console.error(e);
+            }
+        }
+
+        formData = ()=>{
+            let form_dict = {};
+            this.formFields.forEach((formField)=>{
+                form_dict[formField.getKey()] = formField.getValue();
+            })
+            return form_dict;
+        }
+
+        FormValidAction = ()=>{
+            let error_flag = 0;
+            for(let formField of this.formFields){
+                if(formField.errorState === 1){
+                    error_flag = 1;
+                    formField.showError('Field Value is invalid or empty.')
+                    break;
+                }
+            }
+
+            if(error_flag === 1){
+                this.throwBtnError('Fix all Errors and then try again.');
+                return false;
+            }
+            else{
+                return this.formData();
+            }
+
+        }
+
+        init = ()=>{
+            this.submit_btn.addEventListener('click', (e)=>{
+                e.preventDefault();
+
+                if(this.FormValidAction()){
+                    this.SendDataWithBtnChange('Sending to Server').then((response)=>{
+
+                        if(response.data){
+                            window.alert(response.data.msg);
+                            this.clearForm();
+                        }
+                        else{
+                            window.alert('an error occurred, please try again after some time.');
+                            this.clearForm();
+                        }
+
+                    })
+                }
+
+
+            })
+            return this;
+        }
+
+    }
+
+    class ErrorInputObject{
+        constructor(field_id , key){
+            this.error_field = document.getElementById(field_id).children[2];
+            this.input_field = document.getElementById(field_id).children[1];
+            this.key = key;
+            this.errorState = 1;
+        }
+        init = ()=>{
+            this.input_field.addEventListener('input',()=>{
+                this.validate();
+            })
+            return this;
+        }
+        getKey = ()=>{
+            return this.key;
+        }
+        showError = (str)=>{
+            this.error_field.style.display = 'block';
+            this.error_field.innerText = str;
+            this.error_field.classList.add('error');
+            this.input_field.classList.add('error');
+
+            this.errorState = 1;
+        }
+        showHint = (str)=>{
+            this.error_field.style.display = 'block';
+            this.error_field.classList.remove('error');
+            this.input_field.classList.remove('error');
+            this.error_field.innerText = str;
+
+            this.errorState = 0;
+        }
+
+        //used to return field to original state
+        omitError = (str)=>{
+            this.error_field.style.display = 'none';
+            this.error_field.innerText = '';
+            this.error_field.classList.remove('error');
+            this.input_field.classList.remove('error');
+
+            this.errorState = 0;
+        }
+    }
+    
+    class EmailInputObject extends ErrorInputObject{
+        constructor(field_id , key){
+            super(field_id , key);
+        }
+
+        getValue = ()=>{
+            return this.input_field.value.trim();
+        }
+
+        clear = ()=>{
+            this.input_field.value = '';
+            this.omitError();
+        }
+        
+        validate = ()=>{
+            let EMAIL_VERIFY_REGEX = /^(\w|\.|\_|\-)+[@](\w|\_|\-|\.)+[.]\w{2,3}$/g
+            let input_value = this.getValue();
+
+            if(input_value.match(EMAIL_VERIFY_REGEX)){
+                this.omitError();
+                return true;
+            }
+            this.showError('Email is not valid.');
+            return false;
+        }
+    }
+
+    class NameInputObject extends ErrorInputObject{
+        constructor(field_id , key){
+            super(field_id , key);
+        }
+
+        getValue = ()=>{
+            return this.input_field.value.trim();
+        }
+
+        clear = ()=>{
+            this.input_field.value = '';
+            this.omitError();
+        }
+        
+        validate = ()=>{
+            let NAME_VERIFY_REGEX = /^[0-9]\w*|(\w+(@|#|\$|\*)+\w*)/g
+            let input_value = this.getValue();
+
+            if(input_value.match(NAME_VERIFY_REGEX) || input_value.length === 0){
+                this.showError('Name is not valid.');
+                return false;
+            }
+            this.omitError();
+            return true;
+        }
+    }
+
+    class OnlyCharLimitInputObject extends ErrorInputObject{
+
+        constructor(field_id , key , char_limit){
+            super(field_id , key);
+            this.char_limit = char_limit;
+        }
+
+        setValue = (value)=>{
+            this.input_field.value = value;
+        }
+
+        clear = ()=>{
+            this.setValue('');
+            this.omitError();
+        }
+
+        getValue = ()=>{
+            return this.input_field.value.trim();
+        }
+
+        removeLatestEnteredCharacter = ()=>{
+            let last_index = this.getValue().length - 1;
+            this.setValue(this.getValue().substring(0 , this.char_limit));
+        }
+        
+        validate = ()=>{
+            let input_value = this.getValue();
+            if(input_value.length === 0){
+                this.showError(`Field cannot be Empty`);
+                return false;
+            }
+            if(input_value.length >= this.char_limit){
+                this.showHint(`Maximum character limit reached.`);
+                this.removeLatestEnteredCharacter();
+                return true;
+            }
+            this.omitError();
+            return true;
+        }
+    }
+
+const SUBJECT_CHAR_LIMIT = 50;
+const MESSAGE_CHAR_LIMIT = 200;
+
+
+let email_field = new EmailInputObject('email-input' , 'email').init();
+let name_field = new NameInputObject('name-input' , 'name').init(); 
+let subject_field = new OnlyCharLimitInputObject('subject-input' , 'subject' , SUBJECT_CHAR_LIMIT).init();
+let msg_field = new OnlyCharLimitInputObject('message-input' , 'message' , MESSAGE_CHAR_LIMIT).init();
+
+let my_form_object = new FormObject([
+    email_field,
+    name_field,
+    subject_field,
+    msg_field
+],'submit-contact-us-form').init();
+
+</script>
+
+
+<%- include ('partials/footer')%>

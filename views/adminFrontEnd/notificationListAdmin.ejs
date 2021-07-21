@@ -1,0 +1,138 @@
+<%- include("partials/header") %>
+<style>
+    .notificationtxtceter td{
+        text-align: center;
+    }
+</style>
+<div>
+    <h2 style="text-align: center; font-weight: bold;margin-top: 20px;">
+      Notification List
+    </h2>
+  </div>
+<div class="adminlisttotaldiv">
+
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th scope="col bigcol">
+          Notification Title
+        </th>
+        
+        <th scope="col">
+            URL
+          </th>
+        <th scope="col " style="text-align: center;">
+          Edit
+        </th>
+      </tr>
+    </thead>
+    <tbody id="adminnotificationajaxdiv">
+    <%notification.forEach(function(notification){%>
+
+    
+     <tr>
+            <td>
+                <%=notification.title%>
+            </td>
+             
+            <td>
+                <a   href="<%=notification.url%>"><%=notification.url%></a>
+            </td>
+            <td class="smallcolumna" style="text-align: center;">
+                 <a return onclick="confirm('Are you Sure?')" href="/admin/delete/notification/<%=notification.id%>">
+                 <i class="fas fa-trash-alt"></i>
+                  </a>
+                 <!-- <a   href="/admin/updatenotification">
+                  <i class="fas fa-pen"></i>
+                  </a> -->
+                  </td>
+        </tr>
+       <% })%>
+    </tbody>
+  </table>
+
+</div>
+
+
+
+<!-- <script>
+
+    $(function () {
+        var page = 1,
+            limit = 5,
+            totalrecord = 0;
+    
+        fetchData();
+    
+        $(".prev-btn").on("click", function () {
+            if (page > 1) {
+                page--;
+                fetchData();
+            }
+            console.log("Prev Page: " + page);
+        });
+    
+        // handling the next-btn
+        $(".next-btn").on("click", function () {
+            if (page * limit < totalrecord) {
+                page++;
+                fetchData();
+            }
+            console.log("Next Page: " + page);
+        });
+    
+        function fetchData() {
+            // ajax() method to make api calls
+            $.ajax({
+                url: "/api/v1/news",
+                type: "GET",
+                data: {
+                    page: page,
+                    limit: 15,
+                },
+                success: function (data) {
+                    console.log(data);
+    
+                    if (data.status) {
+                        var dataArr = data.data;
+                        totalrecord = data.totalRecord;
+                        console.log(dataArr);
+    
+                        var html = "";
+    
+                        for (var i = 0; i < 10; i++) {
+                            var u = i + 1;
+                            html +=
+                `<tr>
+            <td>
+                This is the Title
+            </td>
+             
+            <td>
+                <a   href="">This is URL</a>
+            </td>
+            <td class="smallcolumna" style="text-align: center;">
+                 <a   href="/deletenews">
+                 <i class="fas fa-trash-alt"></i>
+                  </a>
+                 <a   href="/admin/updatenotification">
+                  <i class="fas fa-pen"></i>
+                  </a>
+                  </td>
+        </tr>`
+                        }
+                        $("#adminnotificationajaxdiv").html(html);
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.log(jqXHR);
+                    console.log(textStatus);
+                    console.log(errorThrown);
+                },
+            });
+        }
+    });
+    
+    
+    </script> -->
+<%- include("partials/footer") %>

@@ -1,0 +1,359 @@
+<%- include("partials/header") %>
+
+<div class="bodyreg">
+    <div>
+        <div>
+            <form id="regForm" action="">
+                <h1 class="regheaging">Update Profile</h1>
+                <!-- One "tab" for each step in the form: -->
+
+                <!--<div class="tab inputdivreg">
+                     <div>
+                        <label for="firstnamereg">First Name:</label>
+                        <input type="text" name="" id="firstnamereg">
+
+                        <label for="lastnamereg">Last Name:</label>
+                        <input type="text" name="" id="lastnamereg">
+
+                        <label for="mobilenoreg">Mobile No.:</label>
+                        <input type="tel" name="" id="mobilenoreg">
+
+                        <label for="emailreg">E-mail ID:</label>
+                        <input type="email" name="" id="emailreg">
+
+                        <label for="usertypereg">User Type</label><br>
+                        <select name="" id="userType" class="usertypeselectreg">
+                            <option value="" selected>Please Select</option>
+                            <option value="">Angel Investor</option>
+                            <option value="">Banking</option>
+                            <option value="">Business entities</option>
+                            <option value="">Investors</option>
+                            <option value="">Lenders </option>
+                            <option value="">Non Banking Financial Institution</option>
+                            <option value="">Other Govt. / non govt. organisations</option>
+                            <option value="">Private Equity</option>
+                            <option value="">Registered Valuers Organisation (RVO)</option>
+                            <option value="">Service Providers</option>
+                            <option value="">Startups</option>
+                        </select>
+                    </div>
+
+                     <p><input placeholder="E-mail..." oninput="this.className = ''" name="email"></p>
+                    <p><input placeholder="Phone..." oninput="this.className = ''" name="phone"></p>
+                </div> -->
+
+
+                <div class="tab inputdivreg">
+
+                    <div>
+                        <label for="photoinputreg">Profile Photo</label>
+                        <input type="file" name="" id="photoinputreg">
+                    </div>
+                    <div>
+                        <h2>Education</h2>
+                        <%if(userOne.education){%>
+                        <div id="educationregmultiform">
+                            <!-- <h3>1.</h3> -->
+                            <%var jj=0%>
+                            <% console.log(userOne.degree[0])%>
+                            <%((userOne.degree)).forEach(function(degree){%>
+
+
+                            <div class="educationregmultiforma">
+                                <input type="text" class="totalnoofentryupdateprofile" style="" value="<%=((userOne.degree)).length%>">
+                                <label for="degreenamereg">Degree Name:</label>
+                                <input type="text" name="" value="<%=degree[0].degreeName%>" id="degreenamereg<%=jj%>">
+
+                                <label for="frominputreg">From:</label>
+                                <input type="month" name="" value="<%=degree[0].fromDate%>" class="shortinputfroma" id="frominputreg<%=jj%>">
+
+                                <label for="toinputreg">To:</label>
+                                <input type="month" name="" value="<%=degree[0].toDate%>" class="shortinputfroma" id="toinputreg<%=jj%>">
+
+                                <label for="collegenamereg">College Name:</label>
+                                <input type="text" name="" value="<%=degree[0].college%>" id="collegenamereg<%=jj%>">
+
+                                <label for="universitynamereg">University Name:</label>
+                                <input type="text" name="" value="<%=degree[0].university%>" id="universitynamereg<%=jj%>">
+
+                                <label for="specializationreg">Specialization:</label>
+                                <input type="text" name="" value="<%=degree[0].specialisation%>" id="specializationreg<%=jj%>">
+                            </div>
+                            <%jj=jj+1%>
+                            <%})}%>
+                        </div>
+                        <button id="buttonclickmultiformedu" class="plusreg"><i class="fas fa-plus-circle"></i>Add Degree</button>
+                    </div>
+
+
+                    <!-- <p><input placeholder="First name..." oninput="this.className = ''" name="fname"></p>
+                    <p><input placeholder="Last name..." oninput="this.className = ''" name="lname"></p> -->
+                </div>
+
+                <div class="tab inputdivreg">
+                    <div>
+                        <h2>Experience</h2>
+                        <%if(userOne.experience){%>
+                        <div id="experienceregmultiform">
+                            <%var kk=0%>
+                         <%((userOne.experience)).forEach(function(experience){%>
+                            <div class="educationregmultiforma">
+
+                                <label for="designationreg">Designation:</label>
+                                <input type="text" name="" value="<%=experience[0].designation%>" id="designationreg<%=kk%>">
+                                <label for="organizationreg">Organization Name:</label>
+                                <input type="text" name="" id="organizationreg<%=kk%>">
+                                <label for="frominputexpreg">From:</label>
+                                <input type="month" name="" class="shortinputfroma" id="frominputexpreg<%=kk%>">
+
+                                <label for="toinputexpreg">To:</label>
+                                <input type="month" name="" class="shortinputfroma" id="toinputexpreg<%=kk%>">
+
+                            </div>
+                            <%kk=kk+1%>
+                        <%})}%>
+                        </div>
+                        <button id="buttonclickmultiformexp" class="plusreg"><i class="fas fa-plus-circle"></i>Add Experience</button>
+                    </div>
+
+
+
+                    <!-- <p><input placeholder="dd" oninput="this.className = ''" name="dd"></p>
+                    <p><input placeholder="mm" oninput="this.className = ''" name="nn"></p>
+                    <p><input placeholder="yyyy" oninput="this.className = ''" name="yyyy"></p> -->
+                </div>
+                <div class="tab inputdivreg">
+                    <div>
+                        <h2>Contact Details</h2>
+                        <div id="experienceregmultiform">
+                            <div>
+                                <label for="websiteurlreg">Website URL:</label>
+                                <input type="text" name="" value="<%=userOne.website%>" id="websiteurlreg">
+                                <label for="linkedinidreg">LinkedIn ID:</label>
+                                <input type="text" name="" id="linkedinidreg">
+
+                                <!-- <label for="alternatenumberreg">Altername Phone No.:</label>
+                                <input type="tel" name="" id="linkedinidreg">
+
+                                <label for="alternameemailidreg">Altername E-mail Id:</label>
+                                <input type="text" name="" id="alternameemailidreg"> -->
+                                <label for="whatsappnoreg">Whatsapp No.:</label>
+                                <input type="tel" name="" pattern="/^+/" id="whatsappnoreg">
+                                <label for="whatsappnoreg">About:</label><br>
+                                <textarea name="" id="About" cols="30" rows="10" style="width: 100%;"></textarea><br>
+                                <label for="whatsappnoreg">Position:</label>
+                                <input type="tel" name="" id="position">
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- <p><input placeholder="Username..." oninput="this.className = ''" name="uname"></p>
+                    <p><input placeholder="Password..." oninput="this.className = ''" name="pword" type="password"></p> -->
+                </div>
+                <div style="overflow:auto;">
+                    <div style="float:right;" class="regdivbuttons">
+                        <button type="button" style="background-color: #647CBC;" id="prevBtn" onclick="nextPrev(-1)">Previous</button>
+                        <button type="button" style="background-color: #647CBC;" id="nextBtn" class="Registration" onclick="nextPrev(1)">Next</button>
+                        <button type="submit" class="hello" style="display: none; position: absolute; right: 45%; width :9rem; margin-top: .8rem; background-color: #647CBC;" >Update</button>
+
+                    </div>
+                </div>
+                <!-- Circles which indicates the steps of the form: -->
+                <div id="steps" style="text-align:center;margin-top:40px;">
+                    <span class="step"></span>
+                    <span class="step"></span>
+                    <span class="step"></span>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<script>
+     var edu = [];
+        var exp = [];
+        if(document.querySelector(".totalnoofentryupdateprofile")==null){
+            countedu=0;
+        }
+        else{
+    var countedu = parseInt(document.querySelector(".totalnoofentryupdateprofile").value)+1;
+        }
+    console.log(countedu);
+    $("#buttonclickmultiformedu").on("click", function (e) {
+        console.log("edu"," ",parseInt(countedu));
+        e.preventDefault();
+        const dd = $("#educationregmultiform");
+        dd.append(`<div class="educationregmultiforma">
+            <input type="text" class="totalnoofentryupdateprofile" style="" value="`+countedu+`">
+                                <label for="degreenamereg">Degree Name:</label>
+                                <input type="text" name="" id="degreenamereg` + (countedu-1) + `">
+
+                                <label for="frominputreg">From:</label>
+                                <input type="month" name="" class="shortinputfroma" id="frominputreg` + (countedu-1) + `">
+
+                                <label for="toinputreg">To:</label>
+                                <input type="month" name="" class="shortinputfroma" id="toinputreg` + (countedu-1) + `">
+
+                                <label for="collegenamereg">College Name:</label>
+                                <input type="text" name="" id="collegenamereg` + (countedu-1) + `">
+
+                                <label for="degreenamereg">University Name:</label>
+                                <input type="text" name="" id="universitynamereg` + (countedu-1) + `">
+
+                                <label for="specializationreg">Specialization:</label>
+                                <input type="text" name="" id="specializationreg` + (countedu-1) + `">
+                            </div>`);
+        countedu = countedu + 1;
+    });
+    if(document.querySelector(".totalnoofentryupdateprofile")==null){
+            countexp=0;
+        }
+        else{
+            var countexp = parseInt(document.querySelector(".totalnoofentryupdateprofileexperience").value)+1;
+        }
+    console.log(countexp);
+    $("#buttonclickmultiformexp").on("click", function (e) {
+        console.log("exp"," ",parseInt(countexp));
+        e.preventDefault();
+        const dda = $("#experienceregmultiform");
+        dda.append(`<div class="educationregmultiforma">
+            <input type="text" class="totalnoofentryupdateprofileexperience" style=";" value="`+(countexp)+`">
+                                <label for="designationreg">Designation:</label>
+                                <input type="text" name="" id="designationreg` + (countexp-1) + `">
+
+
+
+                                <label for="organizationreg">Organization Name:</label>
+                                <input type="text" name="" id="organizationreg` + (countexp-1) + `">
+
+                                <label for="frominputexpreg">From:</label>
+                                <input type="month" name="" class="shortinputfroma" id="frominputexpreg` + (countexp-1) + `">
+
+                                <label for="toinputexpreg">To:</label>
+                                <input type="month" name="" class="shortinputfroma" id="toinputexpreg` + (countexp-1) + `">
+
+                            </div>`);
+
+        countexp = countexp + 1;
+    })
+
+
+
+    function createobjecttrial() {
+       console.log(countedu);
+        console.log(countexp);
+        for (let i = 0; i < countedu-1; i++) {
+            var eduobj = {
+                degreename: document.getElementById("degreenamereg" + i).value,
+                fromdegree: document.getElementById("frominputreg" + i).value,
+                todegree: document.getElementById("toinputreg" + i).value,
+                collegenamedegree: document.getElementById("collegenamereg" + i).value,
+                universitynamedegree: document.getElementById("universitynamereg" + i).value,
+                specializationdegree: document.getElementById("specializationreg" + i).value,
+            }
+            edu[i] = eduobj;
+        }
+        for (let j = 0; j < countexp-1; j++) {
+            var expobj = {
+                designation: document.getElementById("designationreg" + j).value,
+                organization: document.getElementById("organizationreg" + j).value,
+                fromDate: document.getElementById("frominputexpreg" + j).value,
+                toDate: document.getElementById("toinputexpreg" + j).value,
+            }
+            exp[j] = expobj;
+        }
+
+        // console.log(document.getElementById("frominputreg1").value);
+        console.log(edu);
+
+        console.log(exp);
+localStorage.setItem('degree',JSON.stringify(edu))
+localStorage.setItem('experience',JSON.stringify(exp))
+document.getElementById("nextBtn").style.display = "none";
+document.getElementById("prevBtn").style.display = "none";
+document.getElementById("steps").style.display = "none";
+document.querySelector('.hello').style.display = "block";
+    }
+</script>
+
+
+<script>
+    var currentTab = 0; // Current tab is set to be the first tab (0)
+    showTab(currentTab); // Display the current tab
+
+    function showTab(n) {
+        // This function will display the specified tab of the form...
+        var x = document.getElementsByClassName("tab");
+        x[n].style.display = "block";
+        //... and fix the Previous/Next buttons:
+        if (n == 0) {
+            document.getElementById("prevBtn").style.display = "none";
+        } else {
+            document.getElementById("prevBtn").style.display = "inline";
+        }
+        if (n == (x.length - 1)) {
+            // document.getElementById("nextBtn").innerHTML = "Submit";
+        } else {
+            document.getElementById("nextBtn").innerHTML = "Next";
+        }
+        //... and run a function that will display the correct step indicator:
+        fixStepIndicator(n)
+    }
+
+    function nextPrev(n) {
+        // This function will figure out which tab to display
+        var x = document.getElementsByClassName("tab");
+        // Exit the function if any field in the current tab is invalid:
+        if (n == 1 && !validateForm()) return false;
+        // Hide the current tab:
+        x[currentTab].style.display = "none";
+        // Increase or decrease the current tab by 1:
+        currentTab = currentTab + n;
+        // if you have reached the end of the form...
+        if (currentTab >= x.length) {
+            // ... the form gets submitted:
+            // document.getElementById("regForm").submit();
+            createobjecttrial();
+            return false;
+        }
+        // Otherwise, display the correct tab:
+        showTab(currentTab);
+    }
+
+    function validateForm() {
+        // This function deals with validation of the form fields
+        var x, y, i, valid = true;
+        x = document.getElementsByClassName("tab");
+        y = x[currentTab].getElementsByTagName("input");
+        // A loop that checks every input field in the current tab:
+        for (i = 0; i < y.length; i++) {
+            // If a field is empty...
+            if (y[i].value == "") {
+                // add an "invalid" class to the field:
+                // y[i].className += " invalid";
+                // and set the current valid status to false
+                // valid = false;
+            }
+        }
+        // If the valid status is true, mark the step as finished and valid:
+        if (valid) {
+            document.getElementsByClassName("step")[currentTab].className += " finish";
+        }
+        return valid; // return the valid status
+    }
+
+    function fixStepIndicator(n) {
+        // This function removes the "active" class of all steps...
+        var i, x = document.getElementsByClassName("step");
+        for (i = 0; i < x.length; i++) {
+            x[i].className = x[i].className.replace(" active", "");
+        }
+        //... and adds the "active" class on the current step:
+        x[n].className += " active";
+    }
+</script>
+
+<script src="/js/userUpdateProfileAxios.js"></script>
+<%- include("partials/footer") %>

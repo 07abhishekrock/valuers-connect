@@ -1,0 +1,27 @@
+<%- include("partials/header") %>
+<form class="newsformcreate createProjectAdmin" id="formadminnewscreate" class="newsClass">
+    <h1>Add Project</h1>
+    <span>Asset Category</span> 
+    <input type="text" name="" class="projectCategory" id="inputtitlenewsadmin "  placeholder="Asset Type / Categoty"><br>
+    <span>Asset Location</span>
+    <input type="text" name="" class="assetLocation" id="inputtitlenewsadmin "  placeholder="Asset Location"><br>
+    <span>Asset City</span>
+    <input type="text" name="" class="assetCity" id="inputtitlenewsadmin "  placeholder="City"><br>
+
+    <span>Institute Name</span>
+    <input type="text" name="" class="instituteName" id=" instituteName inputtitlenewsadmin " placeholder="Institution Name"><br>
+    <span>Application Deadline</span>
+    <input placeholder="Application Deadline" class="projectDeadline" id="projectDeadline" type="text" onfocus="(this.type = 'date')" ><br>
+    <span>Auction Date</span>
+    <input type="text" onfocus="(this.type = 'date')" class="auctionDate" name="" id="auctionDate inputtitlenewsadmin " placeholder="Auction Date"><br>
+    <span>Reserved Price</span>
+    <input type="number" name="" class="reservedPrice" id="inputtitlenewsadmin " placeholder="Reserved Price"><br>    
+    <span>Property Details</span>
+    <textarea name="" id="" class="desca propertyDetails" cols="30" rows="10" placeholder="Property Details"></textarea>
+    <!-- <input type="datetime-local" name="" id="" placeholder="Time"><br> -->
+    <span>File</span>
+    <input type="file" name="projectDocument" class="projectDocument" id="" style="border: none;">
+    <button type="submit" id="createadminproject" style="margin-top: 20px; margin-bottom: 20px;">PUBLISH</button><br>
+</form>
+<script src="/js/adminCreateProject.js"></script>
+<%- include("partials/footer") %>

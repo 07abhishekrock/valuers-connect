@@ -1,0 +1,352 @@
+<%- include("partials/header") %>
+
+<div>
+<%if(banner.length>0){%>
+    <div class="newhomepageheroimage">
+    <!-- public/bannerHomePage/banner-1620044668881.jpeg -->
+        <!-- <img src="./imagesall/val.jpg" alt=""> -->
+        <div>
+            <%console.log(banner)%>
+            <%banner.length > 0 && banner.forEach((banner)=>{%>
+                <img style="position: center;" src='<%=banner.bannerImage%>' alt="">
+            <%})%>
+            <%#this extra image is added to allow the loop functionality ---do not remove---%>
+                <img style="position: center;" src='<%=banner[0].bannerImage%>' alt="">
+
+        </div>
+        <%if (banner.length > 1) {%>
+            <span class="left" id="btn-left"><i class="fa fa-angle-left"></i></span>
+            <span class="right" id="btn-right"><i class="fa fa-angle-right"></i></span>
+        <%}%>
+
+
+    </div>
+    <%}%>
+    <div class="">
+        <div class="realstateforumhead boxshadow">
+            <div class="realstateforumheadh3div" id=forumNav>
+                <h3>Forum</h3>
+            </div>
+            <div class="contentrepeatforun">
+            <%forumCategory.forEach(function(category){%>
+                <div class="forumnewdivflex row">
+                    <div class="col-lg-9 col-md-9 col-sm-10 col-xs-8" style="">
+
+                        <div class="profession"> <a class="catTitle" href="/forum-thread?category=<%=category.id%>"><i class="far fa-comment-dots fa-comment-dotsaa "></i><%=category.name%></a></div>
+                    </div>
+                    <!-- <div class="col-lg-3 col-md-3 col-sm-2 col-xs-4 forumthred">Thread <br>392k</div> -->
+
+
+                    <!-- <div class="col-lg-4 hidehomeprofileimageforum">
+                        <div class="row">
+                            <div class="col-lg-3 foumimghomepage"><a   href="/profile"><img style="border-radius: 100%;"
+                                        width="50px" height="50px" src="../imagesall/profile_user.jpg" alt=""></a></div>
+                            <div class="profile col-lg-9"><a   href="/profile"><span class="profilename">This is
+                                        the
+                                        heading</span><br><span class="profiletime">Yesterday 4:45 pm</span></a></div>
+                        </div>
+
+                    </div> -->
+
+                </div>
+                <%})%>
+
+            </div>
+        </div>
+        <div class="totalnewsandtendersection">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="newsnewcolumn boxshadow">
+                            <div class="realstateforumheada">
+                                <h5>News</h5>
+                                <div>
+                                    <div class="newsnewup">
+                                        <%  news.forEach(function(news){%>
+
+                                        <i style="color: brown;" class="fas fa-arrow-right"></i> <a
+                                            href="/news/<%=news._id%>"> <%=news.title%></a><br>
+                                        <hr>
+                                        <% })%>
+
+                                    </div>
+                                    <a class="carriermore" href="/news">View More</a><br>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4">
+                        <div class="newsnewcolumn boxshadow">
+                            <div class="realstateforumheada">
+                                <h5>Tenders List</h5>
+                                <div class="upcomingeentdiviner">
+                                <%if(tender.length>0){%>
+                                    <%  tender.forEach(function(tender){%>
+
+                                    <a   href="/tender/<%=tender._id%>"
+                                        style="font-weight: 400; line-height: .8; color: black; text-align: right;"><i
+                                            style="color: brown;"
+                                            class="fas fa-arrow-right"></i><%=tender.title%></a><br>
+                                    <hr style="height:1px;">
+                                    <% })%>
+                                 <%}else{%>
+                                    <a   href="#"
+                                        style="font-weight: 400; line-height: .8; color: black; text-align: right;"><i
+                                            style="color: brown;"
+                                            class="fas fa-arrow-right"></i>No Tender Available</a>
+                                    <%}%>
+                                </div>
+                                 <%if(tender.length>0){%>
+                                <a class="carriermore" href="/tender">View More</a><br>
+                                <%}else{%>
+                                <a class="carriermore" href=""></a><br>
+
+                                 <%}%>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4">
+                        <div class="newsnewcolumn boxshadow">
+                            <div class="realstateforumheada">
+                                <h5>Notifications</h5>
+                                <div>
+                                    <div class="newsnewup">
+                                        <%  notification.forEach(function(notification){%>
+
+                                        <i style="color: brown;" class="fas fa-arrow-right"></i> <a  
+                                            href="<%=notification.url%>"> <%=notification.title%></a><br>
+                                        <hr>
+                                        <% })%>
+
+                                    </div>
+                                    <!-- <a class="carriermore" href="/news">View More</a><br> -->
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+
+
+
+        <div>
+            <div>
+                <div class="newupce">
+                    <h1><u> Upcoming Event</u>
+
+                    </h1>
+                </div>
+                <div class="gallery js-flickity" data-flickity-options='{ "wrapAround": true }'>
+                  <%  upcomingEvents.forEach(function(upcomingEvents){%>
+                    <div class="gallery-cell">
+                        <div class="date-card">
+                            <!-- <div class="day">&nbsp;</div> -->
+                            <div>
+                                <div class="month" style="text-align: center;"><img src="/assets/logo.png" style="width: 10rem; border-radius: 1rem;" alt="" srcset=""></div>
+                                <div class="cardcontentmargintop">
+                                    <p>
+                                    <a style="color: white;" href="/events/<%=upcomingEvents._id%>">
+
+                                       <%=upcomingEvents.title%>
+
+                                                            </a>
+
+                                    </p>
+                                </div>
+                                <div>
+                                <%if(upcomingEvents.fromDate){%>
+                                <%var ts = new Date(upcomingEvents.fromDate)%>
+                                    <p>
+                                       <%=ts.toLocaleString()%>
+                                    </p>
+                                    <%}else{%>
+                                    <p>
+                                    &nbsp;
+                                    </p>
+                                    <%}%>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <%})%>
+
+                     <!-- <div class="gallery-cell">
+                        <div class="date-card">
+                            <div class="day">22</div>
+                            <div>
+                                <div class="month">October</div>
+                                <div class="cardcontentmargintop">
+                                    <p>
+                                        Paris start-up innovation summit
+                                    </p>
+                                </div>
+                                <div>
+                                    <p>
+                                        7:30AM - 9:30PM
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="gallery-cell">
+                        <div class="date-card">
+                            <div class="day">25</div>
+                            <div>
+                                <div class="month">November</div>
+                                <div class="cardcontentmargintop">
+                                    <p>
+                                        Paris start-up innovation summit
+                                    </p>
+                                </div>
+                                <div>
+                                    <p>
+                                        7:30AM - 9:30PM
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div> -->
+                    <!--<div class="gallery-cell">
+                        <div class="date-card">
+                            <div class="day">29</div>
+                            <div>
+                                <div class="month">January</div>
+                                <div class="cardcontentmargintop">
+                                    <p>
+                                        Paris start-up innovation summit
+                                    </p>
+                                </div>
+                                <div>
+                                    <p>
+                                        7:30AM - 9:30PM
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="gallery-cell">
+                        <div class="date-card">
+                            <div class="day">23</div>
+                            <div>
+                                <div class="month">March</div>
+                                <div class="cardcontentmargintop">
+                                    <p>
+                                        Paris start-up innovation summit
+                                    </p>
+                                </div>
+                                <div>
+                                    <p>
+                                        7:30AM - 9:30PM
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div> -->
+                </div>
+            </div>
+        </div>
+
+        <div class="totaldivaboutusnew">
+            <div class="container aboutusmargintopnew">
+                <div id="aboutUs" class="newupce">
+                    <h1><u>ABOUT US</u>
+                    </h1>
+                </div>
+                <div>
+                    <p class="aboutusnewpara">Valuers Connect is a platform for valuers from all over the world to connect with other professionals and stakeholders in the field of valuation. Valuers Connect wishes to establish a forum for discussions on topics of importance and getting counselled by the industry experts. Valuers from different parts of the world can engage in discussions on not only the forum but also conduct business on Valuers Connect. Stakeholders can get in touch with valuers and other professionals to get their job done with complete privacy.
+
+                        Through our continuous commitment towards the growth of the profession, Valuers Connect drives business in the field of valuation and creates job opportunities, empanelment opportunities and more for your business to prosper.
+
+                        Your data is as valuable to us as it is for you. Valuers Connect uses top of the line encryption tools to ensure that your data remains private and out of bounds from others.
+
+
+                    </p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        let current_index = 0;
+        let stop_interval = 5000;
+        let transition_time = 300;
+        let image_div = document.querySelector('.newhomepageheroimage>div');
+        let banner_length = image_div.children.length - 1;
+        let image_window = document.querySelector('.newhomepageheroimage');
+        let interval_id = null;
+        const callSetInterval = ()=>{
+                togglePointerEvents(0);
+
+                setTimeout(()=>{
+                    togglePointerEvents(1);
+                }, transition_time);
+
+                setTransition();
+                image_div.style.transform = `translateX(calc(-${current_index} * 100%))`;
+
+                if(current_index === banner_length){
+                    setTimeout(()=>{
+                        image_div.style.transform = `translateX(0px)`;
+                        current_index = 0;
+                    },transition_time);
+                };
+        }
+        const togglePointerEvents = (toggle_flag)=>{
+            if(toggle_flag === 0){
+                //turn off the pointer events;
+                image_window.style.pointerEvents = 'none';
+            }
+            else if(toggle_flag === 1){
+                //turn on the pointer events;
+                image_window.style.pointerEvents = 'all';
+            }
+        }
+
+        image_window.addEventListener('click',(e)=>{
+            if(banner_length <= 1){
+                return;
+            }
+            clearInterval(interval_id);
+            if(e.target.id === 'btn-right'){
+                current_index += 1;
+                console.log('right');
+            }
+            else if(e.target.id === 'btn-left'){
+                current_index > 0 ? current_index -= 1 : current_index = banner_length - 1;
+                console.log('left');
+            }
+            callSetInterval();
+            interval_id = setInterval(()=>{
+                current_index += 1;
+                callSetInterval()
+            }, 5000);
+        })
+
+
+        const setTransition = ()=>{
+            image_div.style.transition = `transform ${300}ms ease-in`;
+            setTimeout(() => {
+               image_div.style.transition = 'transform 0s ease-in';
+            }, transition_time);
+        }
+        
+        if(banner_length > 1){
+            //if there is more than 1 banner , then we need to loop other wise there is no need
+            interval_id = setInterval(()=>{
+                current_index += 1;
+                callSetInterval()
+            }, 5000);
+        }
+        
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flickity/1.0.0/flickity.pkgd.js"></script>
+    <%- include("partials/footer") %>

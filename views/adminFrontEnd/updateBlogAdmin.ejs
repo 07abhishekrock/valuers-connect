@@ -1,0 +1,84 @@
+<%- include("partials/header") %>
+<form action="" class="newsformcreate">
+
+    <h1>Update Blog</h1>
+	<span>Title</span><br>
+    <input type="text" name="" id="blogtitleinput" value="<%=blog.title%>"><br>
+	<span>Content</span><br>
+    <textarea name="" class="clogcontentinputupdate" id="desc" cols="30" rows="10" placeholder="Content"><%-blog.content%></textarea><br>
+    <span><b>Thumbnail Image </b>File Resolution should be 320 X 350</span>
+	<input type="file" class="blogThumbnailImage" name="blogThumbnailImage" id="" style="border: none;" required>
+
+    <span><b>Banner Image </b>File Resolution should be 900 X 500</span>
+    <input type="file" class="blogFeatureImage" name="blogFeatureImage" id="" style="border: none;" required>
+	
+    <button type="submit" id="btn-update-blog">UPDATE</button><br><br>
+</form>
+ <script>
+
+
+const hideAlert = () => {
+	const el = document.querySelector(".alert");
+	if (el) el.parentElement.removeChild(el);
+};
+
+// type is 'success' or 'error'
+const showAlert = (type, msg, time = 7) => {
+	hideAlert();
+	const markup = `<div class="alert alert--${type}">${msg}</div>`;
+	document.querySelector("body").insertAdjacentHTML("afterbegin", markup);
+	window.setTimeout(hideAlert, time * 1000);
+};
+
+const createNewsAdminVal = async(formData) => {
+
+	try {
+		let button = document.getElementById('btn-update-blog');
+		button.disabled = 'true';
+		const res = await axios({
+			method: "PATCH",
+			url: "/api/v1/blog/<%=blog._id%>",
+			data:formData
+
+		});
+		button.removeAttribute('disabled');
+		if (res.data.status === "success") {
+			console.log("THIS IS RES ", res);
+			showAlert("success", "Published");
+            location.replace("/admin/blogList");
+		}
+	} catch (err) {
+		showAlert("error", err);
+        console.log(err)
+	}
+}
+
+
+const createNewsAdmin = document.querySelector(".newsformcreate");
+let myObj={}
+console.log(createNewsAdmin);
+if (createNewsAdmin) {
+	createNewsAdmin.addEventListener("submit", (e) => {
+		e.preventDefault();
+        // const title=document.querySelector(".newsTitleAdmin").value
+        // const content=document.querySelector(".contentNews").value
+        // // const featImage=document.querySelector(".newsFeatureImage").files[0]
+
+        const formData= new FormData()
+        formData.append('title',document.querySelector("#blogtitleinput").value)
+        formData.append('content',document.querySelector(".clogcontentinputupdate").value)
+        formData.append('blogFeatureImage',document.querySelector(".blogFeatureImage").files[0])
+		formData.append('blogThumbnailImage',document.querySelector(".blogThumbnailImage").files[0])
+        for(var pair of formData.entries()) {
+        console.log(pair[0]+ ', '+ pair[1]);
+        }
+   
+   createNewsAdminVal(formData);
+	});
+} 
+
+
+
+
+ </script>
+<%- include("partials/footer") %>

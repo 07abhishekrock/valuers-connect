@@ -1,0 +1,72 @@
+<%- include("partials/header") %>
+<style>
+#viewTender{
+  font-size: .8rem;
+  padding: .35rem .35rem;
+  color: antiquewhite;
+  text-decoration: none;
+}
+td{
+  color: rgb(17, 15, 15) !important;
+  text-align: center;
+  font-weight: 500  !important;
+}
+th{
+  color: #6A1B4D  !important;
+}
+table{
+  overflow-x: scroll;
+}
+</style>
+<div>
+  <h2 style="text-align: center; font-weight: bold;margin-top: 20px;">
+    Tender List
+  </h2>
+</div>
+<nav aria-label="Page navigation example" style="margin-left: 1rem;">
+	<ul class="pagination">
+	  <li class="page-item"><button class="page-link .prev-btn" id="prev-btn">Previous</button></li>
+	  <li class="page-item"><button class="page-link .next-btn" id="next-btn">Next</button></li>
+	</ul>
+  </nav>
+<table class="table table-hover" style="background-color: white;">
+  <thead>
+    <tr>
+      <th scope="col">
+        Details
+      </th>
+      <th scope="col">
+        Tender Id
+      </th>
+      <th scope="col">
+        Authority Issue
+      </th>
+      <th scope="col">
+        openingDate
+      </th>
+      <th scope="col">
+       LastDate
+      </th>
+     <th scope="col">
+       Organization Detail
+      </th>
+      <th scope="col" style="text-align: center;">
+        EMD
+       </th>
+      <th scope="col" style="text-align: center;">
+        Action
+      </th>
+       <th scope="col">
+        
+      </th>
+    </tr>
+  </thead>
+    <div id="spinn"></div>
+
+  <tbody id="admintenderajaxdiv">
+  </tbody>
+</table>
+
+
+<script src="../../js/adminTenderListAjax.js"></script>
+<%- include("partials/footer") %>

@@ -1,0 +1,117 @@
+.profilephoto {
+    width: 200px;
+    height: 200px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    border-radius: 100%;
+    border: 10px solid white;
+    margin-top: -100px;
+}
+
+.profilecontent {
+    font-weight: 500;
+    font-size: 30px;
+    margin-left: 20px;
+}
+
+.profilebold {
+    font-weight: bolder;
+    font-size: 15px;
+}
+
+.profiledata {
+    margin-top: 50px;
+}
+
+.profiledata table td {
+    padding: 5px 10px 5px 10px;
+}
+
+.profilechat button {
+    font-size: 20px;
+    font-weight: bolder;
+    margin: -50px 10px 60px 10px;
+}
+
+@media(max-width:980px) {
+    .profilechat button {
+        font-size: 20px;
+        font-weight: bolder;
+        margin: 50px 10px 30px 10px;
+    }
+}
+
+.profilebackground {
+    background-image: url("../imagesall/profilebackground.jpg");
+    width: 100%;
+    height: 200px;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.profilecontentdescription {
+    font-weight: 400;
+    font-size: 20px;
+    margin-left: 20px;
+}
+
+.profilecontentorg {
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 1.5;
+    margin-left: 20px;
+}
+
+.profileeducationheading {
+    margin-left: 20px;
+}
+
+.fa-school {
+    padding: 0 10px 0 0;
+    color: blue;
+}
+
+.profilecontentorgdiv {
+    text-align: left;
+}
+
+.educationdetails {
+    margin-top: 40px;
+}
+
+.personaldetails {
+    margin-left: 20px;
+}
+
+
+
+.fas {
+    padding-right: 10px;
+    color: gray;
+}
+
+.fapen {
+    color: white;
+}
+
+.profilepaddingbottom {
+    margin-bottom: 30px;
+}
+
+.personaldetaildiv {
+    margin-top: 50px;
+}
+
+.desca {
+    display: block;
+    position: relative;
+    border: 1px solid black;
+    width: 75%;
+    margin: auto;
+    min-height: 300px;
+    background-color: white;
+    padding: 15px;
+    border-radius: 20px;
+}

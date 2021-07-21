@@ -1,0 +1,692 @@
+<%- include ('partials/header')%>
+<!-- <h1 class="page-heading">Welcome to Valuers Chat.</h1> -->
+<div class="chat-modal-wrapper">
+    <div class="chat-modal">
+        <i id="chat-modal-close"></i>
+        <h2>Available Online Users</h2>
+        <ul class="online-user-list">
+            <!-- <li>
+                <i></i>
+                <span>Abhishek</span>
+            </li> -->
+        </ul>
+    </div>
+    </div>
+<div class="chat-wrapper">
+    <div class="chat-sidebar">
+       <div class="chat-sidebar-head-wrapper loader-bar">
+            <div class="chat-sidebar-head">
+                <div class="heading">
+                    <h2>Chat</h2>
+                    <i id="search-users-online"></i>
+                </div>
+                <div class="search">
+                    <i class="back"></i>
+                    <input type="text"/>
+                    <i></i>
+                </div>
+            </div>
+       </div> 
+
+        <ul class="user-list">
+            <!-- <li class="user-element">
+                <i></i>
+                <div class="user-element-info">
+                    <span class="user-name">Abhishek Jha<i>1</i></span>
+                    <span class="last-message">How are you ...<i class="time-stamp">12:00 AM</i></span>
+                </div>
+            </li> -->
+        </ul>
+        
+    </div>
+    <div class="chat-window chat-empty">
+        <div class="chat-window-header loader-bar ">
+            <i class="back-button" id="move-to-chat-list"></i>
+            <i id="current-receiver-profile-photo"></i>
+            <div class="chat-window-user">
+                <h2 id="current-receiver-name">Abhishek Jha</h2>
+                <span class="chat-user-status" id="current-receiver-status">online</span>
+            </div>
+        </div>
+        <div class="chat-window-content">
+            <div class="chat-content">
+                <!-- <div class="date-seperator">
+                    24 Aug 2020
+                </div> -->
+                <!-- <div class="message received">
+                    <p>Hi there how are you I wanted to send you this message I am very happy that now we can talk after this lockdown</p>
+                    <div class="message-footer">
+                        <span>Abhishek</span>
+                        <i></i>
+                        <span>11:00 AM</span>
+                    </div>
+                </div> -->
+            </div>
+                
+            <div class="input-chat">
+                <div class="input-chat-div" contenteditable="true"></div>
+                <button id="chat-send-btn"></button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var socket = io.connect("https://valuersconnect.com");
+    var user = "<%=user._id%>"
+    var target = "<%=target_chat_id%>"
+
+    function Element(string){
+        return document.querySelector(string);
+    }
+
+    class ChatWindow{
+        constructor(user_list , current_user_id , chat_send_btn , chat_input_field , chat_window, chat_sidebar_loader, chat_window_loader){
+            this.user_list = Element(user_list);
+            this.chat_send_btn = Element(chat_send_btn);
+            this.chat_input_field = Element(chat_input_field);
+            this.chat_content = Element(chat_window);
+            this.chat_sidebar_loader = Element(chat_sidebar_loader);
+            this.chat_window_loader = Element(chat_window_loader);
+            this.current_user_id = current_user_id;
+            this.target_chat_id = target;
+            this.current_user_chat_object = null;
+            this.current_receiver = null;
+            this.current_receiver_fields = [Element('#current-receiver-profile-photo'), Element('#current-receiver-name'), Element('#current-receiver-status')];
+            this.allOnlineUserList = Element('div.chat-modal>ul.online-user-list');
+            this.allReceivers = {};
+            this.current_message_page = 0;
+        }
+        load = async (await_callback , loader_div)=>{
+            try{
+                loader_div.classList.add('loading');
+                let data_returned = await await_callback;
+                loader_div.classList.remove('loading');
+                return(data_returned);
+            }
+            catch(e){
+                console.log(e);
+            }
+        }
+        
+        registerUser = async ()=>{
+            try{
+                let user_object = await axios.get(`/api/v1/user?_id=${this.current_user_id}`);
+                socket.emit("register", { user: user_object.data.user[0] }, (error) => {
+                    if (error) {
+                        alert(error);
+                    }
+                })
+            }
+            catch(e){
+                console.log(e);
+            }
+        }
+        
+        handleChatJoin = async (chat_object)=>{
+            if(chat_object.user_id === this.current_user_id){
+                let joined_chat_user = chat_object;
+                this.current_user_chat_object = chat_object;
+            }
+            else{
+                if(this.allReceivers[chat_object.user_id]){
+                    let element = this.allReceivers[chat_object.user_id];
+                    element.onlineUser = chat_object;
+                    element.status = 'online';
+                    if(this.current_receiver === chat_object.user_id){
+                        this.current_receiver_fields[2].innerText = 'online';
+                    }
+                }
+            }
+            //console.log(this.allReceivers);
+            return;
+        }
+        
+        loadChatUserWithId = async (id)=>{
+            let users_list_data = await this.load(axios.get(`/api/v1/chat/users/${id}`), this.chat_window_loader);
+            return users_list_data.data;
+        } 
+
+        addOnlineUser = async (user_id)=>{
+
+            let user_data = await axios.get('/api/v1/user?_id=' + user_id);
+            user_data = user_data.data.user[0];
+            let onlineUserDataResp = await axios.get('/api/v1/chat/users/'+user_id);
+
+            let onlineUserData = onlineUserDataResp.data;
+            if(onlineUserDataResp.data.length === 0){
+                console.log('no onlineuser found');
+                // alert('User you want to chat with is not a chat user , ask him/her to access their /chat section to become an online user and then try again.');
+                return;
+            }
+            else{
+                onlineUserData = onlineUserDataResp.data[0];
+            }
+
+            this.allReceivers[user_id] = {user:user_data, onlineUser:onlineUserData || '', unread_count:10000, status:onlineUserData.status || 'offline', lastMessage:''}
+            //console.log(this.allReceivers[user_id]);
+           
+            //create li element for userlist
+            let html = `<li class="user-element" id="chat-user-${user_id}" onclick="chat_window.loadReceiverEnd('${user_id}')">
+                        <i style="background-image:url('${user_data.userProfile || ""}')"></i>
+                        <div class="user-element-info">
+                            <span class="user-name">${user_data.firstName}<i>0</i></span>     
+                            <span class="last-message">Start Chat Now<i class="time-stamp"></i></span>
+                        </div>
+                    </li>`;
+            
+            this.user_list.insertAdjacentHTML('afterbegin',html);
+            this.rearrange_user_items();
+            this.allReceivers[user_id].unread_count = 0;
+
+            alert('User added to chat section');
+
+        }
+
+        fillOnlineUserValues = async ()=>{
+            let onlineUsers_data = await axios.get('/api/v1/chat/users');
+            //add onlineUsers to list
+            let onlineUsers = onlineUsers_data.data;
+            //console.log(onlineUsers);
+            this.allOnlineUserList.innerHTML = '';
+            for(let element of onlineUsers){
+                console.log(element);
+                if(element.user_id in this.allReceivers || element.user_id === this.current_user_id) continue;
+                let user_data = await axios.get('/api/v1/user?_id=' + element.user_id);
+                user_data = user_data.data.user[0];
+                if(user_data !== undefined && user_data !== null){
+                    console.log("inside chat")
+                    let html = `
+                    <li onclick="chat_window.addOnlineUser('${element.user_id}')"><i style="background-image:url('${user_data.userProfile !== undefined ? user_data.userProfile : '../../public/userProfile/profile.png'}' )"></i><span>${user_data.firstName}</span></li> 
+                `;
+                this.allOnlineUserList.insertAdjacentHTML('beforeend',html);
+                }
+
+            }
+        }
+
+        addTargetIfNonExist = async ()=>{
+            if(this.target_chat_id.length === 0){
+                return;
+            }
+            else{
+                if(!(this.target_chat_id in this.allReceivers) && !(this.target_chat_id === this.current_user_id)){
+                    this.addOnlineUser(this.target_chat_id);
+                    return;
+                }
+            }
+        }
+
+        loadAllChatUsers = async ()=>{
+            try{
+                let users_list_data = await this.load(axios({
+                        method:'POST',
+                        url:'/api/v1/chat/getSentMessagesOnly',
+                        data:{
+                            sender:this.current_user_id
+                        }
+                    }
+                ), this.chat_sidebar_loader);
+
+                let users_list_with_messages = users_list_data.data.recentMessages;
+               
+                if(users_list_with_messages && users_list_with_messages.length > 0){
+                    for(let messages of users_list_with_messages){
+                        let other_end_user = '';
+                        let current_user_receiver_or_sender = 0;
+                        if(messages[0].sender === this.current_user_id){
+                            other_end_user = messages[0].receiver; 
+                            current_user_receiver_or_sender = 0; //sender
+                        }
+                        else if(messages[0].receiver = this.current_user_id){
+                            other_end_user = messages[0].sender;
+                            current_user_receiver_or_sender = 1; //receiver
+                        }
+
+                        let other_end_user_data = await axios.get(`/api/v1/user?_id=${other_end_user}`);
+
+
+                        let user_name = other_end_user_data.data.user[0].firstName;
+                        let user_profile = other_end_user_data.data.user[0].userProfile;
+                        let total_unread_count = 0;
+
+                        if(current_user_receiver_or_sender){
+                            //receiver
+                            messages.every((element)=>{
+                                if(element.status === 'seen'){
+                                    return false;
+                                }
+                                if(element.status === 'delivered' || element.status === 'sent'){
+                                    total_unread_count += 1;
+                                    return true;
+                                }
+                                return true;
+                            })
+                        }
+
+
+                        let message_object = messages[0];
+                        this.allReceivers[other_end_user_data.data.user[0]._id] = {user :other_end_user_data.data.user[0], unread_count:total_unread_count,lastMessage:message_object.message};
+
+                        let html = '';
+                        let [hours , minutes, meridian] = this.convertTimeFormat( new Date(message_object.createdAt) );
+                        html = `<li class="user-element" id="chat-user-${other_end_user_data.data.user[0]._id}" onclick="chat_window.loadReceiverEnd('${other_end_user_data.data.user[0]._id}')">
+                                <i style="background-image:url('${user_profile}')"></i>
+                                <div class="user-element-info">
+                                    <span class="user-name">${user_name}<i>${total_unread_count}</i></span>     
+                                    <span class="last-message">${message_object.message.length > 15 ? message_object.message.substring(0,15) + '...' : message_object.message}<i class="time-stamp">${hours}:${minutes} ${meridian}</i></span>
+                                </div>
+                            </li>`
+
+                        this.user_list.insertAdjacentHTML('beforeend',html);
+
+                        //rearranging code
+
+                    }
+                    this.rearrange_user_items();
+            }
+                    
+
+                //add target if existent and redirected from public page of profile
+                this.addTargetIfNonExist();
+                
+            }
+            catch(e){
+                console.log(e);
+            }
+        }
+        
+        handleChatOffline = async (offline_user_id)=>{
+            //console.log(offline_user_id , this.current_receiver);
+            let element = this.allReceivers[offline_user_id];
+            if(element){
+                element.status = 'offline';
+                if(this.current_receiver === offline_user_id){
+                    this.current_receiver_fields[2].innerText = 'offline';
+                }
+            }
+        }
+
+        loadReceiverEnd = async (index)=>{
+            Element('div.chat-window').classList.remove('chat-empty');
+            Element('div.chat-window').classList.add('visible');
+            this.current_receiver_fields[0].style.backgroundImage = `url(${this.allReceivers[index].user.userProfile})`;
+            this.current_receiver_fields[1].innerText = this.allReceivers[index].user.firstName;
+            this.current_receiver = index;
+
+            //set current page value as 0
+            this.current_message_page = 0;
+
+            let receiver = await axios.get(`/api/v1/chat/users/${this.allReceivers[this.current_receiver].user._id}`);
+            if(receiver && receiver.data && receiver.data.length > 0){
+                this.allReceivers[this.current_receiver].status = receiver.data[0].status;
+            }
+
+            this.current_receiver_fields[2].innerText = this.allReceivers[this.current_receiver].status;
+            await this.GetAllMessages();
+
+        }
+
+        ReceiverIsTyping = async (status_object)=>{
+            if(this.current_user_chat_object.socketId === status_object.receiver.socketId){
+                //console.log('receiver is typing');
+                this.current_receiver_fields[2].innerText = 'typing';
+            }
+        }
+
+        ReceiverStopTyping = async(status_object)=>{
+            if(this.current_user_chat_object.socketId === status_object.receiver.socketId){
+                //console.log('receiver stop typing');
+                this.current_receiver_fields[2].innerText = 'online';
+            }
+        }
+
+        CurrentUserIsTyping = async ()=>{
+            let receiver = await axios.get(`/api/v1/chat/users/${this.allReceivers[this.current_receiver].user._id}`);
+            if(receiver && receiver.data && receiver.data.length > 0){
+                receiver = receiver.data[0];
+                socket.emit('typing',{
+                    msg:`typing`,
+                    id:receiver.socketId,
+                    sender:this.current_user_chat_object,
+                    receiver:receiver
+                });
+            }
+        }
+
+        CurrentUserStopTyping = async ()=>{
+            let receiver = await axios.get(`/api/v1/chat/users/${this.allReceivers[this.current_receiver].user._id}`);
+            if(receiver && receiver.data && receiver.data.length > 0){
+                receiver = receiver.data[0];
+                socket.emit('stop typing',{
+                    msg:`stop typing`,
+                    id:receiver.socketId,
+                    sender:this.current_user_chat_object,
+                    receiver:receiver                    
+                });
+            }
+        }
+
+        StartPrivateChat = async (msg_body)=>{
+            let receiver = await axios.get(`/api/v1/chat/users/${this.allReceivers[this.current_receiver].user._id}`);
+            let newDate = new Date();
+            if(receiver && receiver.data && receiver.data.length > 0){
+                receiver = receiver.data[0];
+                socket.emit('private_chat',{
+                    id:receiver.socketId,
+                    msg:msg_body,
+                    sender:this.current_user_chat_object,
+                    receiver:receiver
+                });
+                this.createNewMessage(msg_body , 0 , "You", [newDate.getHours() , String(newDate.getMinutes()).length > 1 ? newDate.getMinutes() : '0'+newDate.getMinutes()] , 'sent');
+            }
+        }
+
+        createNewMessage = (msg_string , sender_or_receiver, sender_name , timestamp, status , position=0, scroll_to_bottom = 0,change_sidebar=1)=>{
+            let class_sender_or_receiver = !sender_or_receiver ? "sent" : "received";
+            let html = `
+            <div class="message ${class_sender_or_receiver}">
+                <p>${msg_string}</p>    
+                <div class="message-footer">
+                    <span>${sender_name}</span>    
+                    <i></i>
+                    <span>${timestamp[0]}:${timestamp[1]} ${(timestamp[0] < 12 && timestamp[0] > 0) ? 'AM' : 'PM'}</span>
+                    <b class="${status}"></b>
+                </div>
+            </div> 
+            `
+            let position_text = position ? 'afterbegin' : 'beforeend'; 
+            this.chat_content.insertAdjacentHTML(position_text,html);
+            if(scroll_to_bottom === 0){
+                this.chat_content.scrollBy(0 ,  this.chat_content.scrollHeight);
+            }
+            else{
+                this.chat_content.scrollTop = this.chat_content.scrollHeight - scroll_to_bottom;
+            }
+            this.chat_input_field.innerHTML = '';
+
+            if(change_sidebar){
+                let chat_list_element = document.getElementById(`chat-user-${this.allReceivers[this.current_receiver].user._id}`);
+                chat_list_element.querySelector('span.user-name>i').innerText = 0;
+                chat_list_element.querySelector('span.last-message').innerHTML = `${msg_string.length > 15 ? msg_string.substring(0,15) + '...' : msg_string}<i class="time-stamp">${timestamp[0]}:${timestamp[1]} ${(timestamp[0] < 12 && timestamp[0] > 0) ? 'AM' : 'PM'}</i>`;
+            }
+
+        }
+
+        convertTimeFormat = (date_object)=>{
+            let hours = Math.floor(date_object.getHours() / 10) === 0 ? '0'+date_object.getHours() : date_object.getHours();
+            let minutes = Math.floor(date_object.getMinutes() / 10) === 0 ? '0'+date_object.getMinutes() : date_object.getMinutes(); 
+            let meridian_value = (date_object.getHours >= 0 || date_object.getHours < 12) ? 'AM' : 'PM';
+
+            return [hours , minutes , meridian_value];
+        }
+
+        rearrange_user_items = ()=>{
+            let unread_msgs_array = [];
+            let corresponding_ids = [];
+            for(let user in this.allReceivers){
+                unread_msgs_array.push(this.allReceivers[user].unread_count);
+                corresponding_ids.push(user);
+            }
+
+            let max_value = 0;
+            let max_index = 0;
+            let index_visited = [];
+
+            for(let i=0;i<unread_msgs_array.length;i++){
+                let value_changed = 0;
+                max_value = 0;
+                unread_msgs_array.forEach((element,index)=>{
+                    if(element >= max_value && !index_visited.includes(index)){
+                        max_index = index;
+                        max_value = element;
+                        value_changed = 1;
+                    }
+                })
+                if(value_changed) {index_visited.push(max_index)};
+                //console.log(max_value , max_index);
+            }
+            //console.log(index_visited);
+
+            let length = this.user_list.children.length;
+
+            let count = 0;
+            for(let element in this.allReceivers){
+                //console.log(index_visited.indexOf(count) , count , element);
+                Element(`#chat-user-${element}`).style.transform = `translateY(${index_visited.indexOf(count) * 70}px)`;
+                count++;
+            }
+
+        }
+
+        GotNewMessage = async (msg_object)=>{
+                let date = new Date(msg_object.createdAt);
+                
+                
+                //console.log('sidebar updated');
+
+                let sender = msg_object.sender;
+                if(sender.user_id in this.allReceivers){
+
+                    let actual_unread_count = this.allReceivers[sender.user_id].unread_count + 1;
+                    this.allReceivers[sender.user_id].unread_count = 10000;
+                    this.allReceivers[sender.user_id].lastMessage = msg_object.msg;
+
+                    let sidebar_chat_element = document.querySelector(`#chat-user-${sender.user_id}`);
+                    sidebar_chat_element.querySelector('span.user-name>i').innerText = actual_unread_count;
+                    sidebar_chat_element.querySelector('span.last-message').innerHTML = `${msg_object.msg.length > 15 ? msg_object.msg.substring(0,15) : msg_object.msg}<i class="time-stamp">${msg_object.timestamp[0]}:${msg_object.timestamp[1]} ${msg_object.timestamp[2]}</i>`
+
+                    if(this.current_receiver === msg_object.sender.user_id){
+                    
+                            this.createNewMessage(msg_object.msg , 1, msg_object.sender.name,[msg_object.timestamp[0] , msg_object.timestamp[1]]);
+
+
+                            let receiver = await axios.get(`/api/v1/chat/users/${this.allReceivers[this.current_receiver].user._id}`);
+                            if(receiver && receiver.data && receiver.data.length > 0){
+                                
+
+                                receiver = receiver.data[0];
+                                await socket.emit('received messages' , {
+                                    receiver : this.current_user_chat_object,
+                                    sender:receiver
+                                })
+                                await socket.emit('messages seen', {
+                                    receiver : this.current_user_chat_object,
+                                    sender:receiver
+                                })
+
+                                sidebar_chat_element.querySelector('span.user-name>i').innerText = 0;
+
+                            }
+
+
+
+                    }
+
+                    this.rearrange_user_items();
+                    this.allReceivers[sender.user_id].unread_count = actual_unread_count;
+
+
+            }
+
+            else{
+                //create a new user element in sidebar
+                let user_data_resp = await axios.get('/api/v1/user?_id=' + msg_object.sender.user_id);
+                let user_data = user_data_resp.data.user[0];
+                this.allReceivers[msg_object.sender.user_id] = {user : user_data, unread_count: 10000,lastMessage:msg_object.msg};
+
+                let html = '';
+                html = `<li class="user-element" id="chat-user-${user_data._id}" onclick="chat_window.loadReceiverEnd('${user_data._id}')">
+                        <i style="background-image:url('${user_data.userProfile}')"></i>
+                        <div class="user-element-info">
+                            <span class="user-name">${user_data.firstName}<i>1</i></span>     
+                            <span class="last-message">${msg_object.msg.length > 15 ? msg_object.msg.substring(0,15) + '...' : msg_object.msg}<i class="time-stamp">${msg_object.timestamp[0]}:${msg_object.timestamp[1]} ${msg_object.timestamp[2]}</i></span>
+                        </div>
+                    </li>`
+
+                this.user_list.insertAdjacentHTML('afterbegin',html);
+                this.rearrange_user_items();
+                this.allReceivers[msg_object.sender.user_id].unread_count = 1;
+
+            }
+
+
+        }
+
+
+        LoadMessages = async (page_no , last_scrollHeight)=>{
+            //console.log('called load messages' , page_no);
+            if(this.current_message_page === -1){
+                return;
+            }
+
+            let allMessages = await this.load(axios.post("/api/v1/chat/allMessages",{receiver:this.allReceivers[this.current_receiver].onlineUser, sender : this.current_user_chat_object, skip:this.current_message_page}) , this.chat_window_loader);
+            if(allMessages.data.result.length === 0){
+                //empty array returned;
+                this.current_message_page = -1;
+                return;
+            }
+
+            //write on the content chat
+            let messages_array = allMessages.data.result;
+
+            messages_array.forEach((element)=>{
+                let direction_flag = 0;
+                let chat_relation_name = 'You';
+                let date = new Date(element.createdAt);
+                let hours = date.getHours();
+                let minutes = Math.floor(date.getMinutes() / 10) === 0 ? '0' + date.getMinutes() : date.getMinutes();
+                if(element.receiver === this.current_user_chat_object.user_id){
+                    direction_flag = 1;
+                    chat_relation_name = this.current_receiver_fields[1].innerText; 
+                }
+                if(this.current_message_page === 0){
+                    this.createNewMessage(element.message, direction_flag , chat_relation_name , [hours , minutes], element.status , 1,0,0); 
+                }
+                else{
+                    this.createNewMessage(element.message, direction_flag , chat_relation_name , [hours , minutes], element.status , 1,last_scrollHeight,0); 
+                }
+            })
+
+            this.current_message_page += 1;
+        }
+
+
+        GetAllMessages = async ()=>{
+            let receiver = await axios.get(`/api/v1/chat/users/${this.allReceivers[this.current_receiver].user._id}`);
+            //console.log('called getAllMessages');
+            if(receiver && receiver.data && receiver.data.length > 0){
+                receiver = receiver.data[0];
+    
+                //storing user object here for future purposes
+                this.allReceivers[this.current_receiver].onlineUser = receiver;
+
+
+                this.chat_content.innerHTML = '';
+
+                this.LoadMessages(this.current_message_page);
+
+
+                    await socket.emit('received messages',{
+                        receiver:this.current_user_chat_object,
+                        sender:receiver,
+                    })
+                    await socket.emit('messages seen',{
+                        receiver:this.current_user_chat_object,
+                        sender:receiver,
+                    })
+
+                    this.allReceivers[this.current_receiver].unread_count = 0;
+                    let chat_list_element = document.getElementById(`chat-user-${receiver.user_id}`);
+                    chat_list_element.querySelector('span.user-name>i').innerText = 0;
+            }
+        }
+
+        HandleSeenEvent = ()=>{
+            let seen_element = this.chat_content.querySelectorAll('b.sent ,b.delivered');
+            Array.from(seen_element).forEach((element)=>{
+                element.classList.remove('sent');
+                element.classList.remove('delivered');
+                element.classList.add('seen');
+            })
+        }
+
+        HandleDelieveredEvent = ()=>{
+            let seen_element = this.chat_content.querySelectorAll('b.sent');
+            Array.from(seen_element).every((element)=>{
+                element.classList.remove('sent');
+                element.classList.add('delivered');
+            })
+        }
+
+        init = async ()=>{
+            this.registerUser();
+            await this.loadAllChatUsers();
+            this.chat_input_field.addEventListener('focus',async ()=>{
+                await this.CurrentUserIsTyping();
+            })
+            this.chat_input_field.addEventListener('blur',async ()=>{
+                await this.CurrentUserStopTyping();
+            })
+            this.chat_send_btn.addEventListener('click', async ()=>{
+                if(this.chat_input_field.innerText.trim() === ''){
+                    return;
+                }
+                else{
+                    this.StartPrivateChat(this.chat_input_field.innerText);
+                }
+            })
+            this.chat_content.addEventListener('scroll',(e)=>{
+                if(e.target.innerHTML.length === 0){
+                    return;
+                }
+                if(e.target.scrollTop === 0){
+                    this.LoadMessages(this.current_message_page , e.target.scrollHeight);
+                }
+            })
+
+            this.fillOnlineUserValues();
+
+        }
+    }
+
+    let chat_window = new ChatWindow('ul.user-list', user, '#chat-send-btn','div.input-chat-div','div.chat-content','div.chat-sidebar-head-wrapper','div.chat-window-header');
+    chat_window.init();
+    socket.on('registered', (msg)=>{
+        chat_window.handleChatJoin(msg);
+    })
+    socket.on('typing',async (message)=>{
+        chat_window.ReceiverIsTyping(message);
+    })
+    socket.on('stop typing',async (message)=>{
+        chat_window.ReceiverStopTyping(message);
+    })
+    socket.on('detach',async (offline_user_id)=>{
+        chat_window.handleChatOffline(offline_user_id);
+    })
+    socket.on('message',async (msg_object)=>{
+        chat_window.GotNewMessage(msg_object);
+    })
+    socket.on('seen confirm',()=>{
+        chat_window.HandleSeenEvent();
+    })
+    socket.on('delivery confirm', ()=>{
+        chat_window.HandleDelieveredEvent();
+    })
+
+    Element('#move-to-chat-list').addEventListener('click',()=>{
+       Element('div.chat-window').classList.remove('visible'); 
+    })
+
+    Element('#search-users-online').addEventListener('click',()=>{
+        Element('div.chat-modal-wrapper').classList.add('visible');
+    })
+
+    Element('#chat-modal-close').addEventListener('click',()=>{
+        Element('div.chat-modal-wrapper').classList.remove('visible');
+    })
+    
+    
+</script>
+
+<%- include ('partials/footer')%>

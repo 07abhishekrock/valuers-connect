@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      href="https://fonts.googleapis.com/css?family=Open+Sans:400,600"
+      rel="stylesheet"
+    />
+    <script src="https://js.stripe.com/v3/"></script>
+  </head>
+  <body>
+    <h1>Stripe Payment</h1>
+    <button onclick="getPlan()">Get Products and Pricing</button>
+    <br />
+    <br />
+    <br />
+    <label>Enter subscription amount to cancel</label>
+    <input type="text" id="sub-amount" />
+    <button onclick="cancel()">Cancel Subscription</button>
+    <div
+      id="plans-div"
+      style="
+        display: flex;
+        margin: 1rem;
+        padding: 1rem;
+        justify-content: space-around;
+      "
+    ></div>
+    <div id="result-div" style="display: none">
+      <label> Email Address </label>
+      <input
+        placeholder="Your Email Address"
+        name="customerEmail"
+        id="customerEmail"
+      />
+
+      <div class="form-row" style="width: 20vw">
+        <br />
+        <br />
+        <label for="card-element"> Credit or debit card </label>
+        <br />
+        <br />
+        <div id="card-element">
+          <!-- A Stripe Elements instance will be mounted here -->
+        </div>
+
+        <!-- Any error messages will be mounted here -->
+        <div id="card-errors" role="alert"></div>
+        <br />
+        <br />
+        <button onclick="pay()">Pay</button>
+      </div>
+    </div>
+    <script>
+      var stripe = Stripe(
+        "pk_test_51IpGN7SCVLqlh99G7z4RcFHey75IkODNKefGIVqsBUoZFREE0QxTapfvF4HWqN7bUY23M4DR5U9IWjebcciTYQdq00Hk2JdurD"
+      );
+      var elements = stripe.elements();
+      /* Custom styling can be passed to options when creating an Element */
+      var style = {
+        base: {
+          fontSize: "16px",
+          "::placeholder": { color: "#aab7c4" },
+          fontFamily: '"Open Sans", "Helvetica", sans-serif',
+          fontSmoothing: "antialiased",
+        },
+        invalid: {
+          color: "#fa755a",
+          iconColor: "#fa755a",
+        },
+      };
+
+      /* Create a Stripe Elements instance 
+      and mount to the div with the id 'card-element' */
+
+      var card = elements.create("card", { style: style });
+
+      card.mount("#card-element");
+
+      /* Handle validation errors */
+      card.addEventListener("change", (event) => {
+        var displayError = document.getElementById("card-errors");
+
+        if (event.error) {
+          displayError.textContent = event.error.message;
+        } else {
+          displayError.textContent = "";
+        }
+      });
+
+      function getPlan() {
+        fetch("api/v1/payment/getPlans", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
+          .then((result) => result.json())
+          .then((data) => {
+            data[0].plans.map((value, index) => {
+              var parent = document.getElementById("plans-div");
+              var ele1 = document.createElement("div");
+              ele1.style.width = "20vw";
+              var ele2 = document.createElement("p");
+              ele2.innerText = `${value.currency.toUpperCase()} ${(
+                value.amount / 100
+              ).toFixed(2)} Per ${value.interval_count} ${value.interval}`;
+              var btn = document.createElement("button");
+              btn.innerText = "Choose Plan";
+              btn.addEventListener("click", () => makePayment(value));
+              ele1.appendChild(ele2);
+              ele1.appendChild(btn);
+              parent.appendChild(ele1);
+            });
+          })
+          .catch((err) => console.log(err));
+      }
+
+      let choosenPlanValue = {};
+
+      function makePayment(data) {
+        choosenPlanValue = data;
+        var parent = (document.getElementById("result-div").style.display =
+          "block");
+      }
+
+      async function pay() {
+        await stripe.createToken(card).then(function (result) {
+          if (result.error) {
+            window.alert(result.error.message);
+          } else {
+            console.log(result.token.id);
+            fetch("api/v1/payment/processPayment", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                plan: choosenPlanValue,
+                email: document.getElementById("customerEmail").value,
+                token: result.token.id,
+              }),
+            })
+              .then((response) => response.json())
+              .then((result) => window.alert(result.msg))
+              .catch((err) => {
+                console.log(err);
+              });
+          }
+        });
+      }
+
+      function cancel(email,amount){
+
+      var myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/json");
+
+      var raw = JSON.stringify({email, amount});
+
+      var requestOptions = {
+        method: "POST",
+        headers: myHeaders,
+        body: raw,
+        redirect: "follow",
+      };
+
+        var requestOptions = {
+          method: "POST",
+          headers: myHeaders,
+          body: raw,
+          redirect: "follow",
+        };
+
+        fetch("api/v1/payment/cancelSubscription", requestOptions)
+          .then((response) => response.json())
+          .then((result) => window.alert(result.msg))
+          .catch((error) => console.log("error", error));
+      }
+    </script>
+  </body>
+</html>

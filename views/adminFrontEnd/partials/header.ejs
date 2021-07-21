@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+<link rel="stylesheet" href="/alert.css">  <link
+    href="https://fonts.googleapis.com/css2?family=Lobster&family=Permanent+Marker&family=Reggae+One&family=Roboto+Slab&family=Rock+Salt&display=swap"
+    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@200&family=Fanwood+Text&display=swap"
+    rel="stylesheet">
+  <base href="/">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+    integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.14.0/css/all.css"
+    integrity="sha384-HzLeBuhoNPvSl5KYnjx0BT+WB0QEEqLprO+NBkkk5gbc67FTaL7XIGa2w1L0Xbgc" crossorigin="anonymous">
+  <link rel="stylesheet" href="/styles.css" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+  <title>Valuers Connect | Build Your Network In No Time</title>
+  <meta name="description" content="Valuers Connect is a platform for valuers from all over the world to connect with other professionals and stakeholders in the field of valuation. Valuers Connect wishes to establish a forum for discussions on topics of importance and getting counselled by the industry experts. Valuers from different parts of the world can engage in discussions on not only the forum but also conduct business on Valuers Connect. Stakeholders can get in touch with valuers and other professionals to get their job done with complete privacy.">
+  <script src="/jquery-3.5.1.min.js"></script>
+
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.23.0/trumbowyg.min.js"
+    integrity="sha512-sffB9/tXFFTwradcJHhojkhmrCj0hWeaz8M05Aaap5/vlYBfLx5Y7woKi6y0NrqVNgben6OIANTGGlojPTQGEw=="
+    crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="/Trumbowyg-master/dist/ui/trumbowyg.min.css">
+<style>
+button{
+  cursor: pointer;
+}
+</style>
+  <script>
+    window.onload = function () {
+
+      var options = {
+        exportEnabled: true,
+        animationEnabled: true,
+        data: [{
+          type: "splineArea",
+          dataPoints: [{
+              y: 10
+            },
+            {
+              y: 6
+            },
+            {
+              y: 14
+            },
+            {
+              y: 12
+            },
+            {
+              y: 19
+            },
+            {
+              y: 14
+            },
+            {
+              y: 26
+            },
+            {
+              y: 10
+            },
+            {
+              y: 22
+            }
+          ]
+        }]
+      };
+      // $("#chartContainer").CanvasJSChart(options);
+
+    }
+  </script>
+
+</head>
+
+<body id="body">
+  <div class="containera">
+    <nav class="navbar">
+      <div class="nav_icon" onclick="toggleSidebar()">
+        <i class="fa fa-bars" aria-hidden="true"></i>
+      </div>
+      <div class="navbar__left">
+        <div class="search" style="visibility:hidden;">
+          <input type="text" id="srch" placeholder="Search for customers...">
+          <div class="blue_button"><img src="/assets/zoom_out.png" alt=""></div>
+        </div>
+      </div>
+      <div class="navbar__right">
+        <a   href="#">
+          <img style="display: block; width: 70%; visibility: hidden;" src="/assets/Group 9.png" alt="">
+        </a>
+        <a   href="#">
+          <img style="display: block; width: 35px;margin-right: 10px;border-radius: 2rem;" src="<%= user.userProfile %>" alt="">
+        </a>
+        <a style="font-size: 13px; color: #838797; margin-left: 0px!important;" href="/my/profile">
+          <div class="dropdown" style="color: #A0A5B9;">
+           <%= user.firstName %>
+            <!-- <i style="margin-left: 5px;" class="fa fa-angle-down"></i> -->
+            <!-- <div class="dropdown-content" style="margin-top: 18px; width: 7%;">
+              <span>XYZ Unknown</span>
+            </div> -->
+          </div>
+        </a>
+      </div>
+    </nav>
+
+    <main>
+      <div class="main__container">
+
+        <!-- MAIN CARDS STARTS HERE -->
+        <!-- <div class="main__cards">
+            <div class="card">
+              <div class="card_img" style="background-color: #F2EBFB!important;"><img src="assets/dollar.png" alt=""></div>
+              <div class="card_inner">
+                <div class="card_para">$82,341</div>
+                <div class="card_para2">Total Outstanding</div>
+              </div>
+              <span>...</span>
+            </div> -->
+
+        <!-- <div class="card">
+              <div class="card_img" style="background-color: #FEF3EE!important;"><img src="assets/Group 15.png" alt=""></div>
+              <div class="card_inner">
+                <div class="card_para">$47,641</div>
+                <div class="card_para2">Due within 30days</div>
+              </div>
+              <span>...</span>
+            </div>
+
+            <div class="card">
+              <div class="card_img" style="background-color: #FFEFF2!important;"><img src="assets/triangle.png" alt=""></div>
+              <div class="card_inner">
+                <div class="card_para">$84,534</div>
+                <div class="card_para2">Overdue</div>
+              </div>
+              <span>...</span>
+            </div>
+
+            <div class="card">
+              <div class="card_img" style="background-color: #EDF8FE!important;"><img src="assets/calendar (5).png" alt=""></div>
+              <div class="card_inner">
+                <div class="card_para">17 Days</div>
+                <div class="card_para2">Average days to Paid</div>
+              </div>
+              <span>...</span>
+            </div>
+          </div> -->
+        <!-- MAIN CARDS ENDS HERE -->
+
+        <!-- CHARTS STARTS HERE -->
+        <!-- <div class="charts">
+            <div class="charts__left">
+              <div class="charts__left__title">
+                <div>
+                  <h1>Payments</h1>
+                </div>
+                <div class="dropdown" style="color: #A0A5B9;">
+                  Monthly
+                  <i style="margin-left: 5px;" class="fa fa-angle-down"></i>
+                  <div class="dropdown-content1">
+                    <span style="display: block;">Yearly</span>
+                  </div>
+                </div>
+              </div>
+              <div id="apex1"></div>
+            </div>
+
+            <div class="charts__right">
+              <div>
+                <div class="charts__right__title">
+                  <div>
+                    <p>Collection % This month</p>
+                  </div>
+                </div>
+  
+                <div class="charts__right__cards">
+                  
+                </div>
+              </div>
+              <div class="cr" style="background: #642AD6;">
+                <div style="border-bottom: 0px;" class="charts__right__title">
+                  <div>
+                    <p style="color: #ffffff!important;">$1,00,134</p>
+                    <p style="color: #ffffff!important; font-size: 11px;">Total Revenue Collected this month</p>
+                  </div>
+                </div>
+
+                <div id="chartContainer" style="height: 250px; width: 100%;"></div>
+  
+                <div class="charts__right__cards">
+                  
+                </div>
+              </div>
+            </div>
+          </div> -->
+        <!-- CHARTS ENDS HERE -->

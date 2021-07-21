@@ -1,0 +1,134 @@
+<%- include("partials/header") %>
+
+<div class="clienttenderbody">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="filtertotaldiv">
+                    <h5><i class="fas fa-search"></i> Filter</h5>
+                    <div>
+                        <form id="filter-form">
+                            <!-- <div id="list1" class="dropdown-check-list" tabindex="100">
+                                <span class="anchor"><i class="fas fa-chevron-down"></i> GEOGRAPHIC REGION</span>
+                                <ul class="items">
+                                    <li><input type="checkbox" />Australia and Oceania </li>
+                                    <li><input type="checkbox" />BALTIC</li>
+                                    <li><input type="checkbox" />BRICS </li>
+                                    <li><input type="checkbox" />Central Europe </li>
+                                    <li><input type="checkbox" />Eastern Africa</li>
+                                    <li><input type="checkbox" />Eastern Europe </li>
+                                    <li><input type="checkbox" />North America</li>
+                                </ul>
+                            </div>
+                            <div id="list2" class="dropdown-check-list" tabindex="100">
+                                <span class="anchor"><i class="fas fa-chevron-down"></i> COUNTRY</span>
+                                <ul class="items">
+                                    <li><input type="checkbox" />Australia</li>
+                                    <li><input type="checkbox" />Brazil</li>
+                                    <li><input type="checkbox" />Chile </li>
+                                    <li><input type="checkbox" />Pakistan </li>
+                                    <li><input type="checkbox" />India</li>
+                                    <li><input type="checkbox" />China</li>
+                                    <li><input type="checkbox" />Russia</li>
+                                </ul>
+                            </div> -->
+                            <div id="list3" class="dropdown-check-list" tabindex="100">
+                                <span class="anchor"><i class="fas fa-chevron-down"></i> CATEGORY</span>
+                                <ul class="items">
+                                    <%#add items here through external request%>
+                                </ul>
+                            </div>
+                            <div id="list4" class="dropdown-check-list" tabindex="100">
+                                <!-- <span class="anchor"><i class="fas fa-chevron-down"></i> TENDER VALUE (IN USD)</span> -->
+                                <!-- <ul class="items">
+                                    <li><input type="checkbox" />Australia</li>
+                                    <li><input type="checkbox" />Brazil</li>
+                                    <li><input type="checkbox" />Chile </li>
+                                    <li><input type="checkbox" />Pakistan </li>
+                                    <li><input type="checkbox" />India</li>
+                                    <li><input type="checkbox" />China</li>
+                                    <li><input type="checkbox" />Russia</li>
+                                </ul> -->
+                            </div>
+                            <!-- <div id="list5" class="dropdown-check-list" tabindex="100">
+                                <span class="anchor"><i class="fas fa-chevron-down"></i> DEADLINE</span>
+                                <ul class="items">
+                                    <li><input type="cala" />Australia</li>
+                                    <li><input type="checkbox" />Brazil</li>
+                                    <li><input type="checkbox" />Chile </li>
+                                    <li><input type="checkbox" />Pakistan </li>
+                                    <li><input type="checkbox" />India</li>
+                                    <li><input type="checkbox" />China</li>
+                                    <li><input type="checkbox" />Russia</li>
+                                </ul>
+                            </div> -->
+                            <!-- <input type="text" id="myInput" placeholder="Search within.." title="Type in a name"><br> -->
+                            <span class="btn btn-secondary" id="refine-btn">Refine</span>
+                            <!-- <span class="btn btn-secondary"
+                                style="margin-left: 100px;"></span> -->
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-9">
+
+
+                <div class="tensertotaltable">
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab"
+                                aria-controls="home" aria-selected="true">FRESH TENDER</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab"
+                                aria-controls="profile" aria-selected="false">ARCHIVE TENDER</a>
+                        </li>
+                        <!-- <li class="nav-item">
+                            <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab"
+                                aria-controls="contact" aria-selected="false">ARCHIVE TENDER</a>
+                        </li> -->
+                    </ul>
+                    <div class="tab-content" id="myTabContent">
+                        <div class="row clienttendertotalheading">
+                            <div class="col-lg-8  clienttenderheadingcenter">
+                                <p>TENDER DETAILS</p>
+                            </div>
+                            <div class="col-lg-2 clienttenderheadingcenter">
+                                <p>VALUE</p>
+                            </div>
+                            <div class="col-lg-2 clienttenderheadingcenter">
+                                <p>DEADLINE</p>
+                            </div>
+
+                        </div>
+                        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+
+                            <div id="result1"></div>
+                        </div>
+                        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                            <div>
+                                <p id="result2"></p>
+                            </div>
+                        </div>
+                        <!-- <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+                            <div id="result3">
+
+
+                            </div>
+                        </div> -->
+                    </div>
+                    <br>
+                </div>
+                <br><br><br>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    </script>
+
+
+<script src="/dropdown.js"></script>
+<script src="/js/tenderListAjax.js"></script>
+<%- include("partials/footer") %>

@@ -1,0 +1,103 @@
+<%- include("partials/header") %>
+<form action="" id="" class="newsformcreate createJobForm">
+
+    <h1>Create New Job</h1>
+	<span>Job Position</span>
+    <input type="text" name="" id="position" placeholder="Job Position"  ><br>
+	<span>Job Location</span>
+    <input type="text" name="" id="location" placeholder=" location"  ><br>
+	<span>Country</span>
+    <input type="text" name="" id="job-country" placeholder="country"  ><br>
+	<span>Application Google Form URL</span>
+    <input type="text" name="" id="form" placeholder="Application Google Form Url"  ><br>
+
+	<span>Job Brief</span>
+    <textarea name="" id="jobBrief" class="desca" cols="30" rows="10" placeholder="brief"></textarea  ><br>
+	<span>Job Requirements</span>
+    <textarea name="" id="jobRequirements" class="desca" cols="30" rows="10" placeholder="requirement"></textarea  ><br>
+	<span>Job Contact Details</span>
+    <textarea name="" id="jobContactDetails" class="desca" cols="30" rows="10" placeholder="Company Contact Details"></textarea><br>
+    <!-- <textarea name="" id="desc" class="desca" cols="30" rows="10" placeholder="Job Description"></textarea><br>
+    <textarea name="" id="desc" class="desca" cols="30" rows="10" placeholder="Job Description"></textarea><br> -->
+    <span>File</span>
+    <input type="file" name="" id="" style="border: none;">
+    <button type="submit" id="create-job-btn">PUBLISH</button><br>
+</form>
+<script>
+
+
+
+
+
+
+
+
+
+const hideAlert = () => {
+	const el = document.querySelector(".alert");
+	if (el) el.parentElement.removeChild(el);
+};
+
+// type is 'success' or 'error'
+const showAlert = (type, msg, time = 7) => {
+	hideAlert();
+	const markup = `<div class="alert alert--${type}">${msg}</div>`;
+	document.querySelector("body").insertAdjacentHTML("afterbegin", markup);
+	window.setTimeout(hideAlert, time * 1000);
+};
+
+const createCareer = async (position,location,country,brief,requirements,form,contact_details) => {
+	// var ws = new WebSocket("ws://localhost:3000/alok/api/v1/login");
+
+	try {
+		let button = document.getElementById('create-job-btn');
+		button.disabled = 'true';
+		const res = await axios({
+			method: "POST",
+			url: "/api/v1/job",
+			data: {
+				position,location,country,brief,requirements,form,contact_details
+			},
+		});
+		button.removeAttribute('disabled');
+		if (res.data.status === "success") {
+			console.log("THIS IS RES ", res);
+			showAlert("success", "Created Successfully");
+			window.setTimeout( 2 * 1000);
+            document.querySelector(".createJobForm").reset()
+		}
+	} catch (err) {
+		showAlert("error", err);
+	}
+};
+const createJob = document.querySelector(".createJobForm");
+
+if (createJob) {
+	// alert("Entered If Block");
+	createJob.addEventListener("submit", (e) => {
+		e.preventDefault();
+		const position = document.getElementById("position").value;
+		const location = document.getElementById("location").value;
+		const country = document.getElementById("job-country").value;
+		const brief = document.getElementById("jobBrief").value;
+		const requirements = document.getElementById("jobRequirements").value;
+		const form = document.getElementById("form").value;
+		const contact_details = document.getElementById("jobContactDetails").value;
+
+
+		// console.log(user, forumThread, threadReply);
+		createCareer(position,location,country,brief,requirements,form,contact_details);
+	});
+}
+
+
+
+
+
+
+
+
+
+
+</script>
+<%- include("partials/footer") %>

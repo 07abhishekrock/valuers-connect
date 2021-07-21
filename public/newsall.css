@@ -1,0 +1,89 @@
+#myInputsearch{
+    background-image: url('../imagesall/search.png');
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 40px;
+    border: 1px solid #ddd;
+    margin-bottom: 12px;
+    margin-top: 20px;
+    background-size: 30px;
+    background-position: 15px 5px;
+  font-size: 16px;
+  padding: 15px 20px 15px 60px;
+  }
+  
+.past-episode-heading{    
+    margin-top: -10px;
+    color: rgb(180,180,180);
+}
+.past-episode-heading-bold {
+    font-weight: bold;
+    font-size: 18px;
+    text-decoration: none;
+  }
+  .past-episode-heading-bolda{
+    font-weight: bold;
+    font-size: 18px;
+    color: #329F5B;
+    
+  }
+  /* background-color: 	#000000; */
+  .past-episode-row {
+    margin-top: 70px !important;
+  }
+
+  .past-episode-date {
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 21px;
+    margin-top: -18px;
+    color: rgb(180,180,180);
+  }
+
+  .past-episode-content {
+    font-size: 14px;
+    line-height: 21px;
+    margin-top: -10px;
+  }
+  .past-episode-row-margin .card {
+    border: none;
+    margin: auto;
+    margin-bottom: 60px;
+    box-shadow: 7px 9px 27px -9px rgba(97,94,94,0.53);
+    -webkit-box-shadow: 7px 9px 27px -9px rgba(97,94,94,0.53);
+    -moz-box-shadow: 7px 9px 27px -9px rgba(97,94,94,0.53);
+  }
+
+  .past-episode-row-margin .card .card-body {
+    background: #FDFDFD;
+    border: 1px solid #EEEEEE;
+    box-sizing: border-box;
+    border-radius: 10px;
+    height: 200px;
+  }
+
+  .past-episode-row-margin .card img {
+    width: 100%;
+    height: 200px;
+    border-radius: 10px 10px 0px 0px;
+  }
+  .guest-show-episode {
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 16px;
+    float: right;
+    color: #329F5B;
+    margin-top: -15px;
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+  }
+  .newsallbody{
+      background-color: #f0f0f0;
+  }
+  .past-episode-row-margin .card:hover{
+    -webkit-box-shadow: -1px 3px 8px 9px rgba(0,0,0,0.18);
+    -moz-box-shadow: -1px 3px 8px 9px rgba(0,0,0,0.18);
+    box-shadow: -1px 3px 8px 9px rgba(0,0,0,0.18);
+    transform: scale(1.02);
+  }

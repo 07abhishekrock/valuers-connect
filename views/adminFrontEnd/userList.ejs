@@ -1,0 +1,144 @@
+<%- include("partials/header") %>
+<style>
+#red{
+  color:white !important;
+   padding:.35rem .65rem;
+   font-size: .8rem;
+   border-radius: 1rem;
+}
+</style>
+
+<style>
+    .loader_wrap{
+      display: flex;
+      height: 100vh;
+      justify-content: center;
+      /* background-color: aqua; */
+      text-align: center;
+      align-items: center;
+    }
+    .loader {
+  border: 16px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 16px solid #194342;
+  width: 120px;
+  height: 120px;
+  /* text-align: center; */
+  display: flex;
+  justify-content: center;
+  
+  -webkit-animation: spin 2s linear infinite; /* Safari */
+  animation: spin 2s linear infinite;
+}
+
+/* Safari */
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+    </style>
+<div>
+  <h2 style="text-align: center; font-weight: bold;margin-top: 20px;">
+    Users List
+  </h2>
+</div>
+<div class="main__cards">
+  <div class="card">
+    <div class="card_inner">
+      <div class="card_para"><%=signupData%></div>
+      <div class="card_para2">Total Users</div>
+    </div>
+    <span>...</span>
+  </div>
+  <!-- <div class="card">
+    <div class="card_inner">
+      <div class="card_para"><%=paidMember%></div>
+      <div class="card_para2">Current Month Subscription</div>
+    </div>
+    <span>...</span>
+  </div>
+  <div class="card">
+    <div class="card_inner">
+      <div class="card_para"><%=paidMember%></div>
+      <div class="card_para2">Current Month Subscription</div>
+    </div>
+    <span>...</span>
+  </div> -->
+  <div class="card">
+    <div class="card_inner">
+      <div class="card_para"><%=paidMember%></div>
+      <div class="card_para2">Total Paid Member</div>
+    </div>
+    <span>...</span>
+  </div>
+</div>
+<nav aria-label="Page navigation example" style="margin-left: 1rem;">
+	<ul class="pagination">
+	  <li class="page-item"><button class="page-link .prev-btn" id="prev-btn">Previous</button></li>
+	  <li class="page-item"><button class="page-link .next-btn" id="next-btn">Next</button></li>
+	</ul>
+  </nav>
+<!-- <form > -->
+<h4>SEARCH FILTER</h4>
+<input type="text" style="border-radius: 10px; padding: 6px; border: 1px solid rgb(119, 117, 117); outline: none;"  id="searchFirstName" placeholder="First Name..." onkeyup="">
+<input type="text" style="border-radius: 10px; padding: 6px; border: 1px solid rgb(119, 117, 117); outline: none;" id="phoneNo" placeholder="Mobile No..." onkeyup="">
+<input type="text" style="border-radius: 10px; padding: 6px; border: 1px solid rgb(119, 117, 117); outline: none;" id="searchEmail" placeholder="Email..." onkeyup="">
+
+<br>
+
+<!-- <button onclick="searchbyName()">Search</button> -->
+<!-- </form> -->
+<!-- <input type="text" id="searchName" placeholder="name...">
+<input type="text" id="searchName" placeholder="name..."> -->
+
+<br>
+<table class="table table-hover" style="background-color: white;">
+  <thead>
+    <tr>
+      <th scope="col">
+        S.no
+      </th>
+      <th scope="col">
+        First Name
+      </th>
+      <th scope="col">
+        Last Name
+      </th>
+      <th scope="col" >
+        Email
+      </th>
+      <th scope="col">
+       Phone No.
+      </th>
+      <th scope="col">
+        Delete
+      </th>
+      <!-- <th scope="col">
+        Update
+      </th> -->
+       <th  class="green red">Is Member</th>
+      <!-- <th>Send Mail</th> -->
+    </tr>
+  </thead>
+  <tbody id="adminuserajaxdiv">
+    <div id="spinn"></div>
+  </tbody>
+</table>
+
+
+<script src="/js/userListAjax.js"></script>
+<script>
+if (dataArr.isMember) {
+							document.getElementById("red").style.color = "green";
+							document.getElementById("red").innerHTML = "Member";
+						} else {
+							document.getElementById("red").style.color = "red";
+							document.getElementById("red").innerHTML = "Not Member";
+						}
+</script>
+<%- include("partials/footer") %> 

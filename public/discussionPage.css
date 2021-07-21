@@ -1,0 +1,127 @@
+p.editdeletehide[visible="0"]{
+    display:none;
+}
+.commercial {
+    padding: 10px 0 5px 0px;
+    text-align: center;
+    font-size: 30px;
+    /* background-color: white;
+    box-shadow: -1px 1px 14px 0px rgba(0, 0, 0, 0.75);
+    -webkit-box-shadow: -1px 1px 14px 0px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: -1px 1px 14px 0px rgba(0, 0, 0, 0.75); */
+    border-radius: 30px;
+}
+
+.contnr {
+    width: 80%;
+    margin: auto;
+}
+
+.discussiontotalpage {
+    background-color: #f0f0f0;
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+
+.discussionmaincontentdiv {
+    padding: 5px;
+}
+
+.discussionprofilepic {
+    height: 100px;
+    width: 100px;
+    border-radius: 100%;
+    margin-bottom: 15px;
+}
+
+.discussionprofilepicname {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.discussionprofilepicrank {
+    font-size: 15px;
+    color: grey;
+    font-weight: bold;
+}
+
+.discussionprofilepicdiv {}
+
+.underdiscussionpicheading {
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.underdiscussionpicheadingjoined {
+    color: rgb(102, 101, 101);
+}
+
+.discussionborderrt {
+    border-right: 3px solid lightgrey;
+}
+
+.discussionmaincontentdiv {
+    padding: 10px 5px 10px 20px;
+    background-color: white;
+    border-radius: 20px;
+    margin-top: 30px;
+    box-shadow: -1px 1px 14px 0px rgba(0, 0, 0, 0.75);
+    -webkit-box-shadow: -1px 1px 14px 0px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: -1px 1px 14px 0px rgba(0, 0, 0, 0.75);
+}
+
+.discussionpagecontentmain {
+    padding-left: 20px;
+    font-size: 17px;
+}
+
+.loginbuttond {
+    font-size: 20px;
+    font-weight: bold;
+    display: block;
+    margin: auto;
+    width: 220px;
+    background-color: #436475;
+    text-align: center;
+    color: white;
+    border-radius: 35px;
+    padding: 10px 15px 15px 15px;
+    margin-top: 20px;
+    border: none;
+    outline: none;
+}
+
+.discussiontxtarea {
+    text-align: center;
+    width: 60%;
+    margin: auto;
+    margin-top: 30px;
+    display: none;
+    padding-top: 60px;
+    padding-bottom: 60px;
+}
+
+.discussiontxtarea textarea {
+    width: 80%;
+}
+
+@media(max-width:550px) {
+    .contnr {
+        width: 93%;
+        margin: auto;
+    }
+}
+@media(max-width:1000px){
+    .discussionprofilepicdiv{
+        display: flex;
+    }
+    .imagenamediscussionpage{
+        margin-left: 20px;
+    }
+    .underdiscussionpicheading{
+        margin-left: 20px;
+    }
+    .discussionborderrt {
+        border-right: 0px !important;
+    }
+}

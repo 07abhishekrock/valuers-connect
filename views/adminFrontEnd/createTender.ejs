@@ -1,0 +1,30 @@
+<%- include("partials/header") %>
+<form action="" class="newsformcreate createTenderAdmin">
+
+    <h1>Create New Tender</h1>
+    <span>Title</span>
+    <input type="text" name="" id="Tendertitle" placeholder="Title"    >
+    <span>Category</span>
+    <input type="text" name="" id="category" placeholder="Category"    >
+
+    <span>Authority Issue</span>
+    <input type="text" name="" placeholder="Authority Issue" id="adminAuthorityIssue"   >
+    <span>Opening Date</span>
+    <input type="date" onfocus="(this.type = 'date')" name="" id="openingDate" placeholder="Opening Date"   >
+    <span>Last Date</span>
+    <input type="date" onfocus="(this.type = 'date')" name="" id="lastDate" placeholder="Last Date"   >
+    <span>Organization</span>
+    <input type="text" name="" placeholder="Organization Detail" id="adminOrganizationDetail"   >
+    <span>EMD</span>
+    <input type="text" name="" placeholder="EMD" id="adminEmd"   >
+    <span>Brief</span>
+    <textarea name="" id="" class="adminTenderBrief desca" cols="30" rows="10" placeholder="Breif"   ></textarea><br>
+     <small style="color: brown; margin-left: 5rem;"><b>To upload multiple files, kindly use .zip format</b></small>
+    <span>File</span>
+    <input type="file" id="myFile" class="tenderDocuments" name="filename" placeholder=""  style="border: none;"   >
+    <!--     -->
+
+    <button type="submit" id="create-tender-btn">Create</button>
+</form>
+<script src="/js/adminCreateTender.js"></script>
+<%- include("partials/footer") %>

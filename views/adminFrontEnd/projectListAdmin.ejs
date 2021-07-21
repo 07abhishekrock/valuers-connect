@@ -1,0 +1,133 @@
+<%- include("partials/header") %>
+<div>
+	<h2 style="text-align: center; font-weight: bold;margin-top: 20px;">
+	  Project List
+	</h2>
+  </div>
+  <nav aria-label="Page navigation example" style="margin-left: 1rem;">
+	<ul class="pagination">
+	  <li class="page-item"><button class="page-link .prev-btn" id="prev-btn">Previous</button></li>
+	  <li class="page-item"><button class="page-link .next-btn" id="next-btn">Next</button></li>
+	</ul>
+  </nav>
+<div class="adminlisttotaldiva">
+
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th scope="col bigcol">
+           Listing Id
+          </th>
+          <th scope="col">
+           Institution Name
+          </th>
+          <th scope="col">
+            Property Details
+           </th>
+           <th scope="col">
+            Application Deadline
+           </th>
+           <th scope="col">
+            Auction Date
+           </th>
+           <th scope="col">
+            Reserve Price
+           </th>
+          <th scope="col smallcolumn" style="text-align: center;">
+            Edit
+          </th>
+        </tr>
+      </thead>
+      <tbody id="adminprojectajaxdiv" style="width: 100%;background-color: white;overflow-x: scroll;">
+       
+        
+      </tbody>
+    </table>
+  
+  </div>
+  
+
+<script>
+
+$(function () {
+	var page = 1,
+		limit = 15,
+		totalrecord = 0;
+
+	fetchData();
+
+	document.getElementById("prev-btn").addEventListener("click", function () {
+		if (page > 1) {
+			page--;
+			fetchData();
+		}		else{
+			window.alert("There is no further data available");
+		}
+		console.log("Prev Page: " + page);
+	});
+
+	// handling the next-btn
+	document.getElementById("next-btn").addEventListener("click",function () {
+		if (totalrecord ===15 ) {
+			page++;
+			fetchData();
+		}
+		else{
+			window.alert("There is no further data available");
+		}
+	});
+		
+
+	function fetchData() {
+		// ajax() method to make api calls
+		$.ajax({
+			url: "/api/v1/project",
+			type: "GET",
+			 data: {
+			 	page: page,
+				limit: 15,
+			 },
+			success: function (data) {
+				console.log(data);
+
+				if (data.status) {
+					var dataArr = data.data;
+					totalrecord = data.result;
+					console.log(data.project[0]);
+
+					var html = "";
+
+					for (var i = 0; i < totalrecord; i++) {
+						var u = i + 1;
+						html +=
+            `<tr>
+            <td>${data.project[i]._id}</td>
+            <td>${data.project[i].institutionName}</td>
+            <td>${data.project[i].propertyDetails}</td>
+            <td>${data.project[i].applicationDeadline}</td>
+            <td>${data.project[i].auctionDate}
+            </td>
+            <td>₹ ${data.project[i].reservePrice}</td>
+            <td class="smallcolumn"><a onclick="return confirm('Are you Sure ?')" href="/api/v1/project/delete/${data.project[i]._id}">
+                 <i class="fas fa-trash-alt"></i>
+                   </a>
+                 <a   href=/admin/updateproject/${data.project[i]._id}>
+                  <i class="fas fa-pen"></i>
+                  </a></td>
+        </tr>`
+					}
+					$("#adminprojectajaxdiv").html(html);
+				}
+			},
+			error: function (jqXHR, textStatus, errorThrown) {
+				console.log(jqXHR);
+				console.log(textStatus);
+				console.log(errorThrown);
+			},
+		});
+	}
+});
+
+
+</script>
+<%- include("partials/footer") %>

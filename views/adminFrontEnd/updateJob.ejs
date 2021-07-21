@@ -1,0 +1,96 @@
+<%- include("partials/header") %>
+<form action="" class="newsformcreate jobformcreate">
+    <h1>Update Job Detail</h1>
+	<span>Position</span><br>
+    <input type="text" name="" id="job-position-update" placeholder="Position" value="<%= found.position %>"><br>
+    <!-- <input type="date" name="" id="" placeholder="Time" value="2013-01-08"><br> -->
+	<span>Location</span><br>
+    <input type="text" name="" id="job-location-update" value="<%= found.location %>" placeholder="location"><br>
+	<span>Country</span><br>
+    <input type="text" name="" id="job-country-update" value="<%= found.country %>" placeholder="country"><br>
+	<span>Application Form Url</span><br>
+    <input type="text" name="" id="job-url-update" value="<%=found.form%>" placeholder="Job Link Goes Here"/><br>
+	<span>Brief</span><br>
+    <textarea name=""  id="job-brief-update" cols="30" rows="10" placeholder="job brief goes here"><%=found.brief%></textarea><br>
+	<span>Requirement</span><br>
+    <textarea name="" id="job-requirement-update" cols="30" rows="10" placeholder="job requirement goes here"><%=found.requirements%></textarea><br>
+	<span>Contact Information</span><br>
+    <textarea name="" id="job-contact-update" cols="30" rows="10" placeholder="job contact details goes here"><%=found.contact_details%></textarea><br>
+    <button type="submit" id="update-job-btn">UPDATE</button>
+</form>
+
+
+<script>
+    var url_string=""
+    window.onload=function(){
+        url_string = window.location.href
+ url_string= url_string.split('/')[5]
+console.log(url_string);
+    }
+    const hideAlert = () => {
+	const el = document.querySelector(".alert");
+	if (el) el.parentElement.removeChild(el);
+};
+
+// type is 'success' or 'error'
+const showAlert = (type, msg, time = 7) => {
+	hideAlert();
+	const markup = `<div class="alert alert--${type}">${msg}</div>`;
+	document.querySelector("body").insertAdjacentHTML("afterbegin", markup);
+	window.setTimeout(hideAlert, time * 1000);
+};
+
+// const createTenderAdminVal = async (emd,openingDate, lastDate, organizationDetail,tenderAuthority,brief) => {
+const updateJobAdminVal = async (position, location, brief,country, requirement, form, contact_details ) => {
+	try {
+		let button = document.getElementById('update-job-btn');
+		button.disabled = 'true';
+		const res = await axios({
+			method: "PATCH",
+			url: `/api/v1/job/${url_string}`,
+			data:{
+                position, location, brief,country, requirement, form, contact_details 
+            },
+
+		});
+		button.removeAttribute('disabled');
+		if (res.data.status === "success") {
+			console.log("THIS IS RES ", res);
+			showAlert("success", "Published");
+            document.querySelector(".jobformcreate").reset()
+		}
+	} catch (err) {
+		showAlert("error", err);
+        console.log(err);
+		// if (err.response.status === 500) {
+		// 	document.querySelector(".hideAlert").classList.remove("alert");
+		// 	document.getElementById("alert").innerHTML =
+		// 		"Cannot Submit Form Please Fill Required Field Correctly";
+		// } else {
+		// 	document.querySelector(".hideAlert").classList.remove("alert");
+		// 	document.getElementById("alert").innerHTML = err.response.data.message;
+		// }
+	}
+};
+const createTender = document.querySelector(".jobformcreate");
+console.log(createTender);
+if (createTender) {
+	createTender.addEventListener("submit", (e) => {
+		e.preventDefault();
+        // const form= new FormData()
+        const position = document.getElementById("job-position-update").value;
+        const location = document.getElementById("job-location-update").value;
+        const brief = document.getElementById('job-brief-update').value;
+        const country = document.getElementById('job-country-update').value;
+        const requirement = document.getElementById('job-requirement-update').value;
+        const form = document.getElementById('job-url-update').value;
+        const contact_details = document.getElementById('job-contact-update').value;
+
+		updateJobAdminVal(position, location, brief, country, requirement, form , contact_details);
+	});
+} 
+
+</script>
+
+
+<%- include("partials/footer") %>

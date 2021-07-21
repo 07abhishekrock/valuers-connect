@@ -1,0 +1,34 @@
+<%- include("partials/header") %>
+<form  class="newsformcreate">
+    <h1>Add News</h1>
+    <span>Title</span>
+    <input type="text" class="newsTitleAdmin" name="title" id="inputtitlenewsadmin" placeholder="News Title"><br>
+    <!-- <input type="datetime-local" name="" id="" placeholder="Time"><br> -->
+    <span>Content News</span>
+    <textarea name="content" class="contentNews" id="desc" cols="30" rows="10" placeholder="News Content"></textarea><br>
+    
+    <span><b>Thumbnail Image</b> Resolution should be 320 X 350</span>
+    <input type="file"  class="newsThumbnailImage" name="" id="" style="border: none;" >
+    
+    <span><b>Feature Image</b> Resolution should be 900 X 500</span>
+    <input type="file"  class="newsFeatureImage" name="newsFeatureImage" id="" style="border: none;" >
+
+    <a id="is-important" check="0" style="cursor:pointer;text-decoration:None;margin:2em auto;display:block;text-align:center;width:150px;border-radius:2em;padding:0.3em 1em;border:2px solid black">is Important</a>
+        <button type="submit" id="createadminnews">PUBLISH</button>
+</form>
+
+<script>
+    let is_important = document.querySelector('#is-important');
+    is_important.onclick = ()=>{
+        console.log('hello');
+        if(is_important.getAttribute('check')=='0'){
+            is_important.setAttribute('check','1');
+        }
+        else{
+            is_important.setAttribute('check','0');
+        }
+    }
+</script>
+<script src="/js/createNewsAdminAxios.js"></script>
+<!-- <script src="/js/createallinonefolder.js"></script> -->
+<%- include("partials/footer") %>

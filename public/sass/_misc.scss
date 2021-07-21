@@ -1,0 +1,59 @@
+@use './variables' as variables;
+div.pricing-image-wrapper{
+    max-width:700px;
+    width:95%;
+    font-family:variables.$secondary_font;
+    margin: 0 auto;
+    &>a.subscribe-now{
+        color:white;
+        background-color:variables.$main_color;
+        padding:0.3em 0.5em;
+        border-radius:0.2em;
+        display:inline-block;
+        margin:2em auto;
+        position:relative;
+        left:50%;
+        transform:translateX(-50%);
+        font-size:1.5em;
+        text-decoration:none;
+    }
+    &>img{
+        width:100%;
+    }
+    &>div.footer-small{
+        width:100%;
+        display:flex;
+        align-items:center;
+        justify-content:space-between;
+        margin-top:3em;
+        margin-bottom:2em;
+        &>a.contact-us-link{
+            text-decoration:none;
+            background-color:black;
+            color:white;
+            padding:0.3em 0.5em;
+        }
+        &>div.social-links a{
+            color:black;
+            text-decoration: none;
+        }
+        &>div.social-links i{
+            display:inline-block;
+            margin:0px 0.3em;
+            font-size:1.5em;
+        }
+
+        @media screen and (max-width:670px){
+            flex-flow:column;
+            justify-content:center;
+            align-items:center;
+            &>a.contact-us-link{
+                margin-bottom:2em;
+                display:block;
+            }
+            &>div.social-links{
+                margin-top:2em;
+            }
+        }
+    }
+}

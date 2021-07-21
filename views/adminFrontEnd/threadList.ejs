@@ -1,0 +1,41 @@
+<%- include("partials/header") %>
+<div>
+  <h2 style="text-align: center; font-weight: bold;margin-top: 20px;">
+    Thread Replies
+  </h2>
+</div>
+<nav aria-label="Page navigation example" style="margin-left: 1rem;">
+	<ul class="pagination">
+	  <li class="page-item"><button class="page-link .prev-btn" id="prev-btn">Previous</button></li>
+	  <li class="page-item"><button class="page-link .next-btn" id="next-btn">Next</button></li>
+	</ul>
+  </nav>
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col">
+        Reply_ID
+      </th>
+      <th scope="col">
+        Thread_ID
+      </th>
+      <th scope="col">
+       User_ID
+      </th>
+      <th scope="col">
+        Publisher Name
+      </th>
+      <th scope="col">
+        Delete
+      </th>
+      
+    </tr>
+  </thead>
+  <tbody id="adminthreadajaxdiv">
+
+  </tbody>
+</table>
+
+<script src="/js/adminThreadListAjax.js"></script>
+
+<%- include("partials/footer") %>

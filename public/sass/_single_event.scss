@@ -1,0 +1,78 @@
+@use './variables' as variables;
+div.single-event-wrapper{
+    width:90%;
+    margin:2em auto;
+    font-family:variables.$secondary_font;
+    &>div.timeline{
+        display:grid;
+        grid-template-columns:repeat(2 , 1fr);
+        @media only screen and(max-width:600px){
+            grid-template-columns:repeat(1 , 1fr);
+        }
+        justify-items:center;
+        &>div{
+            @media only screen and(max-width:600px){
+                margin-bottom:1em;
+            }
+            width:250px;
+            font-size:2em;
+            height:270px;
+            display:flex;
+            flex-flow:column;
+            align-items:center;
+            justify-content: center;
+            &>div.seperator{
+                width:100%;
+                div.line{
+                    width:80%;
+                    height:2px;
+                    background-color:white;
+                    position:relative;
+                    margin:0.5em auto;
+                    &>span{
+                        height:0.7em;
+                        width:0.7em;
+                        position:absolute;
+                        top:50%;
+                        left:50%;
+                        transform:translate(-50% , -50%);
+                        border-radius:50%;
+                        background-color:white;
+                        border:5px solid variables.$main_color;
+                    }
+                }
+            }
+            &>span{
+                display:block;
+                text-align:center;
+                border-color:variables.$background-color;
+                border-width:5px;
+                box-sizing: border-box;
+            }
+            &>span:last-child{
+                padding:0px 0.5em;
+                box-sizing: border-box;
+                font-size:0.95em;
+            }
+                background-color:variables.$main_color;
+                color:white;
+                border-radius:0.5em;
+        }
+    }
+
+    & img{
+        width:95%;
+        max-width:650px;
+        margin:2em auto;
+        margin-top:5em;
+        display:block;
+        border-radius:0.3em;
+    }
+    & div.event-content{
+        width:80%;
+        margin: 2em auto;
+        font-size:1.5em;
+    }
+
+}
+

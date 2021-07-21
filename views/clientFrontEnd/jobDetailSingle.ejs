@@ -1,0 +1,36 @@
+<%- include("partials/header") %>
+
+<%console.log(jobDetail)%>
+<div class="jobsingletopmargintotal">
+    <div>
+        <div class="jobsingleheading">
+            <p class="" ><%=jobDetail.position%></p>
+        </div>
+        <div class="container jobsingledescparawidth">
+            <p><%=jobDetail.brief%></p>
+        </div>
+        <div class="josingleresponsibities">
+            <h1>Requirements :</h1>
+            <ul>
+            <p style="font-size: 1.3rem;"><%=jobDetail.requirements%></p>
+            </ul>
+        </div>
+        <%if(jobDetail.contact_details){%>
+            <div class="josingleresponsibities">
+                <h1>Contact Information</h1>
+                <p><%=jobDetail.contact_details%></p>
+            </div>
+        <%}%>
+        <br><br>
+        <%if(jobDetail.form){%>
+            <div class="container" style="text-align: center;">
+                <a   href="<%=jobDetail.form%>"   style="color: white;" class="jobsinglebutton">Apply Now</a style="color: white;"><br>
+            </div>
+        <%}%>
+    </div>
+</div>
+
+
+
+
+<%- include("partials/footer") %>

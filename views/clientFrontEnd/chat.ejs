@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" const="text/html;charset=UTF-8" />
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"
+      integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <title>Simple Chat App</title>
+  </head>
+
+  <body>
+    <header>
+      <h1>Super Chat</h1>
+    </header>
+
+    <section>
+      <div id="change_username">
+        <input id="username" type="text" />
+        <button id="send_username" type="button">Change username</button>
+      </div>
+    </section>
+
+    <section id="chatroom">
+      <section id="feedback"></section>
+    </section>
+
+    <section id="input_zone">
+      <input id="message" class="vertical-align" type="text" />
+      <button id="send_message" class="vertical-align" type="button">
+        Send
+      </button>
+    </section>
+
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script>
+      $(function () {
+        //make connection
+        var socket = io.connect("https://valuersconnect.com");
+
+        //buttons and inputs
+        var message = $("#message");
+        var username = $("#username");
+        var send_message = $("#send_message");
+        var send_username = $("#send_username");
+        var chatroom = $("#chatroom");
+        var feedback = $("#feedback");
+
+        //Emit message
+        send_message.click(function () {
+          socket.emit("new_message", { message: message.val() });
+        });
+
+        //Listen on new_message
+        socket.on("new_message", (data) => {
+          feedback.html("");
+          message.val("");
+          chatroom.append(
+            "<p class='message'>" + data.username + ": " + data.message + "</p>"
+          );
+        });
+
+        //Emit a username
+        send_username.click(function () {
+          socket.emit("change_username", { username: username.val() });
+        });
+
+        //Emit typing
+        message.bind("keypress", () => {
+          socket.emit("typing");
+        });
+
+        //Listen on typing
+        socket.on("typing", (data) => {
+          feedback.html(
+            "<p><i>" + data.username + " is typing a message..." + "</i></p>"
+          );
+        });
+      });
+    </script>
+  </body>
+</html>
+
+<!-- 
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import io from "socket.io-client";
+import "./Join.css";
+import axios from "axios";
+
+export default function SignIn() {
+  const [room, setRoom] = useState("");
+  const [msg, setMsg] = useState("");
+  const [user, setUser] = useState({});
+  const [isTyping,setIsTyping] = useState(false);
+  const [messages,setMessages] = useState([]);
+  const [gotmsg,setGotMsg] = useState(false);
+  const [type,setType] = useState("");
+  const [users, setUsers] = useState([]);
+
+  const ENDPOINT = "http://localhost:5000";
+
+  let socket;
+  socket = io(ENDPOINT);
+  let value = Math.floor(Math.random() * 4) + 1;
+  let name = `Person${value}`;
+  let email = `Person${value}@gmail.com`;
+  let id = value;
+
+  //Getting user data and delivered messages
+  async function getData() {
+    setGotMsg(false);
+    await axios
+      .post("http://localhost:5000/getUser", { mail: email })
+      .then(async function(response) {
+        setUser(response.data);
+        await axios
+          .post("http://localhost:5000/getSentMessages",{
+            user: response.data
+          })
+          .then((res) => {
+            console.log(res.data.result)
+            setMessages(res.data.result);
+            setGotMsg(true);
+            if(res.data.result.length > 0){
+              socket.emit("received messages", { messages: res.data.result }, (error) => {
+                if (error) {
+                  alert(error);
+                }
+              });
+            }
+
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+        socket.emit("register", { user: response.data }, (error) => {
+          if (error) {
+            alert(error);
+          }
+        });
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+
+  }
+  useEffect(() => {
+    getData();
+  }, []);
+
+  useEffect(() => {
+    socket.on("message", (message) => {
+      console.log(message.msg);
+    });
+    socket.on("typing", (message) => {
+      setIsTyping(true);
+      setType(`${message.sender.name} is Typing.....`);
+    });
+    socket.on("stop typing", (message) => {
+      setIsTyping(false);
+    });
+  });
+
+  function getUsers() {
+    axios
+      .get("http://localhost:5000/users")
+      .then((res) => {
+        console.log(res.data);
+        setUsers(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
+function seenMessage(value){
+  socket.emit("messages seen", {
+    data: value
+  });
+}
+
+  function sendPersonalMessage(id) {
+    let receiver = {};
+    users.map((value, index) => {
+      if (value.socketId === id) {
+        receiver = value;
+      }
+    });
+    socket.emit("private_chat", {
+      id: id,
+      msg: document.getElementById("input").value,
+      sender: user,
+      receiver: receiver,
+    });
+  }
+
+  function typing(id) {
+    let receiver = {};
+    users.map((value, index) => {
+      if (value.socketId === id) {
+        receiver = value;
+      }
+    });
+
+    socket.emit("typing", {
+      msg: `typing`,
+      id: id,
+      sender: user,
+      receiver: receiver,
+    });
+  }
+
+  function stoppedTyping(id){
+    let receiver = {};
+    users.map((value, index) => {
+      if (value.socketId === id) {
+        receiver = value;
+      }
+    });
+    socket.emit("stop typing", {
+      msg: `stop typing`,
+      id: id,
+      sender: user,
+      receiver: receiver,
+    });
+  }
+
+  async function allMessages(value){
+    await axios.post("http://localhost:5000/allMessages",{receiver: value, sender : user})
+    .then((result)=>{
+      setMessages(result.data.result);
+      setGotMsg(true);
+    })
+    .catch((err)=>{
+      console.log(err)
+    })
+  }
+  return (
+    <div>
+      <div>
+         <h1>{user && user.name}</h1>
+        {/*
+        <div>
+          <input placeholder="Name" className="joinInput" type="text" onChange={(event) => setName(event.target.value)} />
+        </div>
+        <div>
+          <input placeholder="Room" className="joinInput mt-20" type="text" onChange={(event) => setRoom(event.target.value)} />
+        </div>
+        <Link onClick={e => (!name || !room) ? e.preventDefault() : null} to={`/chat?name=${name}&room=${room}`}>
+          <button className={'button mt-20'} type="submit">Sign In</button>
+        </Link>
+        <br />
+        <br /> */}
+        <button onClick={getUsers}>Get users</button>
+        {/* <button onClick={allMessages}>Get All Messages</button> */}
+        {/* <button onClick={getSentMessages}>Get Offline messages</button> */}
+        {users.length > 0 &&
+          users.map((value, index) => {
+            return (
+              <div
+                style={{ background: "#fff", width: "100%" }}
+              >
+                 <p>{value.name}</p>
+                 <p>{value.socketId}</p>
+                <input
+                  onFocus={() => typing(value.socketId)}
+                  onBlur={()=>stoppedTyping(value.socketId)}
+                  id="input"
+                  type="text"
+                ></input>
+                <br />
+
+                <button onClick={() => sendPersonalMessage(value.socketId)}>
+                  send Message
+                </button>
+                <button onClick={()=>allMessages(value)}>Get All Messages</button>
+              </div>
+            );
+          })}
+      </div>
+      <p>{isTyping &&  type}</p>
+      <br />
+      <br />
+      <p>Sent Messages</p>
+      {gotmsg && messages.length > 0 &&  messages.map((value,index)=>{
+        console.log(value)
+        return <div>
+          <p>{value.message}</p>
+          <button onClick={()=>seenMessage(value)}>seen</button>
+          </div>
+      })}
+    </div>
+  );
+} -->

@@ -1,0 +1,78 @@
+<%- include ("partials/header") %>
+<div class="display-wrapper">
+    <div class="forum-container">
+        <div class="forum-head">
+            <h1>Forums & Discussions</h1>
+            <button>Create New</button>
+        </div>
+        <div class="forum-div">
+            <% forumCategory.forEach(category => { %>
+            <div class="forum-element">
+                <span class="date">Added on <%=getDateString(category.createdAt)%></span>
+                <h2><a   href="/forum-thread?category=<%=category.id%>"><%=category.name.length > 30 ? category.name.substring(0,27) + '...' : category.name %></a></h2>
+                <div class="forum-info">
+                    <span class="threads"><%=category.totalThreads%> Threads</span>
+                    <a   href="/forum-thread?category=<%=category.id%>"></a>
+                </div>
+            </div>
+            <% }) %>
+        </div>
+        <a class="foot-button" id="load-more">Load More</a>
+    </div>
+
+    <div class="event-vertical-container">
+        <h1>Events</h1>
+        <% upcomingEvents.forEach(event => { %>
+            <div class="event" style="background-image:url('<%=event.featureImage%>')">
+                <div class="top-date" month="<%=getDayAndMonth(event.fromDate)[1]%>"><%=getDayAndMonth(event.fromDate)[0]%></div>
+                <p><a   href="/events/<%=event._id%>"><%=event.title.length > 50 ? event.title.substring(0,47) + '...' : event.title%></a></p>
+                <div class="time-range" style="opacity:0">7:30 PM - 9:30 PM</div>
+            </div>
+        <% }) %>
+        <a class="foot-button" href="/events">View More</a>
+</div>
+
+</div>
+
+<script>
+    let load_more_btn = document.getElementById('load-more');
+    let current_page = 1;
+    load_more_btn.addEventListener('click', async ()=>{
+        if(current_page === -1){
+            return;
+        }
+        current_page += 1;
+        load_more_btn.classList.add('disabled');
+        let new_data = await axios({
+            method : 'GET',
+            url: `/api/v1/category?page=${current_page}`
+        })
+        if(new_data.data){
+            if(new_data.data.status === 'success'){
+                let html = '';
+                new_data.data.data.forEach((category)=>{
+                    console.log(category);
+                html += `<div class="forum-element">
+                    <span class="date">Added on ${(new Date(category.createdAt)).toDateString()}</span>
+                    <h2><a   href="/forum-thread?category=${category.id}">${category.name.length > 30 ? category.name.substring(0,27) + '...' : category.name}</a></h2>
+                    <div class="forum-info">
+                        <span class="threads">${category.totalThreads} Threads</span>
+                        <a   href="/forum-thread?category=${category.id}"></a>
+                    </div>
+                </div>`
+                })
+
+                let forum_container = document.querySelector('div.forum-div');
+                forum_container.insertAdjacentHTML('beforeend',html);
+                load_more_btn.classList.remove('disabled');
+            }
+            else{
+                console.log('failed to find more');
+                current_page = -1;
+                load_more_btn.innerText = 'End of List';
+            }
+        }
+    })
+</script>
+
+<%- include ("partials/footer") %>

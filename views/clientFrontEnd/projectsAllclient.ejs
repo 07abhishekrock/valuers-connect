@@ -1,0 +1,204 @@
+<%- include("partials/header") %>
+<div class="adminlisttotaldiv" style="overflow-x: scroll;">
+
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col">
+                    Listing ID
+                </th>
+                <th scope="col">
+                    Institution Name
+                </th>
+                <th scope="col ">
+                    Property Details
+                </th>
+                <th scope="col ">
+                    Application Deadline
+                </th>
+                <th scope="col ">
+                    Auction Date
+                </th>
+                <th scope="col ">
+                    Reserve Price
+                </th>
+                <th scope="col ">
+                    View Details
+                </th>
+            </tr>
+        </thead>
+        <tbody id="adminnewsajaxdiva" style="overflow-x:scroll;">
+        <%project.forEach(function(project){%>
+            
+            <tr>
+                <td><%=project.id%></td>
+                <td><%=project.institutionName%></td>
+                <td><%=project.propertyDetails%></td>
+                <td><%=project.applicationDeadline%></td>
+                <td><%=project.auctionDate%></td>
+                <td>₹ <%=project.reservePrice%></td>
+                <td><a style="background-color: #647CBC !important" href="/project/<%=project.id%>" class="btn btn-lg btn-success">View</a></td>
+            </tr>
+
+        <%})%>
+            <!-- <tr>
+                <td>679452</td>
+                <td>Indian Overseas Bank</td>
+                <td>Plot in Subash Nagar</td>
+                <td>19-05-2021</td>
+                <td>20-05-2021
+                </td>
+                <td>₹59,06,000</td>
+                <td><button class="btn btn-lg btn-success">View</button></td>
+            </tr>
+
+            <tr>
+                <td>679452</td>
+                <td>Indian Overseas Bank</td>
+                <td>Plot in Subash Nagar</td>
+                <td>19-05-2021</td>
+                <td>20-05-2021
+                </td>
+                <td>₹59,06,000</td>
+                <td><button class="btn btn-lg btn-success">View</button></td>
+            </tr>
+
+            <tr>
+                <td>679452</td>
+                <td>Indian Overseas Bank</td>
+                <td>Plot in Subash Nagar</td>
+                <td>19-05-2021</td>
+                <td>20-05-2021
+                </td>
+                <td>₹59,06,000</td>
+                <td><button class="btn btn-lg btn-success">View</button></td>
+            </tr>
+
+            <tr>
+                <td>679452</td>
+                <td>Indian Overseas Bank</td>
+                <td>Plot in Subash Nagar</td>
+                <td>19-05-2021</td>
+                <td>20-05-2021
+                </td>
+                <td>₹59,06,000</td>
+                <td><button class="btn btn-lg btn-success">View</button></td>
+            </tr>
+
+            <tr>
+                <td>679452</td>
+                <td>Indian Overseas Bank</td>
+                <td>Plot in Subash Nagar</td>
+                <td>19-05-2021</td>
+                <td>20-05-2021
+                </td>
+                <td>₹59,06,000</td>
+                <td><button class="btn btn-lg btn-success">View</button></td>
+            </tr>
+
+            <tr>
+                <td>679452</td>
+                <td>Indian Overseas Bank</td>
+                <td>Plot in Subash Nagar</td>
+                <td>19-05-2021</td>
+                <td>20-05-2021
+                </td>
+                <td>₹59,06,000</td>
+                <td><button class="btn btn-lg btn-success">View</button></td>
+            </tr>
+
+            <tr>
+                <td>679452</td>
+                <td>Indian Overseas Bank</td>
+                <td>Plot in Subash Nagar</td>
+                <td>19-05-2021</td>
+                <td>20-05-2021
+                </td>
+                <td>₹59,06,000</td>
+                <td><button class="btn btn-lg btn-success">View</button></td>
+            </tr>
+
+            <tr>
+                <td>679452</td>
+                <td>Indian Overseas Bank</td>
+                <td>Plot in Subash Nagar</td>
+                <td>19-05-2021</td>
+                <td>20-05-2021
+                </td>
+                <td>₹59,06,000</td>
+                <td><button class="btn btn-lg btn-success">View</button></td>
+            </tr>
+
+            <tr>
+                <td>679452</td>
+                <td>Indian Overseas Bank</td>
+                <td>Plot in Subash Nagar</td>
+                <td>19-05-2021</td>
+                <td>20-05-2021
+                </td>
+                <td>₹59,06,000</td>
+                <td><button class="btn btn-lg btn-success">View</button></td>
+            </tr>
+
+            <tr>
+                <td>679452</td>
+                <td>Indian Overseas Bank</td>
+                <td>Plot in Subash Nagar</td>
+                <td>19-05-2021</td>
+                <td>20-05-2021
+                </td>
+                <td>₹59,06,000</td>
+                <td><button class="btn btn-lg btn-success">View</button></td>
+            </tr>
+
+            <tr>
+                <td>679452</td>
+                <td>Indian Overseas Bank</td>
+                <td>Plot in Subash Nagar</td>
+                <td>19-05-2021</td>
+                <td>20-05-2021
+                </td>
+                <td>₹59,06,000</td>
+                <td><button class="btn btn-lg btn-success">View</button></td>
+            </tr>
+
+            <tr>
+                <td>679452</td>
+                <td>Indian Overseas Bank</td>
+                <td>Plot in Subash Nagar</td>
+                <td>19-05-2021</td>
+                <td>20-05-2021
+                </td>
+                <td>₹59,06,000</td>
+                <td><button class="btn btn-lg btn-success">View</button></td>
+            </tr>
+
+            <tr>
+                <td>679452</td>
+                <td>Indian Overseas Bank</td>
+                <td>Plot in Subash Nagar</td>
+                <td>19-05-2021</td>
+                <td>20-05-2021
+                </td>
+                <td>₹59,06,000</td>
+                <td><button class="btn btn-lg btn-success">View</button></td>
+            </tr>
+
+            <tr>
+                <td>679452</td>
+                <td>Indian Overseas Bank</td>
+                <td>Plot in Subash Nagar</td>
+                <td>19-05-2021</td>
+                <td>20-05-2021
+                </td>
+                <td>₹59,06,000</td>
+                <td><button class="btn btn-lg btn-success">View</button></td>
+            </tr> -->
+
+        </tbody>
+    </table>
+
+</div>
+
+
+<%- include("partials/footer") %>

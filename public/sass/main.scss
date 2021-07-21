@@ -1,0 +1,154 @@
+@use './variables' as variables;
+@use './navbar' as navbar;
+@use './carousel' as carousel;
+@use './forum' as forum;
+@use './news' as news;
+@use './events' as events;
+@use './inline_list' as list;
+@use './grid' as grid;
+@use './oneBlog' as oneBlog;
+@use './threads' as threads;
+@use './single_event' as single_event;
+@use './misc' as misc;
+@use './payment' as payment;
+@use './chat' as chat;
+@use './newsletter' as newsletter;
+@use './contact_us' as contact_us;
+body{
+    margin:0px;
+    padding:0px;
+}
+div.about-us-wrapper{
+    background-color:variables.$background_color;
+    width:100%;
+    position:relative;
+    margin-top:2em;
+    padding:3em 0px;
+    &>div.about-us{
+    width:80%;
+    margin: 0 auto;
+    font-family:variables.$secondary_font;
+    text-align:center;
+    &>h1{
+        font-size:3em;
+        color:variables.$main_color;
+    }
+    &>p{
+        font-size:1em;
+    }
+    @media only screen and (max-width:700px) {
+        width:90%; 
+        font-size:0.9em;
+    }
+    
+    }
+}
+a.foot-button{
+    display:inline-block;
+    margin:0 auto;
+    margin-top:2em;
+    margin-bottom:0.5em;
+    padding:0.3em 1em;
+    background-color:black;
+    position:relative;
+    left:50%;
+    transform:translateX(-50%);
+    transition:transform 0.2s ease-in;
+    color:white !important;
+    cursor:pointer;
+    font-family:variables.$secondary_font;
+    border-radius:2em;
+    font-size:1.2em;
+    border:0px solid black;
+    &:hover{
+        transform:translate(-50% , -3px);
+        text-decoration:none;
+    }
+    &.disabled{
+        background-color:darkgray;
+        pointer-events: none;
+    }
+}
+
+
+footer{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    background-color:variables.$background_color;
+    padding:0px 1em;
+    padding-right:1em;
+    box-sizing: border-box;
+    font-family:variables.$secondary_font;
+    @media only screen and (min-width:1201px){
+        padding-right:3em;
+    }
+    @media only screen and (max-width:1100px) {
+        justify-content:center;
+        flex-wrap:wrap;
+    }
+
+    @media only screen and (max-width:900px) {
+        flex-flow:column;
+        align-items:center;
+        justify-content:center;
+    }
+
+    &>div.logo{
+        width:20em;
+        height:20em;
+        background-image:url('/assets/vc logo black-01.png');
+        background-size:contain;
+        background-position:center;
+        background-repeat:no-repeat;
+        flex-shrink:0;
+        align-self:center;
+    }
+    &>div.links{
+        display:grid;
+        grid-template-columns:repeat(3 , 1fr);
+        grid-gap:0.3em 1em;
+        &>a{
+            color:black !important;
+            text-decoration: none !important;
+        }
+        &>a:hover{
+            color:variables.$main_color !important;
+        }
+        @media only screen and (max-width:1100px) {
+            margin:0px 2em;
+        }
+        @media only screen and (max-width:570px) {
+            grid-template-columns:repeat(1 , 1fr);
+            text-align:center;
+            &>a{
+                margin-bottom:0.5em;
+            }
+        }
+    }
+    &>div.social-media-links{
+        display:flex;
+        &>a{
+            width:3em;
+            height:3em;
+            background-position:center;
+            background-size:contain;
+            background-repeat: no-repeat;
+            margin:0px 0.5em;
+            border-radius:50%;
+            flex-grow:0;
+        }
+
+        @media only screen and (max-width:1100px) {
+            margin-bottom:2em;
+        }
+        @media only screen and (max-width:900px) {
+            margin-top:4em;
+        }
+
+    }
+}
+
+button:focus{
+    outline:none;
+}

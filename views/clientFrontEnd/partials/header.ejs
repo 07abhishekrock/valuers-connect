@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Lobster&family=Permanent+Marker&family=Reggae+One&family=Roboto+Slab&family=Rock+Salt&display=swap"
+    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@200&family=Fanwood+Text&display=swap"
+    rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="stylesheet" href="../../news.css">
+  <link rel="stylesheet" href="../../index.css">
+  <link rel="stylesheet" href="../../profile.css">
+  <link rel="stylesheet" href="../../tenderListCustomer.css">
+  <link rel="stylesheet" href="../../carrier.css">
+  <link rel="stylesheet" href="../../insideTenderClientPage.css">
+  <link rel="stylesheet" href="../../newsall.css">
+  <link rel="stylesheet" href="../../jobDetailSingle.css">
+  <link rel="stylesheet" href="../../userprofilenew.css">
+  <link rel="stylesheet" href="../../login.css">
+  <link rel="stylesheet" href="../../signup.css">
+  <link rel="stylesheet" href="/discussionPage.css">
+  <link rel="stylesheet" href="/registrationmulti.css">
+  <link rel="stylesheet" href="/alert.css">
+  <link rel="stylesheet" href="/update_page.css">
+  <link rel="stylesheet" href="/allBlogs.css">
+  <link rel="stylesheet" href="/oneBlog.css">
+  <link rel="stylesheet" href="/homepage_new.css">
+  <script src="https://kit.fontawesome.com/29c86029a6.js" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Trumbowyg/2.23.0/trumbowyg.min.js"
+    integrity="sha512-sffB9/tXFFTwradcJHhojkhmrCj0hWeaz8M05Aaap5/vlYBfLx5Y7woKi6y0NrqVNgben6OIANTGGlojPTQGEw=="
+    crossorigin="anonymous"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-361RLZSPHH"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-361RLZSPHH');
+</script>
+  <link rel="stylesheet" href="/Trumbowyg-master/dist/ui/trumbowyg.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flickity/1.0.0/flickity.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"
+      integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+  ></script>
+
+  <title>Valuers Connect | Build Your Network In No Time</title>
+<meta name="description" content=" Valuers Connect is a platform for valuers from all over the world to connect with other professionals and stakeholders in the field of valuation. Valuers Connect wishes to establish a forum for discussions on topics of importance and getting counselled by the industry experts. Valuers from different parts of the world can engage in discussions on not only the forum but also conduct business on Valuers Connect. Stakeholders can get in touch with valuers and other professionals to get their job done with complete privacy.
+">
+  <style>
+    .loader_wrap{
+      display: flex;
+      height: 100vh;
+      justify-content: center;
+      /* background-color: aqua; */
+      text-align: center;
+      align-items: center;
+    }
+    .loader {
+  border: 16px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 16px solid #194342;
+  width: 120px;
+  height: 120px;
+  /* text-align: center; */
+  display: flex;
+  justify-content: center;
+
+  -webkit-animation: spin 2s linear infinite; /* Safari */
+  animation: spin 2s linear infinite;
+}
+
+/* Safari */
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+    </style>
+</head>
+<body>
+<nav>
+  <a   href="/"><div class="logo"></div></a>
+  <span class="burger"></span>
+  <ul class="nav-list">
+      <li><a   href="/">Home</a></li>
+      <li><a   href="/blog">Blogs</a></li>
+      <li><a   href="/news">News</a></li>
+      <li><a   href="/events">Events</a></li>
+      <li><a   href="/newsletter">Newsletter</a></li>
+      <%if(!user.isMember){%> 
+      <li><a   href="/pricing">Pricing</a></li>
+      <%}%>
+      <li><a   href="/contact-us">Contact Us</a></li>
+      <li class="sub-list-wrapper" tabindex=100>
+          <span>Opportunities <i class="fa fa-caret-down"></i></span>
+          <div class="sub-list">
+              <a   href="/career">Careers</a>
+              <a   href="/tender">Tenders</a>
+              <a   href="/project">Projects</a>
+          </div>
+      </li>
+      <li class="profile-pic sub-list-wrapper" tabindex=100>
+        <% if (user === 0) { %>
+          <span style="background-image:url('/assets/profile.png')"></span>
+        <% } else {%>
+            <%if(user.userProfile){%>
+            <span style="background-image:url('<%=user.userProfile%>')"></span>
+            <%}else {%>
+              <span style="background-image:url('/assets/profile.png')"></span>
+            <%}%>
+        <%}%>
+          <div class="sub-list">
+            <% if (user === 0) { %>
+              <a   href="/login">Login</a>
+              <a   href="/signup">Signup</a>
+            <% } else { %>
+              <a   href="/my/profile">Profile</a>
+              <a   href="/chat">Chat</a>
+              <a class="logout" href="#">Logout</a>
+            <% } %>
+            <% if (user.userRole === 'admin') { %>
+            <a   href="/admin/newsList" class="admin">Admin</a>
+            <% } %>
+          </div>
+      </li>
+  </ul>
+</nav> 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <body style="font-family: 'Crimson Pro', serif; background-color: #fcfcfc;"> -->
+
+  <!-- <div class="headerdiv">
+    <div class="nava">
+
+      <nav class="navbar navbar-expand-lg navbar-light  container logoimagediv">
+        <a class="navbar-brand logoimage" href="/"><img style="width: 8rem;"  src="/assets/logo.png" alt="" srcset=""><span></span></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+          aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse " id="navbarNavAltMarkup">
+          <div class="navbar-nav ml-auto">
+            <a class="nav-item nav-link active" href="/">Home <span class="sr-only">(current)</span></a>
+          
+            <a class="nav-item nav-link active" href="/news">News</a>
+            <a class="nav-item nav-link active" href="/blog">Blog</a>
+            <div class="dropdown">
+              <button class="dropbtn nav-item nav-link active">Opportunities&#9660</button>
+              <div class="dropdown-content">
+                <a class="nav-item nav-link active" href="/tender">Tender</a>
+                <a class="nav-item nav-link active" href="/project">Projects</a>
+                <a class="nav-item nav-link active" href="/career">Career</a>
+
+              </div>
+            </div>
+            <%##if(user===0){%>
+            <a class="nav-item nav-link active btn headerbutton" href="/signup"
+              style="color: white !important;">SignUp</a>
+            <a class="nav-item nav-link active headerloginbutton headerbuttondesign" style="text-align: center;"
+              href="/login">Login</a>
+            <%##} else{%>
+            <div style="display: flex;margin-top: 5px;" class="userphotosmallwindowmarginleft">
+              <a   href="/my/profile" style="margin-right: 10px;"><img src="<%#=user.userProfile%>"
+                  class="imagenavbar" alt=""></a>
+              &nbsp;<span
+                style=" justify-content: center; align-content: center; align-items: center;margin-top: 5px; font-size: 18px;"><a   href="/my/profile" style="color: #2B6688 !important;font-weight: bold !important;"><%#=user.firstName%></a>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+
+            </div>
+            <a class="nav-item nav-link active btn  headerbuttondesign logout" style="text-align: center;" href="#">Logout</a>
+
+            <%##if(user.userRole==="admin"){%>
+            <a class="nav-item nav-link active btn headerbutton" href="/admin/newsList" style="color: white !important;">Admin
+              Dashboard</a>
+            <%##}}%>
+          </div>
+        </div>
+      </nav>
+    </div>
+  </div> -->

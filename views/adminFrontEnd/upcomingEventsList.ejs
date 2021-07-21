@@ -1,0 +1,44 @@
+<%- include("partials/header") %>
+<style>
+  tbody{
+    background-color: white;
+  }
+</style>
+<div>
+
+
+  <h2 style="text-align: center; font-weight: bold;margin-top: 20px;">
+    Events List
+  </h2>
+</div>
+<nav aria-label="Page navigation example" style="margin-left: 1rem;">
+  <ul class="pagination">
+    <li class="page-item"><button class="page-link .prev-btn" id="prev-btn">Previous</button></li>
+    <li class="page-item"><button class="page-link .next-btn" id="next-btn">Next</button></li>
+  </ul>
+  </nav>
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col">
+        S.no
+      </th>
+      <th scope="col">
+        Event Name
+      </th>
+      <th scope="col">
+        Event Time
+      </th>
+      <th scope="col smallcolumn" style="text-align: center;">
+        Edit
+      </th>
+    </tr>
+  </thead>
+  <tbody id="adminupcomingeventdiv">
+
+  </tbody>
+</table>
+
+
+<script src="../../js/adminUpcomingEventAjax.js"></script>
+<%- include("partials/footer") %>
