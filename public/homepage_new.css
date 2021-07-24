@@ -1145,7 +1145,7 @@ div.single-event-wrapper > div.timeline > div > span {
 div.single-event-wrapper > div.timeline > div > span:last-child {
   padding: 0px 0.5em;
   box-sizing: border-box;
-  font-size: 0.95em;
+  font-size: 0.8em;
 }
 div.single-event-wrapper img {
   width: 95%;

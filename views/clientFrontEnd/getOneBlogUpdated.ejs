@@ -23,11 +23,13 @@
         <div class="event-vertical-container">
                 <h1>Events</h1>
                 <% upcomingEvents.forEach(event => { %>
-                    <div class="event" style="background-image:url('<%=event.featureImage%>')">
-                        <div class="top-date" month="<%=getDayAndMonth(event.fromDate)[1]%>"><%=getDayAndMonth(event.fromDate)[0]%></div>
-                        <p><a   href="/events/<%=event._id%>"><%=event.title.length > 50 ? event.title.substring(0,47) + '...' : event.title%></a></p>
-                        <div class="time-range" style="opacity:0">7:30 PM - 9:30 PM</div>
-                    </div>
+                    <% if ((event.toDate).getTime() >= (new Date()).getTime()) { %>
+                        <div class="event" style="background-image:url('<%=event.featureImage%>')">
+                            <div class="top-date" month="<%=getDayAndMonth(event.fromDate)[1]%>"><%=getDayAndMonth(event.fromDate)[0]%></div>
+                            <p><a   href="/events/<%=event._id%>"><%=event.title.length > 50 ? event.title.substring(0,47) + '...' : event.title%></a></p>
+                            <div class="time-range" style="opacity:0">7:30 PM - 9:30 PM</div>
+                        </div>
+                    <% } %>
                 <% }) %>
                 <a class="foot-button" href="/events">View More</a>
         </div>
