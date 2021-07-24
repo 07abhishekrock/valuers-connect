@@ -11,6 +11,10 @@ router
 router.get('/delete/tender/:id',tenderController.deleteTender)
 
 router
+  .route("/getAllCategories")
+  .get(tenderController.getAllCategories)
+
+router
   .route("/:id")
   .get(tenderController.getOneTender)
   .patch(tenderController.uploadTenderDocuments,tenderController.updateTender)

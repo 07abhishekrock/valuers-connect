@@ -64,29 +64,59 @@ exports.uploadTenderDocuments = upload.single("documents");
 //   next();
 // });
 
+exports.getAllCategories = async (req , res, next)=>{
+  try{
+    const categories = await Tender.distinct("category");
+    res.status(200).json({
+      status:'success',
+      categories:categories
+    })
+  }
+  catch(e){
+    console.error(e);
+  }
+}
+
 exports.getAllTender = async (req, res, next) => {
   try {
     // 1) Filtering
     const queryObj = { ...req.query };
+    console.log(req.query);
     const excludedFields = ["page", "sort", "limit", "fields"];
     excludedFields.forEach((el) => delete queryObj[el]);
 
-    let query = Tender.find(queryObj).sort({createdAt : -1});
-    console.log(req.query);
-    console.log(queryObj);
+    if(req.query.category && req.query.category.length > 0){
+      query = Tender.find({
+        category : {
+          $in : req.query.category
+        },
+        lastDate : {
+          $lt : new Date(req.query.deadline || '3000-12-12')
+        }
+      }).sort({createdAt : -1});
+    }
+    else{
+      query = Tender.find({
+        lastDate : {
+          $lt : new Date(req.query.deadline || '3000-12-12')
+        }
+      })
+    }
+
 
     // 2) Limiting Fields
-    if (req.query.fields) {
-      const fields = req.query.fields.split(",").join(" ");
-      query = query.select(fields);
-    } else {
-      query = query.select("-__v");
-      console.log("Error");
-    }
+    // if (req.query.fields) {
+    //   const fields = req.query.fields.split(",").join(" ");
+    //   query = query.select(fields);
+    // } else {
+    //   query = query.select("-__v");
+    //   console.log("Error");
+    // }
+
 
     // 3) Pagination
     const page = req.query.page * 1 || 1;
-    const limit = req.query.limit * 1;
+    const limit = req.query.limit * 5;
     const skip = (page - 1) * limit;
 
     query = query.skip(skip).limit(limit);
