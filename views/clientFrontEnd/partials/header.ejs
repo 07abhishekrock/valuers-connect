@@ -10,6 +10,31 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
+
+  <%if (locals.blog) {%>
+      <meta property="og:site_name" content="valuersconnect.com">
+      <meta property="og:title" content="<%=blog.title%>" />
+      <meta property="og:description" content="Latest Blogs at your fingertips" />
+      <meta property="og:image" itemprop="image" content="<%=blog.blogFeatureImage%>">
+      <meta property="og:type" content="website" />
+  <%}%>
+
+  <%if (locals.news) {%>
+      <meta property="og:site_name" content="valuersconnect.com">
+      <meta property="og:title" content="<%=news.title%>" />
+      <meta property="og:description" content="Latest News at your fingertips" />
+      <meta property="og:image" itemprop="image" content="<%=news.featureImage%>">
+      <meta property="og:type" content="website" />
+  <%}%>
+
+  <%if (locals.event) {%>
+    <meta property="og:site_name" content="valuersconnect.com">
+    <meta property="og:title" content="<%=event.title%>" />
+    <meta property="og:description" content="Latest Events at your fingertips" />
+    <meta property="og:image" itemprop="image" content="<%=event.featureImage%>">
+    <meta property="og:type" content="website" />
+  <%}%>
+
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link
     href="https://fonts.googleapis.com/css2?family=Lobster&family=Permanent+Marker&family=Reggae+One&family=Roboto+Slab&family=Rock+Salt&display=swap"
